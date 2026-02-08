@@ -1,0 +1,670 @@
+/* ==========================================================================
+   Custom Font Faces
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Ohrada';
+  src: url('/fonts/Ohrada.otf') format('opentype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Now';
+  src: url('/fonts/HelveticaNow.otf') format('opentype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Now Bold';
+  src: url('/fonts/HelveticaNowBold.otf') format('opentype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   CSS Custom Properties (Design Tokens)
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --color-primary: #1a2764;
+  --color-secondary: #e4cea1;
+  --color-accent: #eeaf13;
+  --color-accent-hover: #cfa00f;
+  --color-text: #424753;
+  --color-background: #f4f5f7;
+  --color-footer-bg: #031a2b;
+  --color-white: #ffffff;
+
+  /* Fonts */
+  --font-display: 'Ohrada', Arial, sans-serif;
+  --font-heading: 'Helvetica Now', Arial, sans-serif;
+  --font-body: 'Open Sans', Arial, sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  --spacing-3xl: 5rem;
+
+  /* Header */
+  --header-height: 50px;
+  --header-padding-desktop: 4rem;
+  --header-padding-mobile: 1rem;
+
+  /* Navigation */
+  --nav-gap-desktop: 2rem;
+  --nav-font-size: 1.2rem;
+  --nav-letter-spacing: 1.5px;
+
+  /* Footer */
+  --footer-padding: 3.5rem 0;
+  --footer-max-width: 1200px;
+
+  /* Mobile Menu */
+  --mobile-menu-width: 40%;
+  --mobile-menu-max-width: 160px;
+  --mobile-menu-height: 40svh;
+  --mobile-menu-min-height: 250px;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+
+  /* Border Radius */
+  --radius: 5px;
+
+  /* Z-index */
+  --z-header: 1004;
+  --z-hamburger: 1005;
+  --z-mobile-menu: 1006;
+  --z-scroll-top: 9999;
+  --z-logo: 999;
+}
+
+/* ==========================================================================
+   CSS Reset
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-background);
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+p {
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Header & Navigation (Desktop)
+   ========================================================================== */
+
+#g-navigation {
+  top: 0;
+  background: var(--color-primary);
+  color: var(--color-white);
+  position: fixed;
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--header-padding-desktop) 0 0;
+  z-index: var(--z-header);
+  transition: transform var(--transition-fast);
+}
+
+#g-navigation .header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#g-navigation nav {
+  margin-left: auto;
+}
+
+#g-navigation nav ul {
+  display: flex;
+  list-style: none;
+  gap: var(--nav-gap-desktop);
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+#g-navigation nav ul li a {
+  font-family: var(--font-heading);
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: normal;
+  font-size: var(--nav-font-size);
+  letter-spacing: var(--nav-letter-spacing);
+  transition: color var(--transition-base);
+}
+
+#g-navigation nav ul li a:hover {
+  color: var(--color-accent);
+}
+
+/* ==========================================================================
+   Logo
+   ========================================================================== */
+
+.logo {
+  display: flex;
+  align-items: center;
+  z-index: var(--z-logo);
+}
+
+.logo img {
+  height: 43px;
+  display: block;
+  margin: auto 0;
+}
+
+.logo-text {
+  font-family: var(--font-heading);
+  font-size: var(--nav-font-size);
+  color: var(--color-white);
+  text-decoration: none;
+  margin-left: 30px;
+  margin-right: 30px;
+  letter-spacing: var(--nav-letter-spacing);
+}
+
+.logo-text:hover {
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.logo-text,
+.logo-text:link,
+.logo-text:visited,
+.logo-text:active {
+  color: var(--color-white);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+#g-footer {
+  width: 100%;
+  background-color: var(--color-footer-bg);
+  color: var(--color-white);
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  z-index: 10;
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+}
+
+.footer-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: var(--footer-max-width);
+  margin: 0 auto;
+  gap: var(--spacing-xl);
+}
+
+.footer-text,
+.footer-logo {
+  flex: 1;
+  padding: var(--spacing-md);
+}
+
+.footer-text {
+  max-width: 600px;
+}
+
+.footer-text p {
+  line-height: 2;
+  margin: 0 0 var(--spacing-lg) 0;
+  font-family: var(--font-body);
+}
+
+.footer-text p:last-child {
+  margin-bottom: 0;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.footer-logo img {
+  height: 60px;
+  width: auto;
+}
+
+/* ==========================================================================
+   Scroll to Top Button
+   ========================================================================== */
+
+#scrollTopBtn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: transparent;
+  background-image: url("/images/arrow-up-circle.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  z-index: var(--z-scroll-top);
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+  mix-blend-mode: multiply;
+}
+
+#scrollTopBtn img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#scrollTopBtn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+.single-line {
+  white-space: nowrap;
+}
+
+.content {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
+   Mobile Styles - Hidden on Desktop
+   ========================================================================== */
+
+.hamburger,
+.hamburger-close,
+.mobile-menu,
+.bottom-bar,
+.nav-bar,
+.nav-bar2,
+.cover-bar {
+  display: none;
+}
+
+/* ==========================================================================
+   Mobile & Tablet Responsive Styles
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  
+  /* Hide desktop navigation */
+  #g-navigation {
+    display: none;
+  }
+
+  #g-navigation nav ul {
+    display: none;
+  }
+
+  /* Mobile Background Bars */
+  .nav-bar {
+    display: flex;
+    top: 0;
+    background: var(--color-secondary);
+    position: fixed;
+    width: 100%;
+    height: 0svh;
+    z-index: 0;
+  }
+
+  .nav-bar2 {
+    top: 5px;
+    background: var(--color-background);
+    position: fixed;
+    width: 100%;
+    height: 0svh;
+    z-index: 1;
+  }
+
+  .cover-bar {
+    top: 0;
+    bottom: 0;
+    background: var(--color-background);
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+  }
+
+  /* Bottom bar shrink */
+  .bottom-bar {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    background: var(--color-footer-bg);
+    width: 100%;
+    height: 0svh;
+    z-index: 0;
+    transition: height 0.3s ease;
+  }
+
+  .bottom-bar.shrink {
+    height: 0svh;
+  }
+
+  /* Mobile Logo */
+  .logo {
+    display: flex;
+    height: var(--header-height);
+    background-color: var(--color-secondary);
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 20px;
+    z-index: var(--z-logo);
+    position: absolute;
+    width: 100%;
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    transition: height 0.3s ease, padding 0.3s ease;
+  }
+
+  .logo.shrink {
+    height: 35px;
+    padding: 0 15px;
+  }
+
+  .logo-text {
+    display: block;
+    font-family: var(--font-display);
+    color: var(--color-primary);
+    font-size: 2.5rem;
+    margin-left: 10px;
+    margin-right: 0;
+    margin-top: 0;
+    transform: translateY(0);
+    transition: font-size 0.3s ease, transform 0.3s ease, margin 0.3s ease;
+  }
+
+  .logo.shrink .logo-text {
+    font-size: 1.8rem;
+    transform: translateY(0);
+    margin-left: 10px;
+  }
+
+  .header-container {
+    height: 100%;
+  }
+
+  /* Hamburger Menu Button */
+  .hamburger {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 1rem 1rem 2rem 2rem;
+    cursor: pointer;
+    z-index: var(--z-hamburger);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity var(--transition-base), transform var(--transition-base);
+  }
+
+  .hamburger.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+  }
+
+  .hamburger span {
+    width: 30px;
+    height: 2px;
+    background-color: var(--color-primary);
+    border-radius: var(--radius);
+  }
+
+  /* Hamburger Close Button */
+  .hamburger-close {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: var(--header-height);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    cursor: pointer;
+    background-color: transparent;
+    padding-right: 15px;
+    border: none;
+    z-index: calc(var(--z-mobile-menu) + 1);
+  }
+
+  .hamburger-close span {
+    width: 30px;
+    height: 2px;
+    background-color: var(--color-background);
+    border-radius: var(--radius);
+    margin: 3px 0;
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100vh; /* Changed to full viewport height */
+    min-height: auto; /* Remove min-height constraint */
+    max-width: none;
+    background-color: rgba(26, 39, 100, 0.95); /* Slightly more opaque for better readability */
+    flex-direction: column;
+    align-items: center;
+    transition: transform var(--transition-base);
+    z-index: var(--z-mobile-menu);
+    padding-top: 60px;
+    padding-bottom: var(--spacing-xl); /* Add bottom padding */
+    transform: translateX(100%);
+    border-radius: 0; /* Remove border radius for full width */
+    overflow-y: auto; /* Allow scrolling if content is too long */
+  }
+
+  .mobile-menu.open {
+    transform: translateX(0);
+  }
+
+  .mobile-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mobile-menu ul li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .mobile-menu ul li a {
+    display: block;
+    font-family: var(--font-body);
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 1.2rem; /* Slightly larger for full-width menu */
+    padding: var(--spacing-lg) var(--spacing-md);
+    transition: color var(--transition-base);
+    -webkit-tap-highlight-color: rgba(70, 100, 180, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Add separator lines */
+  }
+
+  .mobile-menu ul li:last-child a {
+    border-bottom: none;
+  }
+
+  .mobile-menu ul li a:hover {
+    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.05); /* Add hover effect */
+  }
+
+  /* Footer Responsive */
+  #g-footer {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .footer-flex {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+
+  .footer-text,
+  .footer-logo {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--spacing-md) 0;
+    text-align: center;
+  }
+
+  .footer-logo {
+    justify-content: center;
+  }
+
+  .footer-logo img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+  }
+
+  /* Scroll to Top Button - Mobile */
+  #scrollTopBtn {
+    right: 15px;
+    bottom: 15px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* ==========================================================================
+   Tablet Optimizations (768px - 1024px)
+   ========================================================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  #g-navigation {
+    padding: 0 var(--spacing-lg) 0 0;
+  }
+
+  #g-navigation nav ul {
+    gap: 1.5rem;
+  }
+
+  .logo-text {
+    margin-left: var(--spacing-md);
+    margin-right: var(--spacing-md);
+  }
+
+  /* Footer tablet optimization */
+  #g-footer {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .footer-flex {
+    gap: var(--spacing-lg);
+  }
+}
+
+/* ==========================================================================
+   Large Desktop Optimizations (1280px+)
+   ========================================================================== */
+
+@media (min-width: 1280px) {
+  #g-navigation nav ul {
+    gap: 2.5rem;
+  }
+
+  /* Footer large desktop optimization */
+  #g-footer {
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+  }
+
+  .footer-logo img {
+    height: 70px;
+  }
+}

@@ -1,0 +1,579 @@
+---
+import Navigation from '../components/Navigation.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studentský Velehrad 2026</title>
+    <meta name="description" content="Celostátní setkání věřících vysokoškoláků a mladých pracujících. 30. dubna – 3. května 2026 na&nbsp;Velehradě." />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://studentskyvelehrad.cz/" />
+    <meta property="og:title" content="Studentský Velehrad 2026" />
+    <meta property="og:description" content="Celostátní setkání věřících vysokoškoláků a mladých pracujících. 30. dubna – 3. května 2026 na&nbsp;Velehradě." />
+    <meta property="og:image" content="https://studentskyvelehrad.cz/images/cover.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://studentskyvelehrad.cz/" />
+    <meta property="twitter:title" content="Studentský Velehrad 2026" />
+    <meta property="twitter:description" content="Celostátní setkání věřících vysokoškoláků a mladých pracujících. 30. dubna – 3. května 2026 na&nbsp;Velehradě." />
+    <meta property="twitter:image" content="https://studentskyvelehrad.cz/images/cover.webp" />
+    
+    <!-- preload pozadí -->
+    <link
+      rel="preload"
+      href="/fonts/Ohrada.otf"
+      as="font"
+      type="font/otf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/HelveticaNow.otf"
+      as="font"
+      type="font/otf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/HelveticaNowBold.otf"
+      as="font"
+      type="font/otf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link rel="preload" as="image" href="/images/cover.webp" />
+    <link rel="preload" as="image" href="/images/SV26_FB.svg" />
+    <link rel="preload" as="image" href="/images/SV26_IG.svg" />
+    <link rel="preload" as="image" href="/images/SV26_YT.svg" />
+    <link rel="preload" as="image" href="/images/arrow-up-circle.svg" />
+    <link rel="preload" as="image" href="/images/logo_b_transparent.webp" />
+    <link rel="preload" as="image" href="/images/dlazdice/prednasky.webp" />
+    <link rel="preload" as="image" href="/images/dlazdice/workshopy.webp" />
+    <link rel="preload" as="image" href="/images/dlazdice/liturgie.webp" />
+    <link rel="preload" as="image" href="/images/dlazdice/skupinky.webp" />
+    <link rel="preload" as="image" href="/images/dlazdice/zabava.webp" />
+    <link rel="preload" as="image" href="/images/dlazdice/koncerty.webp" />
+    <link rel="stylesheet" href="styles_v1.css" />
+
+    <style>
+      .cover {
+        background: url("/images/cover.webp") center / cover no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        align-items: center;
+        min-height: 100svh;
+        z-index: 1000;
+        text-align: center;
+        position: relative;
+      }
+
+      .cover-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        width: 100%;
+        max-width: 800px;
+        padding-top: 50px;
+        box-sizing: border-box;
+      }
+
+      .cover-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        padding: 0 1rem;
+        margin-top: 55px;
+      }
+
+      .cover-text h1 {
+        font-family: "Ohrada";
+        font-weight: normal;
+        font-size: 8rem;
+        color: #1a2764;
+        margin-bottom: 1.8rem;
+      }
+
+      .subtitle {
+        font-family: "Helvetica Now Bold", Arial, sans-serif;
+        color: #1a2764;
+        font-size: 1.7rem;
+        font-weight: bold;
+        margin-bottom: 1.3rem;
+        line-height: 1.2;
+        max-width: 100%;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .date {
+        font-family: "Helvetica Now Bold", Arial, sans-serif;
+        color: #1a2764;
+        font-size: 1.6rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+      }
+
+      .button-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+        margin-top: auto;
+        padding-bottom: 2rem;
+      }
+
+      .uvod-button {
+        font-family: Arial, sans-serif;
+        background-color: #e1543a;
+        color: #fff;
+        width: 15.5rem;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 25px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        margin: 0.5rem 0;
+      }
+
+      .uvod-button:hover {
+        background-color: hsl(8, 61%, 47%);
+        color: #fff;
+      }
+
+      .uvod-button.prispet {
+        width: 13.5rem;
+      }
+
+      #about {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+      }
+
+      .about-flex {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        max-width: 1200px;
+        margin: 2rem auto;
+        gap: 20px;
+        padding: 0 15px;
+      }
+
+      .about-text {
+        color: #424753;
+        text-align: center;
+        width: 560px;
+      }
+
+      .about-flex--tiles {
+        padding: 0;
+      }
+
+      #about h2 {
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        line-height: 1.4;
+        font-size: 18px;
+        color: #424753;
+      }
+
+      #about p {
+        margin-bottom: 1.5rem;
+        font-weight: 400;
+        line-height: 2;
+      }
+
+      /* Tiles */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 11px;
+        max-width: 1100px;
+        margin: 0 auto 3rem;
+      }
+
+      .tile {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .grid .tile:nth-child(odd) {
+        margin-left: auto;
+      }
+
+      .grid .tile:nth-child(even) {
+        margin-right: auto;
+      }
+
+      .tile img {
+        width: 100%;
+        display: block;
+      }
+
+      .overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 1rem;
+        opacity: 0;
+        transition: 0.3s;
+        pointer-events: none;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .tile:hover .overlay {
+          opacity: 1;
+        }
+      }
+
+      .tile.active .overlay {
+        opacity: 1;
+      }
+
+      .social-title {
+        text-align: center;
+        margin: 4rem 0 6rem;
+      }
+
+      .social-title h2 {
+        font-size: 1.5rem;
+        font-weight: normal;
+        margin-bottom: 1rem;
+      }
+
+      .social-title p {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        margin: 0;
+      }
+
+      .social-title p a img {
+        width: 50px;
+        object-fit: contain;
+        transition: transform 0.2s;
+      }
+
+      .social-title p a img:hover {
+        transform: scale(1.1);
+      }
+
+      /* Mobile / tablet 640px a méně */
+      @media (max-width: 640px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .about-text {
+          width: auto;
+        }
+
+        .about-flex {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+
+      /* Media query pro menší obrazovky (tablet/mobil) */
+      @media (max-width: 768px) {
+        #about .overlay p {
+          line-height: 1.6;
+        }
+
+        .cover {
+          z-index: 1000;
+        }
+
+        .cover-text h1 {
+          font-size: 5rem;
+          line-height: 1;
+          margin: 12px 0px 24px;
+        }
+
+        .cover-text {
+          margin-top: 0px;
+        }
+
+        .subtitle {
+          margin: 16px 0px 4.8px;
+          white-space: normal;
+          padding: 0 10px;
+        }
+
+        .date {
+          margin: 16px;
+        }
+
+        .cover .subtitle,
+        .cover .date {
+          font-size: 1.2rem;
+        }
+
+        .uvod-button {
+          font-size: 20px;
+          height: 48px;
+          padding: 24px 48px;
+          min-width: 180px;
+        }
+
+        .uvod-button.prispet {
+          min-width: 200px;
+          padding: 18px 36px;
+        }
+
+        .button-wrapper {
+          flex-direction: column;
+          gap: 0rem;
+          padding-bottom: 2rem;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .uvod-button {
+          font-size: 22px;
+          height: 48px;
+          padding: 28px 36px;
+          min-width: auto;
+          width: auto;
+          flex: 0 1 auto;
+        }
+
+        .uvod-button.prispet {
+          min-width: auto;
+          width: auto;
+          padding: 26px 28px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <Navigation />
+    <MobileMenu />
+
+    <!-- HLAVNÍ OBSAH STRÁNKY -->
+    <div class="content">
+      <div class="nav-bar"></div>
+      <div class="cover-bar"></div>
+      <div class="cover">
+        <div class="cover-content">
+          <div class="cover-text">
+            <h1>Studentský Velehrad 2026</h1>
+            <p class="subtitle">
+              Celostátní setkání věřících vysokoškoláků a&nbsp;mladých pracujících
+            </p>
+            <p class="date">30. dubna – 3. května 2026</p>
+          </div>
+          <div class="button-wrapper">
+            <a href="/registrace" class="uvod-button">Zaregistruj se</a>
+            <a href="/chci-prispet" class="uvod-button prispet">Chci přispět</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- O akci -->
+      <section id="about">
+        <div class="about-flex">
+          <div class="about-text">
+            <h2>O akci</h2>
+            <p>
+              Studentský Velehrad je setkání pro&nbsp;věřící vysokoškoláky a mladé
+              pracující. Akce probíhá každé 2 roky na&nbsp;poutním místě Velehrad
+              a na její organizaci se podílí tým dobrovolníků složený ze
+              studentů i pracujících. Letos se koná už 18. ročník.
+            </p>
+            <p>
+              Pro&nbsp;několik stovek účastníků je připraven bohatý program, který
+              nabízí jedinečnou příležitost vytvářet společenství s&nbsp;vrstevníky,
+              diskutovat o&nbsp;mezilidských vztazích, víře a jejím prožívání,
+              povolání i&nbsp;každodenním životě.
+            </p>
+          </div>
+
+          <div class="about-text">
+            <h2>Téma SV26: Je čas</h2>
+            <p>
+              <em
+                >„Všechno má určenou chvíli a veškeré dění pod&nbsp;nebem svůj čas.“</em
+              >
+              <span class="single-line">(Kazatel 3,1–8)</span>
+            </p>
+            <p>
+              Žijeme v&nbsp;době, která nás nutí neustále běžet. Stíhat termíny,
+              zkoušky, práci a k&nbsp;tomu naplňovat očekávání druhých. Máme pocit,
+              že nám čas protéká mezi&nbsp;prsty. Ale Bible nám připomíná, že čas
+              není náš nepřítel. Je to dar.
+            </p>
+            <p>
+              Letošní Studentský Velehrad nese téma <strong>„Je čas“</strong>.
+              Možná je čas přestat se hnát. Je čas se zastavit. Je čas mlčet
+              a naslouchat. Je čas hledat a je čas nacházet. Je čas bořit staré
+              zdi a stavět nové mosty. Na Velehradě chceme společně hledat
+              odpovědi na to, pro&nbsp;co právě teď nastal čas v&nbsp;našem životě.
+            </p>
+            <p>Bůh učinil všechno krásné v pravý čas. Je čas to objevit.</p>
+          </div>
+        </div>
+
+        <h2 class="about-flex">Na co se můžete těšit?</h2>
+
+        <div class="about-flex about-flex--tiles">
+          <div class="grid">
+            <div class="tile">
+              <img src="images/dlazdice/prednasky.webp" alt="Přednášky" />
+              <div class="overlay">
+                <p>
+                  Inspirativní osobnosti z&nbsp;církevního i veřejného života, které
+                  se nebojí otevírat aktuální témata.
+                </p>
+              </div>
+            </div>
+
+            <div class="tile">
+              <img src="images/dlazdice/workshopy.webp" alt="Workshopy" />
+              <div class="overlay">
+                <p>
+                  Kurzy a dílny zaměřené na&nbsp;kreativitu, seberozvoj a praktické
+                  dovednosti.
+                </p>
+              </div>
+            </div>
+
+            <div class="tile">
+              <img src="images/dlazdice/liturgie.webp" alt="Duchovní program" />
+              <div class="overlay">
+                <p>
+                  Každodenní mše svaté, chvály, adorace, svátost smíření
+                  a prostor pro&nbsp;ztišení.
+                </p>
+              </div>
+            </div>
+
+            <div class="tile">
+              <img
+                src="images/dlazdice/skupinky.webp"
+                alt="Diskuzní skupinky"
+              />
+              <div class="overlay">
+                <p>
+                  Debaty v&nbsp;malých skupinách o víře, vztazích a každodenním životě.
+                </p>
+              </div>
+            </div>
+
+            <div class="tile">
+              <img
+                src="images/dlazdice/zabava.webp"
+                alt="Volnočasové aktivity"
+              />
+              <div class="overlay">
+                <p>
+                  Koncerty, výlety, sportovní aktivity a další program pro&nbsp;odpočinek i společné zážitky.
+                </p>
+              </div>
+            </div>
+
+            <div class="tile">
+              <img src="images/dlazdice/koncerty.webp" alt="Společenství" />
+              <div class="overlay">
+                <p>
+                  Prostředí plné mladých lidí, sdílených hodnot a nových přátelství.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-flex">
+          <div class="about-text">
+            <h2>Je čas se přihlásit!</h2>
+            <p>
+              Kapacita ubytování na&nbsp;Velehradě není neomezená. Zajisti si své
+              místo hned teď. Registrace <a href="/registrace">zde</a>.
+            </p>
+          </div>
+
+          <div class="about-text">
+            <h2>Kdo za námi stojí</h2>
+            <p>
+              Akci pořádá <a href="https://vkhcr.cz" target="_blank" rel="noopener noreferrer"
+                >Vysokoškolské katolické hnutí ČR</a
+              >
+              ve&nbsp;spolupráci s&nbsp;jednotlivými místními organizacemi.
+            </p>
+          </div>
+        </div>
+        <div class="social-title">
+          <h2>Sleduj nás na sociálních sítích!</h2>
+          <p>
+            <a href="https://www.facebook.com/studentskyvelehrad/?locale=cs_CZ"
+              ><img src="images/SV26_FB.svg" alt="Facebook" /></a
+            >
+            <a href="https://www.instagram.com/studentsky_velehrad/"
+              ><img src="images/SV26_IG.svg" alt="Instagram" /></a
+            >
+            <a href="https://www.youtube.com/@studentskyvelehrad"
+              ><img src="images/SV26_YT.svg" alt="YouTube" /></a
+            >
+          </p>
+        </div>
+
+        <Footer />
+      </section>
+    </div>
+    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
+    <div class="bottom-bar"></div>
+
+    <script type="module" src="/script.js" defer></script>
+  </body>
+</html>

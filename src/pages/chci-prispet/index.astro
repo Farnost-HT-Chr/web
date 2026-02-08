@@ -1,0 +1,182 @@
+---
+import Navigation from '../../components/Navigation.astro';
+import MobileMenu from '../../components/MobileMenu.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chci přispět - Studentský Velehrad 2026</title>
+    <meta name="description" content="Podpořte Studentský Velehrad 2026 finančním darem." />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://studentskyvelehrad.cz/chci-prispet" />
+    <meta property="og:title" content="Chci přispět - Studentský Velehrad 2026" />
+    <meta property="og:description" content="Podpořte Studentský Velehrad 2026 finančním darem." />
+    <meta property="og:image" content="https://studentskyvelehrad.cz/images/cover.webp" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://studentskyvelehrad.cz/chci-prispet" />
+    <meta property="twitter:title" content="Chci přispět - Studentský Velehrad 2026" />
+    <meta property="twitter:description" content="Podpořte Studentský Velehrad 2026 finančním darem." />
+    <meta property="twitter:image" content="https://studentskyvelehrad.cz/images/cover.webp" />
+    
+    <link
+      rel="preload"
+      href="/fonts/Ohrada.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/HelveticaNow.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/HelveticaNowBold.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" as="image" href="/images/logo_b_transparent.webp" />
+    <link rel="preload" as="image" href="/images/qr_kod.webp" />
+    <link rel="stylesheet" href="/styles_v1.css" />
+
+    <style>
+      #about {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        padding-top: 70px;
+      }
+
+      .about-flex {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        margin: 2rem auto;
+        gap: 20px;
+        padding: 0 20px;
+      }
+
+      .about-text {
+        color: #424753;
+        text-align: left;
+        max-width: 900px;
+        width: 100%;
+        z-index: 999;
+      }
+
+      #about h2 {
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        line-height: 1.4;
+        font-size: 18px;
+        color: #424753;
+        letter-spacing: 1px;
+      }
+
+      #about p {
+        margin-bottom: 1.5rem;
+        font-weight: 400;
+        line-height: 2;
+      }
+
+      .about-text strong {
+        display: block;
+        margin-bottom: 20px;
+      }
+
+      .thanks-message {
+        display: block;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <Navigation />
+    <MobileMenu />
+    
+    <div class="content">
+      <div class="nav-bar"></div>
+      <div class="cover-bar"></div>
+      <!-- <main> -->
+      <section id="about">
+        <div class="about-flex">
+          <div class="about-text">
+            <strong>QR kód pro zaslání sponzorského daru</strong>
+
+            <p>
+              Přispět na letošní ročník Studentského Velehradu můžete
+              prostřednictvím QR kódu. Otázky ke&nbsp;sponzorským darům zodpoví Karel
+              Bláha: <a href="mailto:finance@vkhcr.org">finance@vkhcr.org</a>
+            </p>
+            <p>
+              <img
+                src="/images/qr_kod.webp"
+                width="250"
+                height="250"
+                alt="QR kód pro dar"
+              />
+            </p>
+            <strong>Bankovní spojení pro&nbsp;zaslání sponzorského daru</strong>
+            <p>
+              Číslo účtu: <em>2902653384 / 2010</em>. Specifický symbol: <em
+                >mobil na kontaktní osobu</em
+              > (nepovinný údaj). Zpráva pro&nbsp;příjemce: <em>jméno dárce</em>
+            </p>
+
+            <p class="thanks-message">
+              <strong>Děkujeme za&nbsp;Vaši podporu!</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- </main> -->
+
+        <Footer />
+      </section>
+    </div>
+    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
+    <div class="bottom-bar"></div>
+
+    <script type="module" src="/script.js" defer></script>
+  </body>
+</html>

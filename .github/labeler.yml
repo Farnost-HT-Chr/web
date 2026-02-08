@@ -1,0 +1,65 @@
+# Labeler configuration for automatic PR labels
+
+# Components
+'component: header':
+  - changed-files:
+    - any-glob-to-any-file: 'src/components/Header.astro'
+
+'component: footer':
+  - changed-files:
+    - any-glob-to-any-file: 'src/components/Footer.astro'
+
+'component: layout':
+  - changed-files:
+    - any-glob-to-any-file: 'src/layouts/**'
+
+# Pages
+'page: homepage':
+  - changed-files:
+    - any-glob-to-any-file: 'src/pages/index.astro'
+
+'page: team':
+  - changed-files:
+    - any-glob-to-any-file: 'src/pages/tym.astro'
+
+'page: donation':
+  - changed-files:
+    - any-glob-to-any-file: 'src/pages/chci-prispet.astro'
+
+# Assets
+'assets: images':
+  - changed-files:
+    - any-glob-to-any-file: 
+      - 'public/images/**'
+      - 'src/assets/**/*.{jpg,jpeg,png,gif,svg,webp}'
+
+'assets: fonts':
+  - changed-files:
+    - any-glob-to-any-file: 'public/src/fonts/**'
+
+# Styles
+'styles':
+  - changed-files:
+    - any-glob-to-any-file: 
+      - 'src/styles/**'
+      - '**/*.css'
+
+# Configuration
+'config':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'astro.config.mjs'
+      - 'tsconfig.json'
+      - 'package.json'
+
+# Documentation
+'documentation':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.md'
+      - 'docs/**'
+
+# CI/CD
+'ci/cd':
+  - changed-files:
+    - any-glob-to-any-file: '.github/**'

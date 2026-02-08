@@ -1,0 +1,426 @@
+---
+import Navigation from '../../components/Navigation.astro';
+import MobileMenu from '../../components/MobileMenu.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tým - Studentský Velehrad 2026</title>
+    <meta name="description" content="Poznávejte organizační tým Studentského Velehradu 2026." />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://studentskyvelehrad.cz/tym" />
+    <meta property="og:title" content="Tým - Studentský Velehrad 2026" />
+    <meta property="og:description" content="Poznávejte organizační tým Studentského Velehradu 2026." />
+    <meta property="og:image" content="https://studentskyvelehrad.cz/images/cover.webp" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://studentskyvelehrad.cz/tym" />
+    <meta property="twitter:title" content="Tým - Studentský Velehrad 2026" />
+    <meta property="twitter:description" content="Poznávejte organizační tým Studentského Velehradu 2026." />
+    <meta property="twitter:image" content="https://studentskyvelehrad.cz/images/cover.webp" />
+    
+    <link
+      rel="preload"
+      href="/fonts/Ohrada.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/HelveticaNow.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/HelveticaNowBold.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" as="image" href="/images/cover.webp" />
+    <link rel="preload" as="image" href="/images/SV26_FB.svg" />
+    <link rel="preload" as="image" href="/images/SV26_IG.svg" />
+    <link rel="preload" as="image" href="/images/SV26_YT.svg" />
+    <link rel="preload" as="image" href="/images/arrow-up-circle.svg" />
+    <link rel="preload" as="image" href="/images/logo_b_transparent.webp" />
+    <link rel="preload" as="image" href="/images/tym/domca.webp" />
+    <link rel="preload" as="image" href="/images/tym/pitr.webp" />
+    <link rel="preload" as="image" href="/images/tym/amalka.webp" />
+    <link rel="preload" as="image" href="/images/tym/matej.webp" />
+    <link rel="preload" as="image" href="/images/tym/viktor.webp" />
+    <link rel="preload" as="image" href="/images/tym/viki.webp" />
+    <link rel="preload" as="image" href="/images/tym/michaelZ.webp" />
+    <link rel="preload" as="image" href="/images/tym/ales.webp" />
+    <link rel="preload" as="image" href="/images/tym/lucka.webp" />
+    <link rel="preload" as="image" href="/images/tym/anezka.webp" />
+    <link rel="preload" as="image" href="/images/tym/michaelR.webp" />
+    <link rel="preload" as="image" href="/images/tym/bety.webp" />
+    <link rel="preload" as="image" href="/images/tym/tomas.webp" />
+    <link rel="preload" as="image" href="/images/tym/pepa.webp" />
+    <link rel="preload" as="image" href="/images/tym/ada.webp" />
+    <link rel="preload" as="image" href="/images/tym/ondra.webp" />
+    <link rel="preload" as="image" href="/images/tym/karel.webp" />
+    <link rel="preload" as="image" href="/images/tym/anicka.webp" />
+    <link rel="preload" as="image" href="/images/tym/avatar.webp" />
+    <link rel="stylesheet" href="/styles_v1.css" />
+
+    <style>
+      .about {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        padding-top: 50px;
+      }
+
+      .about-flex {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        max-width: 1200px;
+        margin: 2rem auto;
+        gap: 20px;
+        padding: 0 15px;
+      }
+
+      .about-text {
+        color: #424753;
+        text-align: center;
+        width: 100%;
+        z-index: 999;
+      }
+
+      .about h2 {
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        line-height: 1.4;
+        font-size: 18px;
+      }
+
+      .about p {
+        margin-bottom: 1.5rem;
+        line-height: 2;
+      }
+
+      .spacing {
+        letter-spacing: 1.4px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1200px;
+      }
+
+      .tile {
+        position: relative;
+        overflow: hidden;
+        margin: 14px 8px 40px 8px;
+      }
+
+      .tile img {
+        width: 275px;
+        display: block;
+        margin: 0 auto;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .tile--avatar img {
+        width: auto;
+      }
+
+      .tile h2 {
+        font-weight: normal;
+        letter-spacing: 1.5px;
+        margin: 15px 0 0 0;
+      }
+
+      .tile p {
+        margin: 0;
+      }
+
+      @media (max-width: 1210px) {
+        .grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 920px) {
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* Mobile / tablet 640px a méně */
+      @media (max-width: 640px) {
+        .about-text {
+          width: auto;
+        }
+
+        .about-flex {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .grid {
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        .tile img {
+          width: 100%;
+        }
+      }
+
+      /* Media query pro menší obrazovky (tablet/mobil) */
+      @media (max-width: 768px) {
+        #about p {
+          line-height: 1.6;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <Navigation />
+    <MobileMenu />
+
+    <div class="content">
+      <div class="nav-bar"></div>
+      <div class="cover-bar"></div>
+      <!-- <main> -->
+      <section class="about">
+        <div class="about-flex">
+          <div class="about-text">
+            <h2>Jak se můžu zapojit?</h2>
+          </div>
+        </div>
+
+        <div class="about-flex">
+          <div class="about-text">
+            <p class="spacing">Dobrovolníci</p>
+            <p>
+              Přidej ruku k&nbsp;dílu jako dobrovolník! Za&nbsp;každého jednotlivce jsme
+              vděční a odměníme jej v&nbsp;Boží měně. Jestli máš zájem, neváhej nás
+              kontaktovat na&nbsp;e-mailové adrese
+              <a href="mailto:animatori.sv@vkhcr.org">animatori.sv@vkhcr.org</a
+              >. Děkujeme!
+            </p>
+          </div>
+
+          <div class="about-text">
+            <p class="spacing">Animátoři</p>
+            <p>
+              Jsi vysokoškolský student či mladý pracující, máš zkušenosti
+              s&nbsp;vedením spolča nebo&nbsp;táborů, jsi schopný, zodpovědný
+              a&nbsp;komunikativní a&nbsp;máš čas 29.4.-3.5.2026?
+            </p>
+            <p>
+              Napiš nám na&nbsp;mail <a href="mailto:animatori.sv@vkhcr.org"
+                >animatori.sv@vkhcr.org</a
+              > a&nbsp;přidej se k&nbsp;animátorům na&nbsp;letošním Studentském Velehradě!
+            </p>
+          </div>
+        </div>
+
+        <div class="about-flex">
+          <div class="about-text">
+            <h2>Tým SV 26</h2>
+          </div>
+        </div>
+
+        <div class="about-flex about-flex--tiles">
+          <div class="grid">
+            <div class="tile">
+              <img src="/images/tym/domca.webp" alt="Domča" />
+              <h2>Dominika Demlová</h2>
+              <p>Vedoucí SV</p>
+              <a href="mailto:vedouci.sv@vkhcr.org">vedouci.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/pitr.webp" alt="Pítr" />
+              <h2>Petr Kučera</h2>
+              <p>Vedoucí SV</p>
+              <a href="mailto:vedouci.sv@vkhcr.org">vedouci.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/amalka.webp" alt="Amálka" />
+              <h2>Amálie Výborná</h2>
+              <p>Animátoři</p>
+              <a href="mailto:animatori.sv@vkhcr.org">animatori.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/matej.webp" alt="Matěj" />
+              <h2>Matěj Vláčil</h2>
+              <p>Animátoři</p>
+              <a href="mailto:animatori.sv@vkhcr.org">animatori.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/viktor.webp" alt="Viktor" />
+              <h2>Viktor Toporčák</h2>
+              <p>Workshopy</p>
+              <a href="mailto:prednasky.sv@vkhcr.org">prednasky.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/viki.webp" alt="Viky" />
+              <h2>Viktorie Čápová</h2>
+              <p>Přednášky</p>
+              <a href="mailto:prednasky.sv@vkhcr.org">prednasky.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/michaelZ.webp" alt="Michael" />
+              <h2>Michael Žůrek</h2>
+              <p>Expo</p>
+              <a href="mailto:prednasky.sv@vkhcr.org">prednasky.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/ales.webp" alt="Aleš" />
+              <h2>Aleš Schier</h2>
+              <p>Koncerty</p>
+              <a href="mailto:prednasky.sv@vkhcr.org">prednasky.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/lucka.webp" alt="Lucka" />
+              <h2>Lucia Balážová</h2>
+              <p>Stravování</p>
+              <a href="mailto:stravovani.sv@vkhcr.org"
+                >stravovani.sv@vkhcr.org</a
+              >
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/anezka.webp" alt="Anežka" />
+              <h2>Anežka Brouková</h2>
+              <p>Stravování</p>
+              <a href="mailto:stravovani.sv@vkhcr.org"
+                >stravovani.sv@vkhcr.org</a
+              >
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/michaelR.webp" alt="Michael" />
+              <h2>Michael Rob</h2>
+              <p>Liturgie</p>
+              <a href="mailto:liturgie.sv@vkhcr.org">liturgie.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/bety.webp" alt="Bety" />
+              <h2>Alžběta Veronika Cinerová</h2>
+              <p>Liturgie</p>
+              <a href="mailto:liturgie.sv@vkhcr.org">liturgie.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/tomas.webp" alt="Tomáš" />
+              <h2>Tomáš Čirž</h2>
+              <p>Liturgie</p>
+              <a href="mailto:liturgie.sv@vkhcr.org">liturgie.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/pepa.webp" alt="Pepa" />
+              <h2>Josef Bálek</h2>
+              <p>Ubytování a registrace</p>
+              <a href="mailto:ubytovani.sv@vkhcr.org">ubytovani.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/ada.webp" alt="Áďa" />
+              <h2>Adéla Tesařová</h2>
+              <p>Ubytování a registrace</p>
+              <a href="mailto:ubytovani.sv@vkhcr.org">ubytovani.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/ondra.webp" alt="Ondra" />
+              <h2>Ondřej Kolek</h2>
+              <p>Ubytování a registrace</p>
+              <a href="mailto:ubytovani.sv@vkhcr.org">ubytovani.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/karel.webp" alt="Karel" />
+              <h2>Karel Bláha</h2>
+              <p>Finance</p>
+              <a href="mailto:finance.sv@vkhcr.org">finance.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile">
+              <img src="/images/tym/anicka.webp" alt="Anička" />
+              <h2>Anna Tyburcová</h2>
+              <p>Propagace</p>
+              <a href="mailto:propagace.sv@vkhcr.org">propagace.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile tile--avatar">
+              <img src="/images/tym/avatar.webp" alt="Avatar" />
+              <h2>Terezie Gilligová</h2>
+              <p>Propagace</p>
+              <a href="mailto:propagace.sv@vkhcr.org">propagace.sv@vkhcr.org</a>
+            </div>
+
+            <div class="tile tile--avatar">
+              <img src="/images/tym/avatar.webp" alt="Avatar" />
+              <h2>Anna Pražáková</h2>
+              <p>Propagace</p>
+              <a href="mailto:propagace.sv@vkhcr.org">propagace.sv@vkhcr.org</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- </main> -->
+
+        <Footer />
+      </section>
+    </div>
+    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
+    <div class="bottom-bar"></div>
+
+    <script type="module" src="/script.js" defer></script>
+  </body>
+</html>
