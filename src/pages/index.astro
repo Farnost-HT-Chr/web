@@ -9,8 +9,8 @@ import Footer from '../components/Footer.astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Studentský Velehrad 2026</title>
-    <meta name="description" content="Celostátní setkání věřících vysokoškoláků a mladých pracujících. 30. dubna – 3. května 2026 na&nbsp;Velehradě." />
+    <title>Farnost Hrochův Týnec - Chroustovice</title>
+    <meta name="description" content="Římskokatolická farnost Hrochův Týnec - Chroustovice. Informace o bohoslužbách, farním životě a akcích." />
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
@@ -20,19 +20,19 @@ import Footer from '../components/Footer.astro';
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://studentskyvelehrad.cz/" />
-    <meta property="og:title" content="Studentský Velehrad 2026" />
-    <meta property="og:description" content="Celostátní setkání věřících vysokoškoláků a mladých pracujících. 30. dubna – 3. května 2026 na&nbsp;Velehradě." />
-    <meta property="og:image" content="https://studentskyvelehrad.cz/images/cover.webp" />
+    <meta property="og:url" content="https://farnostht-chr.cz/" />
+    <meta property="og:title" content="Farnost Hrochův Týnec - Chroustovice" />
+    <meta property="og:description" content="Římskokatolická farnost Hrochův Týnec - Chroustovice. Informace o bohoslužbách, farním životě a akcích." />
+    <meta property="og:image" content="https://farnostht-chr.cz/images/cover.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://studentskyvelehrad.cz/" />
-    <meta property="twitter:title" content="Studentský Velehrad 2026" />
-    <meta property="twitter:description" content="Celostátní setkání věřících vysokoškoláků a mladých pracujících. 30. dubna – 3. května 2026 na&nbsp;Velehradě." />
-    <meta property="twitter:image" content="https://studentskyvelehrad.cz/images/cover.webp" />
+    <meta property="twitter:url" content="https://farnostht-chr.cz/" />
+    <meta property="twitter:title" content="Farnost Hrochův Týnec - Chroustovice" />
+    <meta property="twitter:description" content="Římskokatolická farnost Hrochův Týnec - Chroustovice. Informace o bohoslužbách, farním životě a akcích." />
+    <meta property="twitter:image" content="https://farnostht-chr.cz/images/cover.webp" />
     
     <!-- preload pozadí -->
     <link
@@ -78,17 +78,7 @@ import Footer from '../components/Footer.astro';
       crossorigin="anonymous"
     />
     <link rel="preload" as="image" href="/images/cover.webp" />
-    <link rel="preload" as="image" href="/images/SV26_FB.svg" />
-    <link rel="preload" as="image" href="/images/SV26_IG.svg" />
-    <link rel="preload" as="image" href="/images/SV26_YT.svg" />
-    <link rel="preload" as="image" href="/images/arrow-up-circle.svg" />
     <link rel="preload" as="image" href="/images/logo_b_transparent.webp" />
-    <link rel="preload" as="image" href="/images/dlazdice/prednasky.webp" />
-    <link rel="preload" as="image" href="/images/dlazdice/workshopy.webp" />
-    <link rel="preload" as="image" href="/images/dlazdice/liturgie.webp" />
-    <link rel="preload" as="image" href="/images/dlazdice/skupinky.webp" />
-    <link rel="preload" as="image" href="/images/dlazdice/zabava.webp" />
-    <link rel="preload" as="image" href="/images/dlazdice/koncerty.webp" />
     <link rel="stylesheet" href="styles_v1.css" />
 
     <style>
@@ -110,7 +100,7 @@ import Footer from '../components/Footer.astro';
         align-items: center;
         flex: 1;
         width: 100%;
-        max-width: 800px;
+        max-width: 900px;
         padding-top: 50px;
         box-sizing: border-box;
       }
@@ -128,64 +118,66 @@ import Footer from '../components/Footer.astro';
       .cover-text h1 {
         font-family: "Ohrada";
         font-weight: normal;
-        font-size: 8rem;
+        font-size: 6.5rem;
         color: #1a2764;
-        margin-bottom: 1.8rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
       }
 
       .subtitle {
         font-family: "Helvetica Now Bold", Arial, sans-serif;
         color: #1a2764;
-        font-size: 1.7rem;
+        font-size: 1.8rem;
         font-weight: bold;
-        margin-bottom: 1.3rem;
-        line-height: 1.2;
+        margin-bottom: 1rem;
+        line-height: 1.3;
         max-width: 100%;
         text-align: center;
-        white-space: nowrap;
       }
 
-      .date {
-        font-family: "Helvetica Now Bold", Arial, sans-serif;
-        color: #1a2764;
-        font-size: 1.6rem;
-        font-weight: bold;
-        margin-bottom: 2rem;
+      .verse {
+        font-family: "Helvetica Now", Arial, sans-serif;
+        color: #424753;
+        font-size: 1.2rem;
+        font-style: italic;
+        margin-top: 1rem;
+        max-width: 600px;
+        line-height: 1.6;
       }
 
       .button-wrapper {
         display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+        flex-direction: row;
+        gap: 1rem;
         align-items: center;
         margin-top: auto;
         padding-bottom: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
       }
 
       .uvod-button {
         font-family: Arial, sans-serif;
-        background-color: #e1543a;
+        background-color: #8B4513;
         color: #fff;
-        width: 15.5rem;
+        width: auto;
+        min-width: 180px;
         height: 58px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50px;
         text-decoration: none;
-        font-size: 25px;
+        font-size: 20px;
         font-weight: bold;
         transition: background-color 0.3s ease;
         margin: 0.5rem 0;
+        padding: 0 2rem;
       }
 
       .uvod-button:hover {
-        background-color: hsl(8, 61%, 47%);
+        background-color: #6d3410;
         color: #fff;
-      }
-
-      .uvod-button.prispet {
-        width: 13.5rem;
       }
 
       #about {
@@ -228,92 +220,60 @@ import Footer from '../components/Footer.astro';
         line-height: 2;
       }
 
-      /* Tiles */
-      .grid {
+      /* Info boxes */
+      .info-boxes {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 11px;
-        max-width: 1100px;
-        margin: 0 auto 3rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 15px;
       }
 
-      .tile {
-        position: relative;
-        cursor: pointer;
-      }
-
-      .grid .tile:nth-child(odd) {
-        margin-left: auto;
-      }
-
-      .grid .tile:nth-child(even) {
-        margin-right: auto;
-      }
-
-      .tile img {
-        width: 100%;
-        display: block;
-      }
-
-      .overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.65);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      .info-box {
+        background: #f5f5f5;
+        padding: 2rem;
+        border-radius: 10px;
         text-align: center;
-        padding: 1rem;
-        opacity: 0;
-        transition: 0.3s;
-        pointer-events: none;
       }
 
-      @media (hover: hover) and (pointer: fine) {
-        .tile:hover .overlay {
-          opacity: 1;
-        }
-      }
-
-      .tile.active .overlay {
-        opacity: 1;
-      }
-
-      .social-title {
-        text-align: center;
-        margin: 4rem 0 6rem;
-      }
-
-      .social-title h2 {
-        font-size: 1.5rem;
-        font-weight: normal;
+      .info-box h3 {
+        color: #8B4513;
         margin-bottom: 1rem;
+        font-size: 1.5rem;
       }
 
-      .social-title p {
+      .info-box p {
+        color: #424753;
+        line-height: 1.8;
+        margin: 0.5rem 0;
+      }
+
+      .info-box strong {
+        color: #1a2764;
+      }
+
+      .schedule {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+
+      .schedule-item {
         display: flex;
-        justify-content: center;
-        gap: 2.5rem;
-        margin: 0;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #e0e0e0;
       }
 
-      .social-title p a img {
-        width: 50px;
-        object-fit: contain;
-        transition: transform 0.2s;
-      }
-
-      .social-title p a img:hover {
-        transform: scale(1.1);
+      .schedule-item:last-child {
+        border-bottom: none;
       }
 
       /* Mobile / tablet 640px a méně */
       @media (max-width: 640px) {
-        .grid {
-          grid-template-columns: 1fr;
-        }
-
         .about-text {
           width: auto;
         }
@@ -322,20 +282,21 @@ import Footer from '../components/Footer.astro';
           flex-direction: column;
           gap: 1rem;
         }
+
+        .info-boxes {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
       }
 
       /* Media query pro menší obrazovky (tablet/mobil) */
       @media (max-width: 768px) {
-        #about .overlay p {
-          line-height: 1.6;
-        }
-
         .cover {
           z-index: 1000;
         }
 
         .cover-text h1 {
-          font-size: 5rem;
+          font-size: 3.5rem;
           line-height: 1;
           margin: 12px 0px 24px;
         }
@@ -345,53 +306,26 @@ import Footer from '../components/Footer.astro';
         }
 
         .subtitle {
-          margin: 16px 0px 4.8px;
-          white-space: normal;
+          margin: 16px 0px 8px;
+          font-size: 1.3rem;
           padding: 0 10px;
         }
 
-        .date {
-          margin: 16px;
-        }
-
-        .cover .subtitle,
-        .cover .date {
-          font-size: 1.2rem;
+        .verse {
+          font-size: 1rem;
+          padding: 0 20px;
         }
 
         .uvod-button {
-          font-size: 20px;
+          font-size: 18px;
           height: 48px;
-          padding: 24px 48px;
-          min-width: 180px;
-        }
-
-        .uvod-button.prispet {
-          min-width: 200px;
-          padding: 18px 36px;
+          min-width: 160px;
         }
 
         .button-wrapper {
           flex-direction: column;
-          gap: 0rem;
+          gap: 0.5rem;
           padding-bottom: 2rem;
-          justify-content: center;
-          flex-wrap: wrap;
-        }
-
-        .uvod-button {
-          font-size: 22px;
-          height: 48px;
-          padding: 28px 36px;
-          min-width: auto;
-          width: auto;
-          flex: 0 1 auto;
-        }
-
-        .uvod-button.prispet {
-          min-width: auto;
-          width: auto;
-          padding: 26px 28px;
         }
       }
     </style>
@@ -408,164 +342,146 @@ import Footer from '../components/Footer.astro';
       <div class="cover">
         <div class="cover-content">
           <div class="cover-text">
-            <h1>Studentský Velehrad 2026</h1>
+            <h1>Farnost Hrochův Týnec - Chroustovice</h1>
             <p class="subtitle">
-              Celostátní setkání věřících vysokoškoláků a&nbsp;mladých pracujících
+              Vítejte v naší farnosti
             </p>
-            <p class="date">30. dubna – 3. května 2026</p>
+            <p class="verse">
+              „Hledejte Hospodina, dokud je možno ho najít, volejte ho, dokud je blízko."<br/>
+              (Iz 55,6)
+            </p>
           </div>
           <div class="button-wrapper">
-            <a href="/registrace" class="uvod-button">Zaregistruj se</a>
-            <a href="/chci-prispet" class="uvod-button prispet">Chci přispět</a>
+            <a href="/bohosluzby" class="uvod-button">Bohoslužby</a>
+            <a href="/farni-zivot" class="uvod-button">Farní život</a>
+            <a href="/kontakt" class="uvod-button">Kontakt</a>
           </div>
         </div>
       </div>
 
-      <!-- O akci -->
+      <!-- O farnosti -->
       <section id="about">
         <div class="about-flex">
           <div class="about-text">
-            <h2>O akci</h2>
+            <h2>O farnosti</h2>
             <p>
-              Studentský Velehrad je setkání pro&nbsp;věřící vysokoškoláky a mladé
-              pracující. Akce probíhá každé 2 roky na&nbsp;poutním místě Velehrad
-              a na její organizaci se podílí tým dobrovolníků složený ze
-              studentů i pracujících. Letos se koná už 18. ročník.
+              Římskokatolická farnost Hrochův Týnec - Chroustovice patří do děkanátu 
+              Chrudim a je součástí Královéhradecké diecéze. Naše farnost je 
+              společenstvím věřících, kteří se scházejí k bohoslužbám, modlitbě 
+              a vzájemné podpoře v křesťanském životě.
             </p>
             <p>
-              Pro&nbsp;několik stovek účastníků je připraven bohatý program, který
-              nabízí jedinečnou příležitost vytvářet společenství s&nbsp;vrstevníky,
-              diskutovat o&nbsp;mezilidských vztazích, víře a jejím prožívání,
-              povolání i&nbsp;každodenním životě.
+              Jsme malou, ale živou farností, kde se každý může cítit jako doma. 
+              Snažíme se žít evangelium v každodenním životě a být přítomní 
+              v našich obcích.
             </p>
           </div>
 
           <div class="about-text">
-            <h2>Téma SV26: Je čas</h2>
+            <h2>Naše kostely</h2>
             <p>
-              <em
-                >„Všechno má určenou chvíli a veškeré dění pod&nbsp;nebem svůj čas.“</em
-              >
-              <span class="single-line">(Kazatel 3,1–8)</span>
+              <strong>Kostel sv. Martina v Hrochově Týnci</strong><br/>
+              Barokní kostel z 18. století, renovovaný v nedávné době. 
+              Dominantou je hlavní oltář se sochou sv. Martina.
             </p>
             <p>
-              Žijeme v&nbsp;době, která nás nutí neustále běžet. Stíhat termíny,
-              zkoušky, práci a k&nbsp;tomu naplňovat očekávání druhých. Máme pocit,
-              že nám čas protéká mezi&nbsp;prsty. Ale Bible nám připomíná, že čas
-              není náš nepřítel. Je to dar.
+              <strong>Kostel Nanebevzetí Panny Marie v Chroustovicích</strong><br/>
+              Gotický kostel s cennými freskami a barokními úpravami. 
+              Nachází se zde krásný mariánský oltář.
             </p>
-            <p>
-              Letošní Studentský Velehrad nese téma <strong>„Je čas“</strong>.
-              Možná je čas přestat se hnát. Je čas se zastavit. Je čas mlčet
-              a naslouchat. Je čas hledat a je čas nacházet. Je čas bořit staré
-              zdi a stavět nové mosty. Na Velehradě chceme společně hledat
-              odpovědi na to, pro&nbsp;co právě teď nastal čas v&nbsp;našem životě.
-            </p>
-            <p>Bůh učinil všechno krásné v pravý čas. Je čas to objevit.</p>
           </div>
         </div>
 
-        <h2 class="about-flex">Na co se můžete těšit?</h2>
+        <h2 class="about-flex">Bohoslužby a duchovní život</h2>
 
-        <div class="about-flex about-flex--tiles">
-          <div class="grid">
-            <div class="tile">
-              <img src="images/dlazdice/prednasky.webp" alt="Přednášky" />
-              <div class="overlay">
-                <p>
-                  Inspirativní osobnosti z&nbsp;církevního i veřejného života, které
-                  se nebojí otevírat aktuální témata.
-                </p>
+        <div class="info-boxes">
+          <div class="info-box">
+            <h3>Bohoslužby o nedělích a svátcích</h3>
+            <div class="schedule">
+              <div class="schedule-item">
+                <span><strong>Hrochův Týnec</strong></span>
+                <span>9:00</span>
+              </div>
+              <div class="schedule-item">
+                <span><strong>Chroustovice</strong></span>
+                <span>10:30</span>
               </div>
             </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+              Aktuální změny naleznete v oznámení nebo na našich stránkách.
+            </p>
+          </div>
 
-            <div class="tile">
-              <img src="images/dlazdice/workshopy.webp" alt="Workshopy" />
-              <div class="overlay">
-                <p>
-                  Kurzy a dílny zaměřené na&nbsp;kreativitu, seberozvoj a praktické
-                  dovednosti.
-                </p>
-              </div>
-            </div>
+          <div class="info-box">
+            <h3>Svátosti</h3>
+            <p>
+              <strong>Křest:</strong> Po předchozí domluvě s knězem<br/>
+              <strong>První svátosti:</strong> Příprava probíhá ve farnosti<br/>
+              <strong>Biřmování:</strong> dle rozhodnutí biskupa<br/>
+              <strong>Sňatek:</strong> Hlaste se minimálně 3 měsíce předem<br/>
+              <strong>Svátost nemocných:</strong> Kontaktujte kněze
+            </p>
+          </div>
 
-            <div class="tile">
-              <img src="images/dlazdice/liturgie.webp" alt="Duchovní program" />
-              <div class="overlay">
-                <p>
-                  Každodenní mše svaté, chvály, adorace, svátost smíření
-                  a prostor pro&nbsp;ztišení.
-                </p>
-              </div>
-            </div>
-
-            <div class="tile">
-              <img
-                src="images/dlazdice/skupinky.webp"
-                alt="Diskuzní skupinky"
-              />
-              <div class="overlay">
-                <p>
-                  Debaty v&nbsp;malých skupinách o víře, vztazích a každodenním životě.
-                </p>
-              </div>
-            </div>
-
-            <div class="tile">
-              <img
-                src="images/dlazdice/zabava.webp"
-                alt="Volnočasové aktivity"
-              />
-              <div class="overlay">
-                <p>
-                  Koncerty, výlety, sportovní aktivity a další program pro&nbsp;odpočinek i společné zážitky.
-                </p>
-              </div>
-            </div>
-
-            <div class="tile">
-              <img src="images/dlazdice/koncerty.webp" alt="Společenství" />
-              <div class="overlay">
-                <p>
-                  Prostředí plné mladých lidí, sdílených hodnot a nových přátelství.
-                </p>
-              </div>
-            </div>
+          <div class="info-box">
+            <h3>Farní aktivity</h3>
+            <p>
+              <strong>Náboženství pro děti</strong><br/>
+              Každý týden během školního roku
+            </p>
+            <p>
+              <strong>Setkání mládeže</strong><br/>
+              Pravidelná setkání mladých lidí
+            </p>
+            <p>
+              <strong>Biblické hodiny</strong><br/>
+              Společné čtení a rozjímání nad Písmem
+            </p>
+            <p>
+              <strong>Charita</strong><br/>
+              Pomoc potřebným v našich obcích
+            </p>
           </div>
         </div>
 
         <div class="about-flex">
           <div class="about-text">
-            <h2>Je čas se přihlásit!</h2>
+            <h2>Kontakt na faráře</h2>
             <p>
-              Kapacita ubytování na&nbsp;Velehradě není neomezená. Zajisti si své
-              místo hned teď. Registrace <a href="/registrace">zde</a>.
+              <strong>P. Mgr. [Jméno kněze]</strong><br/>
+              Farní úřad: Hrochův Týnec, [adresa]<br/>
+              Tel: [telefon]<br/>
+              Email: [email]
+            </p>
+            <p>
+              Úřední hodiny: Po dohodě
             </p>
           </div>
 
           <div class="about-text">
-            <h2>Kdo za námi stojí</h2>
+            <h2>Jak nás najdete</h2>
             <p>
-              Akci pořádá <a href="https://vkhcr.cz" target="_blank" rel="noopener noreferrer"
-                >Vysokoškolské katolické hnutí ČR</a
-              >
-              ve&nbsp;spolupráci s&nbsp;jednotlivými místními organizacemi.
+              <strong>Hrochův Týnec</strong><br/>
+              Kostel sv. Martina se nachází v centru obce, 
+              cca 10 km od Chrudimi směrem na Heřmanův Městec.
+            </p>
+            <p>
+              <strong>Chroustovice</strong><br/>
+              Kostel Nanebevzetí Panny Marie stojí na návsi, 
+              obec leží mezi Chrudimí a Heřmanovým Městcem.
             </p>
           </div>
         </div>
-        <div class="social-title">
-          <h2>Sleduj nás na sociálních sítích!</h2>
-          <p>
-            <a href="https://www.facebook.com/studentskyvelehrad/?locale=cs_CZ"
-              ><img src="images/SV26_FB.svg" alt="Facebook" /></a
-            >
-            <a href="https://www.instagram.com/studentsky_velehrad/"
-              ><img src="images/SV26_IG.svg" alt="Instagram" /></a
-            >
-            <a href="https://www.youtube.com/@studentskyvelehrad"
-              ><img src="images/SV26_YT.svg" alt="YouTube" /></a
-            >
-          </p>
+
+        <div class="about-flex" style="margin-top: 3rem;">
+          <div class="about-text">
+            <h2>Přijďte mezi nás</h2>
+            <p>
+              Ať už jste stálý obyvatel našich obcí, nebo jen návštěvník, 
+              srdečně vás zveme na bohoslužby a do našeho farního společenství. 
+              Těšíme se na setkání s vámi!
+            </p>
+          </div>
         </div>
 
         <Footer />
