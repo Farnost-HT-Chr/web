@@ -1,28 +1,227 @@
 ---
 ---
 
-<div class="logo">
-  <a href="/" class="logo-text">Studentský Velehrad</a>
-</div>
 <div class="mobile-menu" id="mobileMenu">
-  <button class="hamburger-close" id="hamburger-close">
+  <button class="hamburger-close" id="hamburger-close" aria-label="Zavřít menu">
     <span></span>
     <span></span>
     <span></span>
   </button>
-  <ul>
-    <li><a href="/">Úvod</a></li>
-    <li><a href="/tym">Tým</a></li>
-    <li><a href="/registrace">Registrace</a></li>
-    <li>
-      <a href="https://sv24.studentskyvelehrad.cz/sv24" target="_blank" rel="noopener noreferrer"
-        >Minulý ročník</a
-      >
-    </li>
-  </ul>
+  <nav>
+    <ul>
+      <li><a href="/">Úvod</a></li>
+      <li class="has-submenu">
+        <button class="submenu-toggle" aria-expanded="false">
+          <span>Farnost</span>
+          <span class="arrow">▼</span>
+        </button>
+        <ul class="submenu">
+          <li><a href="/bohosluzby">Bohoslužby</a></li>
+          <li><a href="/intence">Intence</a></li>
+          <li><a href="/kalendar">Kalendář</a></li>
+          <li><a href="/farni-rada">Farní rada</a></li>
+          <li><a href="/pohreb">Pohřeb</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <button class="submenu-toggle" aria-expanded="false">
+          <span>Kostely</span>
+          <span class="arrow">▼</span>
+        </button>
+        <ul class="submenu">
+          <li class="has-submenu">
+            <button class="submenu-toggle" aria-expanded="false">
+              <span>Farnost Hrochův Týnec</span>
+              <span class="arrow">▼</span>
+            </button>
+            <ul class="submenu">
+              <li><a href="/kostel-ht">Farní kostel Hrochův Týnec</a></li>
+              <li><a href="/kostel-trojovice">Filiální kostel Trojovice</a></li>
+              <li><a href="/kostel-honbice">Filiální kostel Honbice</a></li>
+            </ul>
+          </li>
+          <li><a href="/kostel-chr">Farní kostel Chroustovice</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <button class="submenu-toggle" aria-expanded="false">
+          <span>Svátosti</span>
+          <span class="arrow">▼</span>
+        </button>
+        <ul class="submenu">
+          <li><a href="/krest">Křest</a></li>
+          <li><a href="/eucharistie">Eucharistie</a></li>
+          <li><a href="/svatost-smireni">Svátost smíření</a></li>
+          <li><a href="/birmovani">Biřmování</a></li>
+          <li><a href="/manzelstvi">Manželství</a></li>
+          <li><a href="/pomazani-nemocnych">Pomazání nemocných</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <button class="submenu-toggle" aria-expanded="false">
+          <span>Média</span>
+          <span class="arrow">▼</span>
+        </button>
+        <ul class="submenu">
+          <li><a href="/ohlasky">Ohlášky</a></li>
+          <li><a href="/bozi-slovo">Boží slovo</a></li>
+          <li><a href="/galerie">Galerie</a></li>
+          <li><a href="/archiv">Archiv</a></li>
+          <li><a href="/msf">MSF</a></li>
+          <li><a href="/ke-stazeni">Ke stažení</a></li>
+        </ul>
+      </li>
+      <li><a href="/kontakty">Kontakty</a></li>
+    </ul>
+  </nav>
 </div>
-<button class="hamburger" aria-label="Otevřít menu">
+<button class="hamburger" id="hamburger" aria-label="Otevřít menu">
   <span></span>
   <span></span>
   <span></span>
 </button>
+
+<style>
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    padding-top: 60px;
+  }
+
+  .mobile-menu.active {
+    right: 0;
+  }
+
+  .hamburger,
+  .hamburger-close {
+    display: none;
+    position: fixed;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1001;
+  }
+
+  .hamburger {
+    top: 15px;
+    right: 15px;
+  }
+
+  .hamburger-close {
+    top: 10px;
+    right: 10px;
+  }
+
+  .hamburger span,
+  .hamburger-close span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background-color: #fff;
+    margin: 5px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+  }
+
+  .hamburger-close.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-6px, 6px);
+  }
+
+  .hamburger-close.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-close.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-6px, -6px);
+  }
+
+  .mobile-menu nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-menu nav > ul > li {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .mobile-menu nav a,
+  .mobile-menu nav .submenu-toggle {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    transition: background-color 0.3s ease;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .mobile-menu nav a:hover,
+  .mobile-menu nav .submenu-toggle:hover {
+    background-color: rgba(255,215,0,0.15);
+  }
+
+  .submenu-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .submenu-toggle .arrow {
+    font-size: 0.7em;
+    transition: transform 0.3s ease;
+  }
+
+  .submenu-toggle[aria-expanded="true"] .arrow {
+    transform: rotate(180deg);
+  }
+
+  .submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: rgba(0,0,0,0.2);
+  }
+
+  .submenu.active {
+    max-height: 1000px;
+  }
+
+  .submenu li {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .submenu a,
+  .submenu .submenu-toggle {
+    padding-left: 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  .submenu .submenu a,
+  .submenu .submenu .submenu-toggle {
+    padding-left: 3.5rem;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger,
+    .hamburger-close {
+      display: block;
+    }
+  }
+</style>
