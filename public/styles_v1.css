@@ -528,19 +528,19 @@ p {
     top: 0;
     right: 0;
     width: 40%;
-    height: 100vh; /* Changed to full viewport height */
-    min-height: auto; /* Remove min-height constraint */
+    height: 100vh;
+    min-height: auto;
     max-width: none;
-    background-color: rgba(26, 39, 100, 0.95); /* Slightly more opaque for better readability */
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
     flex-direction: column;
     align-items: center;
     transition: transform var(--transition-base);
     z-index: var(--z-mobile-menu);
     padding-top: 60px;
-    padding-bottom: var(--spacing-xl); /* Add bottom padding */
+    padding-bottom: var(--spacing-xl);
     transform: translateX(100%);
-    border-radius: 0; /* Remove border radius for full width */
-    overflow-y: auto; /* Allow scrolling if content is too long */
+    border-radius: 0;
+    overflow-y: auto;
   }
 
   .mobile-menu.open {
@@ -568,11 +568,11 @@ p {
     color: var(--color-white);
     text-decoration: none;
     font-weight: normal;
-    font-size: 1.2rem; /* Slightly larger for full-width menu */
+    font-size: 1.2rem;
     padding: var(--spacing-lg) var(--spacing-md);
     transition: color var(--transition-base);
     -webkit-tap-highlight-color: rgba(70, 100, 180, 0.3);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Add separator lines */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .mobile-menu ul li:last-child a {
@@ -581,7 +581,7 @@ p {
 
   .mobile-menu ul li a:hover {
     text-decoration: underline;
-    background-color: rgba(255, 255, 255, 0.05); /* Add hover effect */
+    background-color: rgba(255, 255, 255, 0.05);
   }
 
   /* Footer Responsive */

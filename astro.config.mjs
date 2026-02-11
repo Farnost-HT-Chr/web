@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://studentskyvelehrad.cz',
+  site: 'https://farnostht-chr.cz',
   server: {
     port: 4321,
     host: true
@@ -19,4 +19,7 @@ export default defineConfig({
     }
   },
   integrations: [],
+  devToolbar: {
+    enabled: false
+  }
 });

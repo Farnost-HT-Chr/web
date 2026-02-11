@@ -1,11 +1,5 @@
----
----
-
 <div class="mobile-menu" id="mobileMenu">
   <button class="hamburger-close" id="hamburger-close" aria-label="Zavřít menu">
-    <span></span>
-    <span></span>
-    <span></span>
   </button>
   <nav>
     <ul>
@@ -75,7 +69,7 @@
     </ul>
   </nav>
 </div>
-<button class="hamburger" id="hamburger" aria-label="Otevřít menu">
+<button class="hamburger" id="hamburger" aria-label="Otevřít menu" aria-expanded="false">
   <span></span>
   <span></span>
   <span></span>
@@ -86,7 +80,7 @@
     position: fixed;
     top: 0;
     right: -100%;
-    width: 80%;
+    width: 50%;
     max-width: 320px;
     height: 100vh;
     background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
@@ -97,7 +91,7 @@
     padding-top: 60px;
   }
 
-  .mobile-menu.active {
+  .mobile-menu.open {
     right: 0;
   }
 
@@ -115,6 +109,13 @@
   .hamburger {
     top: 15px;
     right: 15px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger.hide {
+    transform: translateY(-100px);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .hamburger-close {
@@ -133,15 +134,15 @@
     border-radius: 2px;
   }
 
-  .hamburger-close.active span:nth-child(1) {
+  .hamburger-close span:nth-child(1) {
     transform: rotate(-45deg) translate(-6px, 6px);
   }
 
-  .hamburger-close.active span:nth-child(2) {
+  .hamburger-close span:nth-child(2) {
     opacity: 0;
   }
 
-  .hamburger-close.active span:nth-child(3) {
+  .hamburger-close span:nth-child(3) {
     transform: rotate(45deg) translate(-6px, -6px);
   }
 

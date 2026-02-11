@@ -6,7 +6,7 @@
     <a href="/">Úvod</a>
     
     <div class="dropdown">
-      <a href="#farnost">Farnost</a>
+      <a href="#farnost" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">Farnost</a>
       <div class="dropdown-content">
         <a href="/bohosluzby">Bohoslužby</a>
         <a href="/intence">Intence</a>
@@ -17,10 +17,10 @@
     </div>
 
     <div class="dropdown">
-      <a href="#kostely">Kostely</a>
+      <a href="#kostely" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">Kostely</a>
       <div class="dropdown-content">
         <div class="dropdown">
-          <a href="#farnost-ht">Farnost Hrochův Týnec</a>
+          <a href="#farnost-ht" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">Farnost Hrochův Týnec</a>
           <div class="dropdown-content">
             <a href="/kostel-ht">Farní kostel Hrochův Týnec</a>
             <a href="/kostel-trojovice">Filiální kostel Trojovice</a>
@@ -32,7 +32,7 @@
     </div>
 
     <div class="dropdown">
-      <a href="#svatosti">Svátosti</a>
+      <a href="#svatosti" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">Svátosti</a>
       <div class="dropdown-content">
         <a href="/krest">Křest</a>
         <a href="/eucharistie">Eucharistie</a>
@@ -44,7 +44,7 @@
     </div>
 
     <div class="dropdown">
-      <a href="#media">Média</a>
+      <a href="#media" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">Média</a>
       <div class="dropdown-content">
         <a href="/ohlasky">Ohlášky</a>
         <a href="/bozi-slovo">Boží slovo</a>
@@ -59,9 +59,108 @@
   </nav>
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const dropdownLinks = document.querySelectorAll('.menu-bar .dropdown > a');
+    
+    dropdownLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+      });
+
+      link.addEventListener('keydown', function(e) {
+        const dropdown = this.parentElement;
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+        
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          this.setAttribute('aria-expanded', !isExpanded);
+          
+          if (!isExpanded && dropdownContent) {
+            const firstLink = dropdownContent.querySelector('a');
+            if (firstLink) {
+              setTimeout(() => firstLink.focus(), 50);
+            }
+          }
+        } else if (e.key === 'Escape') {
+          this.setAttribute('aria-expanded', 'false');
+          this.focus();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          this.setAttribute('aria-expanded', 'true');
+          if (dropdownContent) {
+            const firstLink = dropdownContent.querySelector('a');
+            if (firstLink) firstLink.focus();
+          }
+        }
+      });
+
+      const dropdown = link.parentElement;
+      dropdown.addEventListener('mouseenter', function() {
+        link.setAttribute('aria-expanded', 'true');
+      });
+      dropdown.addEventListener('mouseleave', function() {
+        link.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    const dropdownContentLinks = document.querySelectorAll('.menu-bar .dropdown-content a');
+    dropdownContentLinks.forEach(function(link) {
+      link.addEventListener('keydown', function(e) {
+        const dropdown = this.closest('.dropdown');
+        const parentDropdownContent = this.closest('.dropdown-content');
+        const allLinks = Array.from(parentDropdownContent.querySelectorAll(':scope > a, :scope > .dropdown > a'));
+        const currentIndex = allLinks.indexOf(this);
+        
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          const nextIndex = currentIndex + 1;
+          if (nextIndex < allLinks.length) {
+            allLinks[nextIndex].focus();
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (currentIndex > 0) {
+            allLinks[currentIndex - 1].focus();
+          } else {
+            const parentLink = dropdown.querySelector(':scope > a');
+            if (parentLink) parentLink.focus();
+          }
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          const parentLink = dropdown.querySelector(':scope > a');
+          if (parentLink) {
+            parentLink.setAttribute('aria-expanded', 'false');
+            parentLink.focus();
+          }
+        } else if (e.key === 'ArrowRight') {
+          const nestedDropdown = this.nextElementSibling;
+          if (nestedDropdown && nestedDropdown.classList.contains('dropdown-content')) {
+            e.preventDefault();
+            this.setAttribute('aria-expanded', 'true');
+            const firstNestedLink = nestedDropdown.querySelector('a');
+            if (firstNestedLink) firstNestedLink.focus();
+          }
+        } else if (e.key === 'ArrowLeft') {
+          const parentDropdown = this.closest('.dropdown-content .dropdown');
+          if (parentDropdown) {
+            e.preventDefault();
+            const parentLink = parentDropdown.querySelector(':scope > a');
+            if (parentLink) {
+              parentLink.setAttribute('aria-expanded', 'false');
+              parentLink.focus();
+            }
+          }
+        }
+      });
+    });
+  });
+</script>
+
 <style>
   .menu-bar {
-    background: linear-gradient(to right, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
     padding: 0;
     box-shadow: 0 3px 8px rgba(0,0,0,0.15);
     position: sticky;
@@ -125,7 +224,7 @@
   .dropdown-content {
     display: none;
     position: absolute;
-    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
     min-width: 200px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     z-index: 1000;
@@ -154,6 +253,10 @@
     display: block;
   }
 
+  .dropdown:focus-within > .dropdown-content {
+    display: block;
+  }
+
   .dropdown-content .dropdown {
     position: relative;
   }
@@ -176,6 +279,10 @@
   }
 
   .dropdown-content .dropdown:hover > .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-content .dropdown:focus-within > .dropdown-content {
     display: block;
   }
 </style>
