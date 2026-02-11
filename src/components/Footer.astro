@@ -1,22 +1,110 @@
 ---
+const currentYear = new Date().getFullYear();
 ---
-
-<footer id="g-footer">
-  <div class="container footer-flex">
-    <div class="footer-text">
-      <p>
-        Vysokoškolské katolické hnutí Česká republika, z.s.<br />
-        Kozí 8<br />
-        Brno, 602 00<br />
-        IČO: 26610311<br />
-        L 9486 vedená u Krajského soudu v Brně<br />
-        <strong>Č. účtu: </strong>2902653384/2010
-      </p>
-      <p>© 2024-2026 Studentský Velehrad. Všechna práva vyhrazena</p>
-    </div>
-
-    <div class="footer-logo">
-      <img src="/images/logo_b_transparent.webp" alt="Logo SV26" />
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-copyright">
+      <p>{currentYear} © Římskokatolická farnost | PePro</p>
     </div>
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    color: #ecf0f1;
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+  }
+
+  .footer-content {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-contact {
+    margin-bottom: 2rem;
+    padding-bottom: 0;
+  }
+
+  .footer-contact h3 {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: #FFD700;
+    font-size: 1.2rem;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+  }
+
+  .footer-contact p {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+    color: #bdc3c7;
+    line-height: 1.6;
+  }
+
+  .footer-contact a {
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-contact a:hover {
+    color: #FFD700;
+  }
+
+  .footer-copyright {
+    text-align: center;
+  }
+
+  .footer-copyright p {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #95a5a6;
+  }
+
+  .footer-copyright a {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  .footer-copyright a:hover {
+    color: #FFA500;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .site-footer {
+      padding: 2rem 1rem 1.5rem;
+    }
+
+    .footer-content {
+      padding: 0 1rem;
+    }
+
+    .footer-contact {
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-contact h3 {
+      font-size: 1.1rem;
+    }
+
+    .footer-contact p {
+      font-size: 0.9rem;
+    }
+
+    .footer-copyright p {
+      font-size: 0.85rem;
+    }
+  }
+</style>
