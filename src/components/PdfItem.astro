@@ -1,0 +1,31 @@
+---
+interface Props {
+  name: string;
+  path: string;
+  index: number;
+}
+
+const { name, path, index } = Astro.props;
+---
+
+<div class="pdf-item" data-pdf-id={index}>
+  <div class="pdf-header">
+    <h2 class="pdf-title">
+      <span class="expand-icon">▼</span>
+      {name}
+    </h2>
+    <div class="pdf-actions">
+      <a href={path} download class="btn btn-download">
+        ⬇ Stáhnout PDF
+      </a>
+    </div>
+  </div>
+  <div class="pdf-content">
+    <iframe
+      class="pdf-viewer"
+      title={name}
+      loading="lazy"
+      data-pdf-src={path}
+    />
+  </div>
+</div>
