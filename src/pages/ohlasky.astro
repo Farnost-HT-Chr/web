@@ -1,0 +1,632 @@
+---
+import Navigation from '../components/Navigation.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+import fs from 'fs';
+import path from 'path';
+
+// Get all PDF files from public/announcements directory
+let pdfFiles: { name: string; path: string }[] = [];
+
+try {
+  const announcementsDir = path.join(process.cwd(), 'public', 'announcements');
+  
+  // Check if directory exists, if not create it
+  if (!fs.existsSync(announcementsDir)) {
+    fs.mkdirSync(announcementsDir, { recursive: true });
+  }
+  
+  const files = fs.readdirSync(announcementsDir);
+  pdfFiles = files
+    .filter(file => file.toLowerCase().endsWith('.pdf'))
+    .map(file => ({
+      name: file.replace('.pdf', ''),
+      path: `/announcements/${file}`
+    }))
+    .sort((a, b) => {
+      // Helper function to extract and normalize date from filename
+      const extractDate = (filename: string): Date | null => {
+        // Format: DD.MM.YYYY or D.M.YYYY (e.g., 1.9.2020, 23.12.2025)
+        const ddmmyyyyRegex = /(\d{1,2})\.(\d{1,2})\.(\d{4})/;
+        // Format: YYYY-MM-DD or YYYY.MM.DD (e.g., 2024-12-25, 2024.12.25)
+        const yyyymmddRegex = /(\d{4})[-.](\d{1,2})[-.](\d{1,2})/;
+        
+        let match = filename.match(ddmmyyyyRegex);
+        if (match) {
+          const [, day, month, year] = match;
+          return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+        }
+        
+        match = filename.match(yyyymmddRegex);
+        if (match) {
+          const [, year, month, day] = match;
+          return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+        }
+        
+        return null;
+      };
+      
+      const dateA = extractDate(a.name);
+      const dateB = extractDate(b.name);
+      
+      // If both have valid dates, compare them
+      if (dateA && dateB) {
+        return dateB.getTime() - dateA.getTime(); // Descending order (newest first)
+      }
+      
+      // If only one has a date, prioritize it
+      if (dateA) return -1;
+      if (dateB) return 1;
+      
+      // If neither has a date, sort alphabetically descending
+      return b.name.localeCompare(a.name);
+    });
+} catch (error) {
+  console.error('Error reading PDF files:', error);
+}
+
+const itemsPerPage = 6;
+const totalPages = Math.ceil(pdfFiles.length / itemsPerPage);
+const remainingItems = pdfFiles.length - itemsPerPage;
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ohlášky - Farnost Hrochův Týnec - Chroustovice</title>
+    <meta name="description" content="Aktuální ohlášky a oznámení farnosti Hrochův Týnec - Chroustovice." />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    
+    <link rel="stylesheet" href="/styles_v1.css" />
+
+    <style>
+      body {
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .site-header {
+        background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+        padding: 1.5rem 1rem 1.2rem;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+
+      .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.8rem;
+      }
+
+      .header-favicon {
+        width: 70px;
+        height: 70px;
+        flex-shrink: 0;
+        background: white;
+        border-radius: 50%;
+        padding: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .header-favicon:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      }
+
+      .header-favicon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .header-text h1 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 2.2rem;
+        color: #2c3e50;
+        margin: 0 0 0.2rem 0;
+        line-height: 1.2;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+      }
+
+      .header-text p {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 0.95rem;
+        color: #555;
+        margin: 0;
+        font-weight: 400;
+      }
+
+      .content {
+        flex: 1;
+        background-color: #f8f9fa;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 1rem;
+      }
+
+      .page-title {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        font-size: 2.5rem;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 3rem;
+        font-weight: 600;
+      }
+
+      .no-pdfs {
+        text-align: center;
+        color: #666;
+        font-size: 1.1rem;
+        padding: 3rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      }
+
+      .pdf-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .pdf-item {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        overflow: hidden;
+        transition: box-shadow 0.3s ease;
+      }
+
+      .pdf-item:not(:last-child) {
+        margin-bottom: 0;
+      }
+
+      .pdf-list > .pdf-item {
+        margin-bottom: 1.5rem;
+      }
+
+      /* Styl pro kontejner se schovanými položkami */
+      .extra-items-container {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .extra-items-container.is-open {
+        max-height: none; /* Neomezená výška */
+        margin-top: 0;
+      }
+
+      /* Mezera mezi položkami uvnitř rozbaleného seznamu */
+      .extra-items-container .pdf-item {
+        margin-bottom: 0 !important;
+      }
+
+      .extra-items-container .pdf-item:not(:last-child) {
+        margin-bottom: 1.5rem !important;
+      }
+
+      .pdf-header {
+        padding: 1.8rem 2.5rem;
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        cursor: pointer;
+        user-select: none;
+        min-height: 90px; /* Zajistí konzistentní výšku */
+      }
+
+      .pdf-header:hover {
+        background: linear-gradient(135deg, #34495e 0%, #3d566e 100%);
+      }
+
+      .pdf-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .expand-icon {
+        font-size: 0.9rem;
+        transition: transform 0.3s ease;
+        display: inline-block;
+      }
+
+      .pdf-item.expanded .expand-icon {
+        transform: rotate(180deg);
+      }
+
+      .pdf-actions {
+        display: flex;
+        gap: 0.8rem;
+      }
+
+      .btn {
+        padding: 0.6rem 1.3rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-download {
+        background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+        color: #2c3e50;
+      }
+
+      .btn-download:hover {
+        background: linear-gradient(135deg, #FFC700 0%, #FFB700 100%);
+        transform: translateY(-2px);
+      }
+
+      .pdf-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-out;
+      }
+
+      .pdf-item.expanded .pdf-content {
+        max-height: 2000px;
+        transition: max-height 0.5s ease-in;
+      }
+
+      .pdf-viewer {
+        width: 100%;
+        height: 1600px;
+        border: none;
+        display: block;
+      }
+
+      /* Pagination styles */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 3rem;
+        padding: 2rem 0;
+      }
+
+      .load-more-btn {
+        padding: 1rem 2.5rem;
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        color: #2c3e50;
+        border: 2px solid #FFD700;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .load-more-btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+
+      .load-more-btn:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      .load-more-btn:hover {
+        background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+      }
+
+      .load-more-btn:active {
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(255, 165, 0, 0.3);
+      }
+
+      .load-more-btn .btn-text {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .load-more-btn .count {
+        background: rgba(44, 62, 80, 0.2);
+        padding: 0.2rem 0.6rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+      }
+
+      .load-more-btn.loading {
+        pointer-events: none;
+        opacity: 0.7;
+      }
+
+      .load-more-btn.loading::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(44, 62, 80, 0.3);
+        border-top-color: #2c3e50;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      @keyframes spin {
+        to { transform: translateY(-50%) rotate(360deg); }
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .pdf-page {
+        display: none;
+      }
+
+      .pdf-page.active {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .pdf-item.fade-in {
+        animation: fadeInUp 0.5s ease-out forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 2rem 1rem;
+        }
+
+        .pdf-list {
+          gap: 1rem;
+        }
+
+        .pdf-list > .pdf-item {
+          margin-bottom: 1rem;
+        }
+
+        .extra-items-container {
+          gap: 1rem;
+        }
+        
+        .extra-items-container.is-open {
+          max-height: none; /* Neomezená výška */
+          margin-top: 0;
+        }
+
+        .extra-items-container .pdf-item:not(:last-child) {
+          margin-bottom: 1rem !important;
+        }
+
+        .pdf-header {
+          padding: 2rem 1.5rem;
+          min-height: 100px; /* Upravená výška pro mobilní zařízení */
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <MobileMenu />
+    
+    <header class="site-header">
+      <div class="header-content">
+        <a href="/" class="header-favicon" aria-label="Přejít na domovskou stránku">
+          <img src="/favicon/apple-touch-icon.png" alt="Logo farnosti" />
+        </a>
+        <div class="header-text">
+          <h1>Farnost Hrochův Týnec - Chroustovice</h1>
+          <p>Římskokatolická farnost</p>
+        </div>
+      </div>
+    </header>
+
+    <Navigation />
+
+    <div class="content">
+      <div class="container">
+        <h1 class="page-title">Ohlášky</h1>
+        
+        {pdfFiles.length === 0 ? (
+          <div class="no-pdfs">
+            <p>Momentálně nejsou k dispozici žádné ohlášky.</p>
+          </div>
+        ) : (
+          <>
+            <div class="pdf-list">
+              {/* Prvních X položek, které jsou vidět vždy */}
+              {pdfFiles.slice(0, itemsPerPage).map((pdf, index) => (
+                <div class="pdf-item" data-pdf-id={index}>
+                  <div class="pdf-header" onclick={`togglePDF(${index})`}>
+                    <h2 class="pdf-title">
+                      <span class="expand-icon">▼</span>
+                      {pdf.name}
+                    </h2>
+                    <div class="pdf-actions">
+                      <a href={pdf.path} download class="btn btn-download">
+                        ⬇ Stáhnout PDF
+                      </a>
+                    </div>
+                  </div>
+                  <div class="pdf-content">
+                    <iframe
+                      class="pdf-viewer"
+                      title={pdf.name}
+                      loading="lazy"
+                      data-pdf-src={pdf.path}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              {/* Skrytý kontejner pro zbytek ohlášek */}
+              {pdfFiles.length > itemsPerPage && (
+                <div class="extra-items-container" id="extraItems">
+                  {pdfFiles.slice(itemsPerPage).map((pdf, index) => {
+                    const globalIndex = index + itemsPerPage;
+                    return (
+                      <div class="pdf-item" data-pdf-id={globalIndex}>
+                        <div class="pdf-header">
+                          <h2 class="pdf-title">
+                            <span class="expand-icon">▼</span>
+                            {pdf.name}
+                          </h2>
+                          <div class="pdf-actions">
+                            <a href={pdf.path} download class="btn btn-download">
+                              ⬇ Stáhnout PDF
+                            </a>
+                          </div>
+                        </div>
+                        <div class="pdf-content">
+                          <iframe
+                            class="pdf-viewer"
+                            title={pdf.name}
+                            loading="lazy"
+                            data-pdf-src={pdf.path}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {pdfFiles.length > itemsPerPage && (
+              <div class="pagination">
+                <button class="load-more-btn" id="toggleExtraBtn">
+                  <span class="btn-text" id="btnText">
+                    <span>📄 Zobrazit starší ohlášky</span>
+                    <span class="count">+{remainingItems}</span>
+                  </span>
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+
+    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
+    
+    <script is:inline>
+      window.togglePDF = function(index) {
+        const pdfItem = document.querySelector(`[data-pdf-id="${index}"]`);
+        if (pdfItem) {
+          const isExpanding = !pdfItem.classList.contains('expanded');
+          pdfItem.classList.toggle('expanded');
+          
+          if (isExpanding) {
+            const iframe = pdfItem.querySelector('.pdf-viewer');
+            const pdfSrc = iframe?.getAttribute('data-pdf-src');
+            if (iframe && pdfSrc && !iframe.src) {
+              iframe.src = pdfSrc;
+            }
+          }
+        }
+      };
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // Add click handlers to ALL pdf headers (including extra items)
+        document.querySelectorAll('.pdf-header').forEach((header) => {
+          header.addEventListener('click', (e) => {
+            // Don't toggle if clicking on download button
+            if (!e.target.closest('.pdf-actions')) {
+              const pdfItem = header.closest('.pdf-item');
+              const index = pdfItem?.getAttribute('data-pdf-id');
+              if (index !== null) {
+                togglePDF(parseInt(index));
+              }
+            }
+          });
+        });
+
+        const toggleBtn = document.getElementById('toggleExtraBtn');
+        const extraItems = document.getElementById('extraItems');
+        const btnText = document.getElementById('btnText');
+
+        if (toggleBtn && extraItems) {
+          toggleBtn.addEventListener('click', () => {
+            const isOpen = extraItems.classList.toggle('is-open');
+            
+            // Změna textu tlačítka
+            if (isOpen) {
+              btnText.innerHTML = '<span>▲ Zobrazit méně</span>';
+            } else {
+              btnText.innerHTML = '<span>📄 Zobrazit starší ohlášky</span><span class="count">+' + (extraItems.children.length) + '</span>';
+              
+              // Volitelné: Odrolovat zpět nahoru k začátku seznamu při zavření
+              extraItems.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+          });
+        }
+      });
+    </script>
+    
+    <script type="module" src="/script.js" defer></script>
+    <Footer />
+  </body>
+</html>
