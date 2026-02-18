@@ -1444,3 +1444,2833 @@ p {
     gap: 1rem;
   }
 }
+
+/* ==========================================================================
+   Liturgie Page Styles
+   ========================================================================== */
+
+/* Liturgical files section */
+.liturgical-files-section {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 2rem 0;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 3px solid #FFD700;
+  padding-bottom: 1rem;
+}
+
+.no-files {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.files-by-year {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.year-group {
+  border-left: 4px solid #FFD700;
+  padding-left: 1.5rem;
+}
+
+.year-header {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 1.6rem;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.year-header::before {
+  content: "📅";
+  font-size: 1.4rem;
+}
+
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+}
+
+.file-item {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.file-item:hover {
+  border-color: #FFD700;
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(255,215,0,0.2);
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.file-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.file-name {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #2c3e50;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.file-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.view-btn {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+}
+
+.view-btn:hover {
+  background: linear-gradient(135deg, #2980b9 0%, #21618c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52,152,219,0.3);
+}
+
+.download-btn {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+}
+
+.download-btn:hover {
+  background: linear-gradient(135deg, #FFC700 0%, #FF9500 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255,215,0,0.3);
+}
+
+.liturgie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.liturgie-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.liturgie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.liturgie-card h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+  border-bottom: 3px solid #FFD700;
+  padding-bottom: 0.8rem;
+}
+
+.liturgie-card p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  line-height: 1.8;
+  margin: 0 0 1rem 0;
+}
+
+.liturgie-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.liturgie-card li {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e9ecef;
+  line-height: 1.6;
+}
+
+.liturgie-card li:last-child {
+  border-bottom: none;
+}
+
+.liturgie-card li:before {
+  content: "📖 ";
+  margin-right: 0.5rem;
+}
+
+.liturgie-card a {
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.liturgie-card a:hover {
+  color: #FFA500;
+  text-decoration: underline;
+}
+
+.link-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+  padding: 0.9rem 2rem;
+  border-radius: 28px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+  margin-top: 1rem;
+}
+
+.link-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+  background: linear-gradient(135deg, #FFC700 0%, #FF9500 100%);
+}
+
+.liturgical-calendar {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 3rem;
+}
+
+.liturgical-calendar h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 2rem 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.calendar-item {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  border-left: 4px solid #FFD700;
+}
+
+.calendar-item h4 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.calendar-item p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #666;
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.calendar-item .date {
+  color: #FFD700;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.info-section {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 3rem;
+}
+
+.info-section h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+}
+
+.info-section p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  line-height: 1.8;
+  margin: 0 0 1rem 0;
+}
+
+.info-section strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.liturgical-colors {
+  list-style: none;
+  padding: 0;
+}
+
+.liturgical-colors li {
+  border-left-width: 4px;
+  border-left-style: solid;
+  padding-left: 1rem;
+}
+
+.liturgical-colors li.color-white {
+  border-left-color: white;
+}
+
+.liturgical-colors li.color-red {
+  border-left-color: red;
+}
+
+.liturgical-colors li.color-green {
+  border-left-color: green;
+}
+
+.liturgical-colors li.color-purple {
+  border-left-color: purple;
+}
+
+/* Liturgie Page - Mobile Styles */
+@media (max-width: 768px) {
+  .liturgical-files-section {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .files-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .file-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .file-info {
+    margin-bottom: 0.8rem;
+  }
+
+  .file-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .file-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .year-header {
+    font-size: 1.4rem;
+  }
+
+  .liturgie-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .liturgie-card {
+    padding: 2rem;
+  }
+
+  .calendar-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Let Page Styles
+   ========================================================================== */
+
+.let-page {
+  background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+  padding: 1.5rem 1rem 1.2rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.let-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.8rem;
+}
+
+.let-favicon {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.let-favicon:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.let-favicon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.let-text h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin: 0 0 0.2rem 0;
+  line-height: 1.2;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+}
+
+.let-text p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+  font-weight: 400;
+}
+
+.let-content {
+  flex: 1;
+  background-color: #f8f9fa;
+}
+
+.let-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.let-title {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 600;
+}
+
+.no-pdfs {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  padding: 3rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.pdf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pdf-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Styl pro kontejner se schovanými položkami */
+.extra-items-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.extra-items-container.is-open {
+  max-height: none;
+  margin-top: 0;
+}
+
+/* Mezera mezi položkami uvnitř rozbaleného seznamu */
+.extra-items-container .pdf-item {
+  margin-bottom: 0 !important;
+}
+
+.extra-items-container .pdf-item:not(:last-child) {
+  margin-bottom: 1.5rem !important;
+}
+
+.pdf-header {
+  padding: 1.8rem 2.5rem;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  cursor: pointer;
+  user-select: none;
+  min-height: 90px;
+}
+
+.pdf-header:hover {
+  background: linear-gradient(135deg, #34495e 0%, #3d566e 100%);
+}
+
+.pdf-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.expand-icon {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.pdf-item.expanded .expand-icon {
+  transform: rotate(180deg);
+}
+
+.pdf-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.btn {
+  padding: 0.6rem 1.3rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-download {
+  background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+  color: #2c3e50;
+}
+
+.btn-download:hover {
+  background: linear-gradient(135deg, #FFC700 0%, #FFB700 100%);
+  transform: translateY(-2px);
+}
+
+.pdf-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+}
+
+.pdf-item.expanded .pdf-content {
+  max-height: 2000px;
+  transition: max-height 0.5s ease-in;
+}
+
+.pdf-viewer {
+  width: 100%;
+  height: 1600px;
+  border: none;
+  display: block;
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding: 2rem 0;
+}
+
+.load-more-btn {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+  border: 2px solid #FFD700;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.load-more-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.load-more-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.load-more-btn:hover {
+  background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+}
+
+.load-more-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(255, 165, 0, 0.3);
+}
+
+.load-more-btn .btn-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.load-more-btn .count {
+  background: rgba(44, 62, 80, 0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.load-more-btn.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.load-more-btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(44, 62, 80, 0.3);
+  border-top-color: #2c3e50;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.pdf-page {
+  display: none;
+}
+
+.pdf-page.active {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pdf-item.fade-in {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ohlášky Page - Mobile Styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .pdf-list {
+    gap: 1rem;
+  }
+
+  .pdf-list > .pdf-item {
+    margin-bottom: 1rem;
+  }
+
+  .extra-items-container {
+    gap: 1rem;
+  }
+  
+  .extra-items-container.is-open {
+    max-height: none;
+    margin-top: 0;
+  }
+
+  .extra-items-container .pdf-item:not(:last-child) {
+    margin-bottom: 1rem !important;
+  }
+
+  .pdf-header {
+    padding: 2rem 1.5rem;
+    min-height: 100px;
+  }
+}
+
+/* ==========================================================================
+   Index Page Styles
+   ========================================================================== */
+
+.menu-bar {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  padding: 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.menu-bar nav {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.menu-bar nav > a,
+.menu-bar nav .dropdown {
+  position: relative;
+}
+
+.menu-bar nav a {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #fff;
+  text-decoration: none;
+  padding: 1.1rem 1.5rem;
+  display: block;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+}
+
+.menu-bar nav a:hover {
+  background-color: rgba(255,215,0,0.15);
+  border-bottom-color: #FFD700;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown > a {
+  cursor: pointer;
+}
+
+.dropdown > a::after {
+  content: ' ▼';
+  font-size: 0.7em;
+  margin-left: 0.3rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  border-radius: 0 0 8px 8px;
+}
+
+.dropdown-content a {
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.9rem;
+}
+
+.dropdown-content a:last-child {
+  border-bottom: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(255,215,0,0.2);
+  border-bottom-color: transparent;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content .dropdown {
+  position: relative;
+}
+
+.dropdown-content .dropdown > a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-content .dropdown > a::after {
+  content: ' ▶';
+  margin-left: auto;
+}
+
+.dropdown-content .dropdown-content {
+  left: 100%;
+  top: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.dropdown-content .dropdown:hover > .dropdown-content {
+  display: block;
+}
+
+.cover {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 65vh;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.cover-content {
+  max-width: 900px;
+  width: 100%;
+}
+
+.cover-text {
+  padding: 0 1rem;
+}
+
+.cover-text h2 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-weight: 600;
+  font-size: 3.8rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.verse {
+  font-family: Georgia, serif;
+  color: #666;
+  font-size: 1.15rem;
+  font-style: italic;
+  margin-top: 2rem;
+  max-width: 650px;
+  line-height: 1.7;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.uvod-button {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+  width: auto;
+  min-width: 190px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 28px;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 0 2.2rem;
+  box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+}
+
+.uvod-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+  background: linear-gradient(135deg, #FFC700 0%, #FF9500 100%);
+}
+
+#about {
+  background-color: #fff;
+  padding: 4rem 0;
+  flex: 1;
+}
+
+.about-flex {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  max-width: 1200px;
+  margin: 2rem auto;
+  gap: 20px;
+  padding: 0 15px;
+}
+
+.about-text {
+  color: #424753;
+  text-align: center;
+  width: 560px;
+}
+
+.about-flex--tiles {
+  padding: 0;
+}
+
+#about h2 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 1.8rem;
+  line-height: 1.4;
+  font-size: 1.3rem;
+  color: #2c3e50;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#about p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #555;
+}
+
+.info-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 15px;
+}
+
+.info-box {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.info-box h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: #2c3e50;
+  margin-bottom: 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.info-box p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  line-height: 1.8;
+  margin: 0.5rem 0;
+}
+
+.info-box strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.schedule {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 12px;
+  margin-top: 1.2rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.schedule-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+/* Index Page - Mobile & Tablet Styles */
+@media (max-width: 640px) {
+  .about-text {
+    width: auto;
+  }
+
+  .about-flex {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-boxes {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-bar {
+    display: none;
+  }
+
+  .menu-bar nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .menu-bar nav a {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .dropdown-content {
+    position: static;
+    display: none;
+    box-shadow: none;
+    background: rgba(0,0,0,0.2);
+    border-radius: 0;
+  }
+
+  .dropdown.active .dropdown-content {
+    display: block;
+  }
+
+  .dropdown > a::after {
+    content: ' ▼';
+    transition: transform 0.3s ease;
+  }
+
+  .dropdown.active > a::after {
+    transform: rotate(180deg);
+    display: inline-block;
+  }
+
+  .dropdown-content .dropdown-content {
+    position: static;
+    background: rgba(0,0,0,0.3);
+    padding-left: 1rem;
+  }
+
+  .dropdown-content .dropdown > a::after {
+    content: ' ▼';
+  }
+
+  .dropdown-content .dropdown.active > a::after {
+    transform: rotate(180deg);
+  }
+
+  .cover {
+    min-height: 50vh;
+    padding: 2.5rem 1rem;
+  }
+
+  .cover-text h2 {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.3rem;
+  }
+
+  .verse {
+    font-size: 1rem;
+    padding: 1.2rem;
+  }
+
+  .uvod-button {
+    font-size: 1rem;
+    height: 50px;
+    min-width: 170px;
+  }
+
+  .button-wrapper {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Liturgie Page Styles
+   ========================================================================== */
+
+/* Liturgical files section */
+.liturgical-files-section {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 2rem 0;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 3px solid #FFD700;
+  padding-bottom: 1rem;
+}
+
+.no-files {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.files-by-year {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.year-group {
+  border-left: 4px solid #FFD700;
+  padding-left: 1.5rem;
+}
+
+.year-header {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 1.6rem;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.year-header::before {
+  content: "📅";
+  font-size: 1.4rem;
+}
+
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+}
+
+.file-item {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.file-item:hover {
+  border-color: #FFD700;
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(255,215,0,0.2);
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.file-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.file-name {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #2c3e50;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.file-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.view-btn {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+}
+
+.view-btn:hover {
+  background: linear-gradient(135deg, #2980b9 0%, #21618c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52,152,219,0.3);
+}
+
+.download-btn {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+}
+
+.download-btn:hover {
+  background: linear-gradient(135deg, #FFC700 0%, #FF9500 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255,215,0,0.3);
+}
+
+.liturgie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.liturgie-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.liturgie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.liturgie-card h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+  border-bottom: 3px solid #FFD700;
+  padding-bottom: 0.8rem;
+}
+
+.liturgie-card p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  line-height: 1.8;
+  margin: 0 0 1rem 0;
+}
+
+.liturgie-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.liturgie-card li {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e9ecef;
+  line-height: 1.6;
+}
+
+.liturgie-card li:last-child {
+  border-bottom: none;
+}
+
+.liturgie-card li:before {
+  content: "📖 ";
+  margin-right: 0.5rem;
+}
+
+.liturgie-card a {
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.liturgie-card a:hover {
+  color: #FFA500;
+  text-decoration: underline;
+}
+
+.link-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+  padding: 0.9rem 2rem;
+  border-radius: 28px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+  margin-top: 1rem;
+}
+
+.link-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+  background: linear-gradient(135deg, #FFC700 0%, #FF9500 100%);
+}
+
+.liturgical-calendar {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 3rem;
+}
+
+.liturgical-calendar h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 2rem 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.calendar-item {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  border-left: 4px solid #FFD700;
+}
+
+.calendar-item h4 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.calendar-item p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #666;
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.calendar-item .date {
+  color: #FFD700;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.info-section {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 3rem;
+}
+
+.info-section h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+}
+
+.info-section p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  line-height: 1.8;
+  margin: 0 0 1rem 0;
+}
+
+.info-section strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.liturgical-colors {
+  list-style: none;
+  padding: 0;
+}
+
+.liturgical-colors li {
+  border-left-width: 4px;
+  border-left-style: solid;
+  padding-left: 1rem;
+}
+
+.liturgical-colors li.color-white {
+  border-left-color: white;
+}
+
+.liturgical-colors li.color-red {
+  border-left-color: red;
+}
+
+.liturgical-colors li.color-green {
+  border-left-color: green;
+}
+
+.liturgical-colors li.color-purple {
+  border-left-color: purple;
+}
+
+/* Liturgie Page - Mobile Styles */
+@media (max-width: 768px) {
+  .liturgical-files-section {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .files-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .file-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .file-info {
+    margin-bottom: 0.8rem;
+  }
+
+  .file-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .file-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .year-header {
+    font-size: 1.4rem;
+  }
+
+  .liturgie-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .liturgie-card {
+    padding: 2rem;
+  }
+
+  .calendar-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Let Page Styles
+   ========================================================================== */
+
+.let-page {
+  background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+  padding: 1.5rem 1rem 1.2rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.let-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.8rem;
+}
+
+.let-favicon {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.let-favicon:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.let-favicon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.let-text h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin: 0 0 0.2rem 0;
+  line-height: 1.2;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+}
+
+.let-text p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+  font-weight: 400;
+}
+
+.let-content {
+  flex: 1;
+  background-color: #f8f9fa;
+}
+
+.let-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.let-title {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 600;
+}
+
+.no-pdfs {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  padding: 3rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.pdf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pdf-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Styl pro kontejner se schovanými položkami */
+.extra-items-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.extra-items-container.is-open {
+  max-height: none;
+  margin-top: 0;
+}
+
+/* Mezera mezi položkami uvnitř rozbaleného seznamu */
+.extra-items-container .pdf-item {
+  margin-bottom: 0 !important;
+}
+
+.extra-items-container .pdf-item:not(:last-child) {
+  margin-bottom: 1.5rem !important;
+}
+
+.pdf-header {
+  padding: 1.8rem 2.5rem;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  cursor: pointer;
+  user-select: none;
+  min-height: 90px;
+}
+
+.pdf-header:hover {
+  background: linear-gradient(135deg, #34495e 0%, #3d566e 100%);
+}
+
+.pdf-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.expand-icon {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.pdf-item.expanded .expand-icon {
+  transform: rotate(180deg);
+}
+
+.pdf-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.btn {
+  padding: 0.6rem 1.3rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-download {
+  background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+  color: #2c3e50;
+}
+
+.btn-download:hover {
+  background: linear-gradient(135deg, #FFC700 0%, #FFB700 100%);
+  transform: translateY(-2px);
+}
+
+.pdf-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+}
+
+.pdf-item.expanded .pdf-content {
+  max-height: 2000px;
+  transition: max-height 0.5s ease-in;
+}
+
+.pdf-viewer {
+  width: 100%;
+  height: 1600px;
+  border: none;
+  display: block;
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding: 2rem 0;
+}
+
+.load-more-btn {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+  border: 2px solid #FFD700;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.load-more-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.load-more-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.load-more-btn:hover {
+  background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+}
+
+.load-more-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(255, 165, 0, 0.3);
+}
+
+.load-more-btn .btn-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.load-more-btn .count {
+  background: rgba(44, 62, 80, 0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.load-more-btn.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.load-more-btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(44, 62, 80, 0.3);
+  border-top-color: #2c3e50;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.pdf-page {
+  display: none;
+}
+
+.pdf-page.active {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pdf-item.fade-in {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ohlášky Page - Mobile Styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .pdf-list {
+    gap: 1rem;
+  }
+
+  .pdf-list > .pdf-item {
+    margin-bottom: 1rem;
+  }
+
+  .extra-items-container {
+    gap: 1rem;
+  }
+  
+  .extra-items-container.is-open {
+    max-height: none;
+    margin-top: 0;
+  }
+
+  .extra-items-container .pdf-item:not(:last-child) {
+    margin-bottom: 1rem !important;
+  }
+
+  .pdf-header {
+    padding: 2rem 1.5rem;
+    min-height: 100px;
+  }
+}
+
+/* ==========================================================================
+   Index Page Styles
+   ========================================================================== */
+
+.menu-bar {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  padding: 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.menu-bar nav {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.menu-bar nav > a,
+.menu-bar nav .dropdown {
+  position: relative;
+}
+
+.menu-bar nav a {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #fff;
+  text-decoration: none;
+  padding: 1.1rem 1.5rem;
+  display: block;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+}
+
+.menu-bar nav a:hover {
+  background-color: rgba(255,215,0,0.15);
+  border-bottom-color: #FFD700;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown > a {
+  cursor: pointer;
+}
+
+.dropdown > a::after {
+  content: ' ▼';
+  font-size: 0.7em;
+  margin-left: 0.3rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  border-radius: 0 0 8px 8px;
+}
+
+.dropdown-content a {
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.9rem;
+}
+
+.dropdown-content a:last-child {
+  border-bottom: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(255,215,0,0.2);
+  border-bottom-color: transparent;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content .dropdown {
+  position: relative;
+}
+
+.dropdown-content .dropdown > a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-content .dropdown > a::after {
+  content: ' ▶';
+  margin-left: auto;
+}
+
+.dropdown-content .dropdown-content {
+  left: 100%;
+  top: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.dropdown-content .dropdown:hover > .dropdown-content {
+  display: block;
+}
+
+.cover {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 65vh;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.cover-content {
+  max-width: 900px;
+  width: 100%;
+}
+
+.cover-text {
+  padding: 0 1rem;
+}
+
+.cover-text h2 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-weight: 600;
+  font-size: 3.8rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.verse {
+  font-family: Georgia, serif;
+  color: #666;
+  font-size: 1.15rem;
+  font-style: italic;
+  margin-top: 2rem;
+  max-width: 650px;
+  line-height: 1.7;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.uvod-button {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+  width: auto;
+  min-width: 190px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 28px;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 0 2.2rem;
+  box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+}
+
+.uvod-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+  background: linear-gradient(135deg, #FFC700 0%, #FF9500 100%);
+}
+
+#about {
+  background-color: #fff;
+  padding: 4rem 0;
+  flex: 1;
+}
+
+.about-flex {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  max-width: 1200px;
+  margin: 2rem auto;
+  gap: 20px;
+  padding: 0 15px;
+}
+
+.about-text {
+  color: #424753;
+  text-align: center;
+  width: 560px;
+}
+
+.about-flex--tiles {
+  padding: 0;
+}
+
+#about h2 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 1.8rem;
+  line-height: 1.4;
+  font-size: 1.3rem;
+  color: #2c3e50;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#about p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #555;
+}
+
+.info-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 15px;
+}
+
+.info-box {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.info-box h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: #2c3e50;
+  margin-bottom: 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.info-box p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  line-height: 1.8;
+  margin: 0.5rem 0;
+}
+
+.info-box strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.schedule {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 12px;
+  margin-top: 1.2rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.schedule-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+/* Index Page - Mobile & Tablet Styles */
+@media (max-width: 640px) {
+  .about-text {
+    width: auto;
+  }
+
+  .about-flex {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-boxes {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-bar {
+    display: none;
+  }
+
+  .menu-bar nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .menu-bar nav a {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .dropdown-content {
+    position: static;
+    display: none;
+    box-shadow: none;
+    background: rgba(0,0,0,0.2);
+    border-radius: 0;
+  }
+
+  .dropdown.active .dropdown-content {
+    display: block;
+  }
+
+  .dropdown > a::after {
+    content: ' ▼';
+    transition: transform 0.3s ease;
+  }
+
+  .dropdown.active > a::after {
+    transform: rotate(180deg);
+    display: inline-block;
+  }
+
+  .dropdown-content .dropdown-content {
+    position: static;
+    background: rgba(0,0,0,0.3);
+    padding-left: 1rem;
+  }
+
+  .dropdown-content .dropdown > a::after {
+    content: ' ▼';
+  }
+
+  .dropdown-content .dropdown.active > a::after {
+    transform: rotate(180deg);
+  }
+
+  .cover {
+    min-height: 50vh;
+    padding: 2.5rem 1rem;
+  }
+
+  .cover-text h2 {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.3rem;
+  }
+
+  .verse {
+    font-size: 1rem;
+    padding: 1.2rem;
+  }
+
+  .uvod-button {
+    font-size: 1rem;
+    height: 50px;
+    min-width: 170px;
+  }
+
+  .button-wrapper {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Liturgie Page Styles
+   ========================================================================== */
+
+/* Liturgical files section */
+.liturgical-files-section {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 2rem 0;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 3px solid #FFD700;
+  padding-bottom: 1rem;
+}
+
+.no-files {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.files-by-year {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.year-group {
+  border-left: 4px solid #FFD700;
+  padding-left: 1.5rem;
+}
+
+.year-header {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 1.6rem;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.year-header::before {
+  content: "📅";
+  font-size: 1.4rem;
+}
+
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+}
+
+.file-item {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.file-item:hover {
+  border-color: #FFD700;
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(255,215,0,0.2);
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.file-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.file-name {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #2c3e50;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.file-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.view-btn {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+}
+
+.view-btn:hover {
+  background: linear-gradient(135deg, #2980b9 0%, #21618c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52,152,219,0.3);
+}
+
+.download-btn {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+}
+
+.download-btn:hover {
+  background: linear-gradient(135deg, #FFC700 0%, #FF9500 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255,215,0,0.3);
+}
+
+.liturgie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.liturgie-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.liturgie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.liturgie-card h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+  border-bottom: 3px solid #FFD700;
+  padding-bottom: 0.8rem;
+}
+
+.liturgie-card p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  line-height: 1.8;
+  margin: 0 0 1rem 0;
+}
+
+.liturgie-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.liturgie-card li {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e9ecef;
+  line-height: 1.6;
+}
+
+.liturgie-card li:last-child {
+  border-bottom: none;
+}
+
+.liturgie-card li:before {
+  content: "📖 ";
+  margin-right: 0.5rem;
+}
+
+.liturgie-card a {
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.liturgie-card a:hover {
+  color: #FFA500;
+  text-decoration: underline;
+}
+
+.link-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+  padding: 0.9rem 2rem;
+  border-radius: 28px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+  margin-top: 1rem;
+}
+
+.link-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+  background: linear-gradient(135deg, #FFC700 0%, #FF9500 100%);
+}
+
+.liturgical-calendar {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 3rem;
+}
+
+.liturgical-calendar h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 2rem 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.calendar-item {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  border-left: 4px solid #FFD700;
+}
+
+.calendar-item h4 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.calendar-item p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #666;
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.calendar-item .date {
+  color: #FFD700;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.info-section {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 3rem;
+}
+
+.info-section h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+}
+
+.info-section p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #555;
+  line-height: 1.8;
+  margin: 0 0 1rem 0;
+}
+
+.info-section strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.liturgical-colors {
+  list-style: none;
+  padding: 0;
+}
+
+.liturgical-colors li {
+  border-left-width: 4px;
+  border-left-style: solid;
+  padding-left: 1rem;
+}
+
+.liturgical-colors li.color-white {
+  border-left-color: white;
+}
+
+.liturgical-colors li.color-red {
+  border-left-color: red;
+}
+
+.liturgical-colors li.color-green {
+  border-left-color: green;
+}
+
+.liturgical-colors li.color-purple {
+  border-left-color: purple;
+}
+
+/* Liturgie Page - Mobile Styles */
+@media (max-width: 768px) {
+  .liturgical-files-section {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .files-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .file-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .file-info {
+    margin-bottom: 0.8rem;
+  }
+
+  .file-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .file-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .year-header {
+    font-size: 1.4rem;
+  }
+
+  .liturgie-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .liturgie-card {
+    padding: 2rem;
+  }
+
+  .calendar-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Let Page Styles
+   ========================================================================== */
+
+.let-page {
+  background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+  padding: 1.5rem 1rem 1.2rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.let-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.8rem;
+}
+
+.let-favicon {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.let-favicon:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.let-favicon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.let-text h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin: 0 0 0.2rem 0;
+  line-height: 1.2;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+}
+
+.let-text p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+  font-weight: 400;
+}
+
+.let-content {
+  flex: 1;
+  background-color: #f8f9fa;
+}
+
+.let-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.let-title {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 600;
+}
+
+.no-pdfs {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  padding: 3

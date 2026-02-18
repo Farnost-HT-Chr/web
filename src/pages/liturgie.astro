@@ -1,0 +1,296 @@
+---
+import Navigation from '../components/Navigation.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+import fs from 'fs';
+import path from 'path';
+
+// Načtení PDF souborů z podsložek podle roku
+const liturgicalTextsDir = path.join(process.cwd(), 'public', 'liturgical_texts');
+let pdfsByYear: Record<string, Array<{fileName: string, filePath: string}>> = {};
+
+try {
+  if (fs.existsSync(liturgicalTextsDir)) {
+    const yearDirs = fs.readdirSync(liturgicalTextsDir, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory());
+    
+    yearDirs.forEach(yearDir => {
+      const year = yearDir.name;
+      const yearPath = path.join(liturgicalTextsDir, year);
+      
+      if (fs.existsSync(yearPath)) {
+        const files = fs.readdirSync(yearPath);
+        const pdfFiles = files.filter(file => file.toLowerCase().endsWith('.pdf'));
+        
+        if (pdfFiles.length > 0) {
+          pdfsByYear[year] = pdfFiles.map(file => ({
+            fileName: file,
+            filePath: `${year}/${file}`
+          })).sort((a, b) => b.fileName.localeCompare(a.fileName));
+        }
+      }
+    });
+    
+    // Seřazení let sestupně (nejnovější první)
+    const sortedYears = Object.keys(pdfsByYear).sort((a, b) => {
+      if (a === 'Ostatní' || a === 'other' || a === 'Other') return 1;
+      if (b === 'Ostatní' || b === 'other' || b === 'Other') return -1;
+      
+      const yearA = parseInt(a, 10);
+      const yearB = parseInt(b, 10);
+      
+      if (isNaN(yearA) && isNaN(yearB)) return b.localeCompare(a);
+      if (isNaN(yearA)) return -1;
+      if (isNaN(yearB)) return 1;
+      
+      return yearB - yearA;
+    });
+    
+    pdfsByYear = sortedYears.reduce((obj, key) => {
+      obj[key] = pdfsByYear[key];
+      return obj;
+    }, {} as Record<string, Array<{fileName: string, filePath: string}>>);
+  }
+} catch (error) {
+  console.error('Chyba při načítání PDF souborů:', error);
+}
+
+// Získání aktuálního roku a rozdělení dat
+const currentYear = new Date().getFullYear().toString();
+const allYears = Object.keys(pdfsByYear);
+const currentYearData = pdfsByYear[currentYear] || [];
+// Obrácení pořadí let - od nejstaršího k aktuálnímu
+const otherYears = allYears.filter(year => year !== currentYear).reverse();
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liturgie - Farnost Hrochův Týnec - Chroustovice</title>
+    <meta name="description" content="Liturgické texty, kalendář a zdroje pro farnost Hrochův Týnec - Chroustovice." />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    
+    <!-- Preload fonts -->
+    <link rel="preload" href="/fonts/Ohrada.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/HelveticaNow.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/HelveticaNowBold.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/OpenSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/OpenSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/styles_v2.css" />
+  </head>
+
+  <body>
+    <MobileMenu />
+    
+    <header class="site-header">
+      <div class="header-content">
+        <a href="/" class="header-favicon" aria-label="Přejít na domovskou stránku">
+          <img src="/favicon/apple-touch-icon.png" alt="Logo farnosti" />
+        </a>
+        <div class="header-text">
+          <h1>Farnost Hrochův Týnec - Chroustovice</h1>
+          <p>Římskokatolická farnost</p>
+        </div>
+      </div>
+    </header>
+
+    <Navigation />
+
+    <div class="content">
+      <div class="container">
+        <!-- Liturgické texty ke stažení -->
+        <h1 class="page-title">Boží slovo</h1>
+        <div class="liturgical-files-section">
+          
+          {Object.keys(pdfsByYear).length === 0 ? (
+            <div class="no-files">
+              <p>Zatím nejsou k dispozici žádné liturgické texty ke stažení.</p>
+            </div>
+          ) : (
+            <>
+              <div class="files-by-year">
+                <!-- Aktuální rok - vždy viditelný -->
+                {currentYearData.length > 0 ? (
+                  <div class="year-group" data-year={currentYear}>
+                    <h4 class="year-header">{currentYear}</h4>
+                    <div class="files-grid">
+                      {currentYearData.map(({fileName, filePath}) => {
+                        const displayName = fileName
+                          .replace('.pdf', '')
+                          .replace(/^\d{4}-\d{2}-\d{2}[-_]?/, '')
+                          .replace(/[-_]/g, ' ')
+                          .trim();
+                        
+                        return (
+                          <div class="file-item">
+                            <div class="file-info">
+                              <span class="file-icon">📄</span>
+                              <span class="file-name">{displayName}</span>
+                            </div>
+                            <div class="file-actions">
+                              <a 
+                                href={`/liturgical_texts/${filePath}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                class="file-btn view-btn"
+                                aria-label={`Zobrazit ${displayName}`}
+                              >
+                                👁️ Zobrazit
+                              </a>
+                              <a 
+                                href={`/liturgical_texts/${filePath}`} 
+                                download
+                                class="file-btn download-btn"
+                                aria-label={`Stáhnout ${displayName}`}
+                              >
+                                ⬇️ Stáhnout
+                              </a>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : allYears.length > 0 && (
+                  <div class="year-group" data-year={allYears[0]}>
+                    <h4 class="year-header">{allYears[0]}</h4>
+                    <div class="files-grid">
+                      {pdfsByYear[allYears[0]].map(({fileName, filePath}) => {
+                        const displayName = fileName
+                          .replace('.pdf', '')
+                          .replace(/^\d{4}-\d{2}-\d{2}[-_]?/, '')
+                          .replace(/[-_]/g, ' ')
+                          .trim();
+                        
+                        return (
+                          <div class="file-item">
+                            <div class="file-info">
+                              <span class="file-icon">📄</span>
+                              <span class="file-name">{displayName}</span>
+                            </div>
+                            <div class="file-actions">
+                              <a 
+                                href={`/liturgical_texts/${filePath}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                class="file-btn view-btn"
+                                aria-label={`Zobrazit ${displayName}`}
+                              >
+                                👁️ Zobrazit
+                              </a>
+                              <a 
+                                href={`/liturgical_texts/${filePath}`} 
+                                download
+                                class="file-btn download-btn"
+                                aria-label={`Stáhnout ${displayName}`}
+                              >
+                                ⬇️ Stáhnout
+                              </a>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                <!-- Skryté starší roky -->
+                {otherYears.length > 0 && (
+                  <div class="extra-items-container" id="extraYears">
+                    {otherYears.map((year) => (
+                      <div class="year-group" data-year={year}>
+                        <h4 class="year-header">{year}</h4>
+                        <div class="files-grid">
+                          {pdfsByYear[year].map(({fileName, filePath}) => {
+                            const displayName = fileName
+                              .replace('.pdf', '')
+                              .replace(/^\d{4}-\d{2}-\d{2}[-_]?/, '')
+                              .replace(/[-_]/g, ' ')
+                              .trim();
+                            
+                            return (
+                              <div class="file-item">
+                                <div class="file-info">
+                                  <span class="file-icon">📄</span>
+                                  <span class="file-name">{displayName}</span>
+                                </div>
+                                <div class="file-actions">
+                                  <a 
+                                    href={`/liturgical_texts/${filePath}`} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    class="file-btn view-btn"
+                                    aria-label={`Zobrazit ${displayName}`}
+                                  >
+                                    👁️ Zobrazit
+                                  </a>
+                                  <a 
+                                    href={`/liturgical_texts/${filePath}`} 
+                                    download
+                                    class="file-btn download-btn"
+                                    aria-label={`Stáhnout ${displayName}`}
+                                  >
+                                    ⬇️ Stáhnout
+                                  </a>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <!-- Tlačítko pro načtení starších let -->
+              {otherYears.length > 0 && (
+                <div class="pagination">
+                  <button class="load-more-btn" id="toggleExtraYears">
+                    <span class="btn-text" id="btnText">
+                      <span>📅 Zobrazit starší roky</span>
+                      <span class="count">+{otherYears.length}</span>
+                    </span>
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
+    <script type="module" src="/script.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('toggleExtraYears');
+        const extraYears = document.getElementById('extraYears');
+        const btnText = document.getElementById('btnText');
+
+        if (toggleBtn && extraYears) {
+          toggleBtn.addEventListener('click', () => {
+            const isOpen = extraYears.classList.toggle('is-open');
+            
+            if (isOpen) {
+              btnText.innerHTML = '<span>▲ Zobrazit méně</span>';
+            } else {
+              const yearCount = extraYears.querySelectorAll('.year-group').length;
+              btnText.innerHTML = '<span>📅 Zobrazit starší roky</span><span class="count">+' + yearCount + '</span>';
+              
+              extraYears.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+          });
+        }
+      });
+    </script>
+    <Footer />
+  </body>
+</html>
