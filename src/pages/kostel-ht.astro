@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Kostel sv. Martina - Hrochův Týnec" 
+  description="Historie a informace o farním kostelu sv. Martina v Hrochově Týnci"
+>
+  <div class="container">
+    <h1>Kostel sv. Martina v Hrochově Týnci</h1>
+    
+    <div class="content">
+      <h2>Historie</h2>
+      <p>
+        O tom, kdy byl postaven kostel sv. Martina, není v písemných pramenech žádné svědectví. 
+        Pouze ze skutečnosti, že se Hrochův Týnec („Tynecz") uvádí v souboru listin z let 1349 až 1351, 
+        kterými se některé východočeské farnosti převádějí pod nově zřizované litomyšlské biskupství, 
+        můžeme usuzovat, že zde kostel již stál (Rojek 1871–73; Šebek 1991).
+      </p>
+
+      <h2>Vývoj farnosti</h2>
+      <p>
+        Po husitských válkách byla zdejší fara utrakvistická, event. evangelická. Od roku 1621 byla 
+        opět katolická, nejprve jako filiální k Trojovicím. V roce 1704 se tento stav obrátil 
+        (Trojovice byly nadále filiální do Hrochova Týnce).
+      </p>
+
+      <h2>Stavební vývoj</h2>
+      <p>
+        Existující kostel byl v roce 1680 rozšířen o kapli P. Marie. Rozsáhlá přestavba do dodnes 
+        dochované podoby proběhla v letech 1723–1728 nákladem hraběnky Markety z Valdštejna 
+        (Chytil 1900, 216–218). Kaple z roku 1680 se stala součástí nově stavěného kostela. 
+        Dnešní, vně velmi jednoduchá podoba, odpovídá tomuto období a nelze vysledovat stopy 
+        nějaké starší stavební etapy.
+      </p>
+
+      <div class="source">
+        <p>
+          <em>Zdroj: Autoři: Jan Frolík – Petra Stránská – Jarmila Švédová</em>
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    border-bottom: 3px solid #FFD700;
+    padding-bottom: 1rem;
+  }
+
+  h2 {
+    color: #34495e;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+
+  .content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+
+  .content p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+  }
+
+  .source {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .source p {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .content {
+      font-size: 1rem;
+    }
+  }
+</style>

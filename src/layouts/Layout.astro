@@ -1,0 +1,58 @@
+---
+import Navigation from '../components/Navigation.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Římskokatolická farnost Hrochův Týnec - Chroustovice' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    
+    <link rel="stylesheet" href="/styles_v2.css" />
+  </head>
+
+  <body>
+    <MobileMenu />
+    
+    <!-- Site Header s faviconem -->
+    <header class="site-header">
+      <div class="header-content">
+        <a href="/" class="header-favicon" aria-label="Přejít na domovskou stránku">
+          <img src="/favicon/apple-touch-icon.png" alt="Logo farnosti" />
+        </a>
+        <div class="header-text">
+          <h1>Farnost Hrochův Týnec - Chroustovice</h1>
+          <p>Římskokatolická farnost</p>
+        </div>
+      </div>
+    </header>
+
+    <Navigation />
+
+    <div class="content">
+      <slot />
+    </div>
+
+    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
+    
+    <script type="module" src="/script.js"></script>
+    <Footer />
+  </body>
+</html>

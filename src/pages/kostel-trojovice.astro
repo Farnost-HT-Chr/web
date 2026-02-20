@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Kostel sv. Michaela archanděla - Trojovice" 
+  description="Historie a informace o filiálním kostelu sv. Michaela archanděla v Trojovicích"
+>
+  <div class="container">
+    <h1>Kostel sv. Michaela archanděla v Trojovicích</h1>
+    
+    <div class="content">
+      <h2>Původní stavba</h2>
+      <p>
+        Kostel byl založen jako gotický patrně v polovině 14. století, nepochybně stál již před rokem 1374.
+      </p>
+
+      <h2>Barokní přestavba</h2>
+      <p>
+        V 1. polovině 18. století vyhořel a roku 1744 tehdejší majitelé, premonstráti z kláštera 
+        v Hradisku u Olomouce, nechali postavit kostel nový z kamene a se šindelovou střechou, který měl 
+        dvě věže. Menší z nich stála nad presbytářem.
+      </p>
+
+      <h2>Požár a obnova</h2>
+      <p>
+        I tento nový kostel byl roku 1855 postižen požárem, podařilo se však zachránit část vnitřního 
+        zařízení. Místní osadníci prosili tehdy patrona kostela pana Šlechtu z Hrochova na Hrochově Týnci, 
+        aby nechal postavit kostel nový, ale byli odmítnuti.
+      </p>
+      
+      <p>
+        Rozhodli se proto opravit kostel sami z darů řady dobrodinců, mezi něž se zařadil i bývalý 
+        císař Ferdinand Dobrotivý. Dne 18. listopadu 1860 byla v restaurovaném kostele sloužena první mše svatá.
+      </p>
+
+      <h2>Současnost</h2>
+      <p>
+        Nyní je trojovický kostel kostelem filiálním v římskokatolické farnosti Hrochův Týnec a bohoslužby 
+        tu jsou slouženy podle ohlášení.
+      </p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    border-bottom: 3px solid #FFD700;
+    padding-bottom: 1rem;
+  }
+
+  h2 {
+    color: #34495e;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+
+  .content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+
+  .content p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .content {
+      font-size: 1rem;
+    }
+  }
+</style>
