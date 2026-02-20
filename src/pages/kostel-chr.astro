@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Kostel sv. Jakuba Staršího - Chroustovice">
+  <div class="container">
+    <h1>Kostel sv. Jakuba Staršího v Chroustovicích</h1>
+    
+    <div class="content">
+      <p>
+        Kostel sv. Jakuba Staršího je barokní jednolodní neorientovaná stavba. Kostelní loď je 23,5 m dlouhá 
+        a 12 m široká. V čele hranolová věž zakončená štíhlým jehlanem. Podvěžím je veden hlavní vchod do kostela. 
+        Po stranách půlkruhem zakončeného presbytáře přiléhají přízemní sakristie a oratoř.
+      </p>
+
+      <h2>Interiér</h2>
+      <p>
+        Zařízení interiéru je rokokové. Rokoková kazatelna je doplněna schodištěm doplněným řezbami. 
+        Cínová křtitelnice nese letopočet 1510. Věž nesla podle soupisu památek tři zvony, dva z roku 1750, 
+        třetí z roku 1782, za války byly zrekvírovány a ponechán pouze umíráček.
+      </p>
+
+      <h2>Historie</h2>
+      <p>
+        První písemná zmínka o obci pochází z roku 1349. Kostel sv. Jakuba Staršího se prvně připomíná 
+        roku 1350 v soupisu far začleněných do nově zřizovaného biskupství litomyšlského. Tento původní kostel 
+        byl roku 1744 zbourán a nákladem hraběnky Terezie Kinské, manželky majitele chroustovického panství, 
+        vybudován kostel nový.
+      </p>
+      
+      <p>
+        Roku 1856 střecha kostela s věží a zvony zničena požárem. Kostel roku 1858 obnoven. Rozsáhlou 
+        rekonstrukcí prošel roku 1898.
+      </p>
+
+      <h2>Současnost</h2>
+      <p>
+        Kostel je hlavním svatostánkem farnosti Chroustovice, ta je spravována excurrendo z Hrochova Týnce. 
+        Bohoslužby se konají pravidelně v sobotu s nedělní platností v 17:00 hod.
+      </p>
+
+      <div class="source">
+        <p>
+          <em>Zdroj: Pavel Vítek – Zdeněk Wirth: Soupis památek historických a uměleckých v Království Českém, 
+          sv. 16 Politický okres vysokomýtský, Archaelogická komise při České akademii císaře Františka Josefa 
+          pro vědy, slovesnost a umění, Praha 1902, 17.1. 2011</em>
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    border-bottom: 3px solid #FFD700;
+    padding-bottom: 1rem;
+  }
+
+  h2 {
+    color: #34495e;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+
+  .content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+
+  .content p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+  }
+
+  .source {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .source p {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .content {
+      font-size: 1rem;
+    }
+  }
+</style>
