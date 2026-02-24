@@ -1,0 +1,426 @@
+---
+import Navigation from '../components/Navigation.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Svátost křtu - Farnost Hrochův Týnec - Chroustovice</title>
+    <meta name="description" content="Informace o svátosti křtu v naší farnosti - křest dospělých i dětí, příprava na křest." />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://farnostht-chr.cz/krest" />
+    <meta property="og:title" content="Svátost křtu - Farnost Hrochův Týnec - Chroustovice" />
+    <meta property="og:description" content="Informace o svátosti křtu v naší farnosti - křest dospělých i dětí, příprava na křest." />
+    
+    <!-- preload fonts -->
+    <link
+      rel="preload"
+      href="/fonts/Ohrada.otf"
+      as="font"
+      type="font/otf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/HelveticaNow.otf"
+      as="font"
+      type="font/otf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/HelveticaNowBold.otf"
+      as="font"
+      type="font/otf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles_v3.css" />
+
+    <style>
+      body {
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .site-header {
+        background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+        padding: 1.5rem 1rem 1.2rem;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+
+      .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.8rem;
+      }
+
+      .header-favicon {
+        width: 70px;
+        height: 70px;
+        flex-shrink: 0;
+        background: white;
+        border-radius: 50%;
+        padding: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .header-favicon:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      }
+
+      .header-favicon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .header-text h1 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 2.2rem;
+        color: #2c3e50;
+        margin: 0 0 0.2rem 0;
+        line-height: 1.2;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+      }
+
+      .header-text p {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 0.95rem;
+        color: #555;
+        margin: 0;
+        font-weight: 400;
+      }
+
+      .content {
+        flex: 1;
+        background-color: #fff;
+      }
+
+      .page-hero {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 3rem 1rem;
+        text-align: center;
+      }
+
+      .page-hero h2 {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        font-weight: 600;
+        font-size: 3rem;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      .page-hero p {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        color: #555;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .content-section {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+      }
+
+      .intro-quote {
+        font-family: Georgia, serif;
+        color: #444;
+        font-size: 1.15rem;
+        font-style: italic;
+        margin: 2rem 0 3rem;
+        padding: 2rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-left: 4px solid #FFD700;
+        border-radius: 8px;
+        line-height: 1.8;
+      }
+
+      .text-content {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        color: #333;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+      }
+
+      .text-content p {
+        margin-bottom: 1.5rem;
+      }
+
+      .section-title {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        font-size: 2rem;
+        color: #2c3e50;
+        margin: 3rem 0 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid #FFD700;
+        font-weight: 600;
+      }
+
+      .section-subtitle {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        font-size: 1.5rem;
+        color: #34495e;
+        margin: 2rem 0 1rem;
+        font-weight: 600;
+      }
+
+      .highlight-box {
+        background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 2rem 0;
+        border-left: 4px solid #FFD700;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      }
+
+      .highlight-box p {
+        margin: 0.5rem 0;
+        color: #333;
+      }
+
+      .info-list {
+        background: #f8f9fa;
+        padding: 1.5rem 2rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+      }
+
+      .info-list ul {
+        margin: 0;
+        padding-left: 1.5rem;
+      }
+
+      .info-list li {
+        margin: 0.8rem 0;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      strong {
+        color: #2c3e50;
+        font-weight: 600;
+      }
+
+      /* Media query pro menší obrazovky (tablet/mobil) */
+      @media (max-width: 768px) {
+        .header-content {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .header-favicon {
+          width: 55px;
+          height: 55px;
+          padding: 6px;
+        }
+
+        .header-text h1 {
+          font-size: 1.6rem;
+        }
+
+        .header-text p {
+          font-size: 0.85rem;
+        }
+
+        .page-hero {
+          padding: 2rem 1rem;
+        }
+
+        .page-hero h2 {
+          font-size: 2rem;
+        }
+
+        .page-hero p {
+          font-size: 1rem;
+        }
+
+        .content-section {
+          padding: 2rem 1rem;
+        }
+
+        .section-title {
+          font-size: 1.6rem;
+        }
+
+        .section-subtitle {
+          font-size: 1.3rem;
+        }
+
+        .text-content {
+          font-size: 1rem;
+        }
+
+        .intro-quote {
+          font-size: 1rem;
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <MobileMenu />
+    
+    <!-- Site Header s faviconem -->
+    <header class="site-header">
+      <div class="header-content">
+        <a href="/" class="header-favicon" aria-label="Přejít na domovskou stránku">
+          <img src="/favicon/apple-touch-icon.png" alt="Logo farnosti" />
+        </a>
+        <div class="header-text">
+          <h1>Farnost Hrochův Týnec - Chroustovice</h1>
+          <p>Římskokatolická farnost</p>
+        </div>
+      </div>
+    </header>
+
+    <Navigation />
+
+    <!-- HLAVNÍ OBSAH STRÁNKY -->
+    <div class="content">
+      <div class="page-hero">
+        <h2>Svátost křtu</h2>
+      </div>
+
+      <section class="content-section">
+        <div class="intro-quote">
+          „Ovoce křtu neboli křestní milost je obohacující skutečnost, která zahrnuje: odpuštění prvotního hříchu a všech osobních hříchů; zrození k novému životu, jímž se člověk stává adoptivním synem Otce, Kristovým údem, chrámem Ducha svatého. Z téhož důvodu je pokřtěný začleněn do církve, Kristova těla, a stává se účastným Kristova kněžství" (KKC 1279).
+        </div>
+
+        <div class="text-content">
+          <p>
+            Svátost křtu je branou do života s Ježíšem a do společenství věřících – církve. Je to setkání s Ježíšem, který s dotyčným člověkem vytváří nerozlučitelný vztah, který trvá až za hranice smrti. Přestože se člověk může tohoto vztahu v budoucnu vzdát, Ježíš se pokřtěného nikdy nevzdá a s jemností a vytrvalostí k němu hledá cestu zpět. Křtem se odpouštějí všechny hříchy a pokřtěný má možnost přistupovat k dalším svátostem.
+          </p>
+          <p>
+            Křest ustanovil sám Ježíš, když apoštolům přikázal: „Jděte, učte všechny národy a křtěte je ve jménu Otce i Syna i Ducha svatého!" (Mt 28,19).
+          </p>
+          <p>
+            „Pokřtít" (řecky baptizein) znamená „ponořit" nebo „omýt". Člověk je ponořen do života a smrti Ježíše Krista. Proto se křest uděluje ponořením do vody nebo omytím vodou. Voda je totiž znamením života. Přitom se říká: <strong>N (jméno), já tě křtím ve jménu Otce i Syna i Ducha Svatého.</strong>
+          </p>
+        </div>
+
+        <h3 class="section-title">Křest dospělého</h3>
+
+        <div class="text-content">
+          <p>
+            Křest dospělého člověka je možný tehdy, jestliže uvěřil v Krista jako jediného plného zachránce člověka, poznal a přijal víru církve a vyznává jí a chce žít ve společenství katolické církve a respektovat její učení víry i morálky. Dospělý člověk má za normálních okolností přijmout v jedné slavnosti takzvané iniciační svátosti, tedy být pokřtěn, biřmován a přijmout eucharistii.
+          </p>
+          <p>
+            Příprava na křest probíhá v několika etapách (tzv. „katechumenát"):
+          </p>
+        </div>
+
+        <div class="info-list">
+          <ul>
+            <li>
+              Po seznámení s obsahem křesťanské víry a základním obrácení, chce-li adept skutečně směřovat ke křtu a jeví známky víry i postupného obrácení, může být přijat do katechumenátu. To znamená, že se seznámil s vírou natolik, že může udělat zodpovědné rozhodnutí k jejímu plnému přijetí.
+            </li>
+            <li>
+              V katechumenátu pokračuje příprava na křest. Když je zřejmé, že katechumenova víra je natolik úplná a zralá, že může být podkladem pro křest, je katechumen přijat mezi bezprostřední čekatele křtu.
+            </li>
+            <li>
+              Během několika týdnů pak celá příprava na křest skončí udělením svátostí. Délka přípravy na křest je různá, musí respektovat postupné rozvíjení víry člověka. Těžko může být kratší než půl roku, zpravidla trvá jeden až jeden a půl roku. Během této doby katechumen prožívá jak formální vyučování a rozhovory nad určitými tématy, tak má možnost neformálně objevovat různé rozměry víry a života místní církve.
+            </li>
+          </ul>
+        </div>
+
+        <div class="text-content">
+          <p>
+            Je dobré, když dospělého adepta provází na jeho cestě ke křtu někdo, kdo mu je oporou a kdo mu bude oporou v cestě víry i po křtu. Takový člověk je-li sám pokřtěným a biřmovaným katolíkem, žijícím z víry – může být křtěncem vybrán za kmotra.
+          </p>
+          <p>
+            Je důležité, aby se při přípravě na křest včas zjistilo, zda adept nebo adeptka křtu buď žije v platném církevním sňatku nebo zda žije, ve svazku, který může být po křtu církevně zplatněn.
+          </p>
+        </div>
+
+        <div class="highlight-box">
+          <p><strong>Křest dospělých se slaví zpravidla o velikonoční vigilii (velikonoční bohoslužba v noci ze soboty na neděli).</strong></p>
+          <p>
+            Podobné přípravy se pak také účastní ti, kteří sice byli pokřtěni jako malé děti, pak již dále svoji víru nepraktikovali a v dospělosti touží po plném svátostném životě.
+          </p>
+        </div>
+
+        <h3 class="section-title">Křest malého dítěte</h3>
+
+        <div class="text-content">
+          <p>
+            Na rozdíl od dospělého nemůžeme od malého dítěte čekat ani rozhodnutí pro křest ani vyznání víry. Malé děti se křtí proto, že patří do rodiny křesťanů a ta chce, aby dítě mělo spolu s nimi účast na životě církve. Proto se žádá od rodičů a kmotrů, aby byli pokřtěni, byli schopni svou křesťanskou víru při křtu vyznat a mohli tak uvést do víry i dítě, které je jim svěřeno. Proto by měli být oba rodiče katolicky pokřtěni a vychováni a měli by žít v církvi svou víru. Pokud toto platí jen o jednom, může to stačit, ovšem je třeba aby si oba byli vědomi závazku, který ze křtu pro rodiče vyplývá a respektovali ho, i když ho bude uskutečňovat jen jeden z rodičů.
+          </p>
+          <p>
+            O křest dítěte žádají zásadně jeho rodiče, kteří nejen že by měli být při křtu přítomni, ale kteří jediní mohou přijmout plnou zodpovědnost za to, že jejich dítě bude vychováno ve víře v Krista a v prostoru života a víry církve. Kmotr nebo kmotra v tom mají rodičům pomáhat a tuto ochotu také před ostatními účastníky křtu deklarují.
+          </p>
+        </div>
+
+        <h4 class="section-subtitle">Praktické informace</h4>
+
+        <div class="text-content">
+          <p>
+            Křest se uděluje buď při nedělní bohoslužbě nebo mimo ní, podle dohody s místním farářem. Je třeba ho sjednávat s dostatečným časovým předstihem zpravidla několika týdnů, aby byl čas pro potřebná setkání křtícího kněze s rodiči. Jeho povinností totiž je nejen rodiče informovat o náplni a průběhu křtu a vyřídit nutné administrativní věci, ale také je připravit k plnění těch úkolů, které do budoucna na sebe křtem dítěte berou.
+          </p>
+          <p>
+            Před křtem se vyhotoví na faře křestní zápis. K němu je třeba donést rodný list dítěte a jména a adresy kmotrů, případně jejich křestní listy.
+          </p>
+          <p>
+            Pro vlastní obřad křtu je dobré opatřit si křestní roušku a křestní svíčku pro dítě (může to být úkolem kmotrů; určitou základní nabídku může poskytnout i naše farní kancelář). Křtu se za normálních okolností musí zúčastnit oba rodiče dítěte a kmotr (kmotři). Je samozřejmě možné pokřtít i dítě svobodné, ovdovělé nebo rozvedené matky, jsou-li ostatní podmínky křtu splněny.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
+    <script type="module" src="/script.js" defer></script>
+    <Footer />
+  </body>
+</html>
