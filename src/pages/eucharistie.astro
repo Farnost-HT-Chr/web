@@ -1,455 +1,108 @@
----
-import Navigation from '../components/Navigation.astro';
-import MobileMenu from '../components/MobileMenu.astro';
-import Footer from '../components/Footer.astro';
+﻿---
+import Layout from '../layouts/Layout.astro';
 ---
 
-<!doctype html>
-<html lang="cs">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eucharistie - Farnost Hrochův Týnec - Chroustovice</title>
-    <meta name="description" content="Informace o svátosti Eucharistie, svatém přijímání a eucharistické adoraci v naší farnosti." />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://farnostht-chr.cz/eucharistie" />
-    <meta property="og:title" content="Eucharistie - Farnost Hrochův Týnec - Chroustovice" />
-    <meta property="og:description" content="Informace o svátosti Eucharistie, svatém přijímání a eucharistické adoraci v naší farnosti." />
-    
-    <!-- preload fonts -->
-    <link
-      rel="preload"
-      href="/fonts/Ohrada.otf"
-      as="font"
-      type="font/otf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/HelveticaNow.otf"
-      as="font"
-      type="font/otf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/HelveticaNowBold.otf"
-      as="font"
-      type="font/otf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/OpenSans-Regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/OpenSans-Italic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/OpenSans-Bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="styles_v3.css" />
+<Layout 
+  title="Eucharistie - Farnost Hrochův Týnec - Chroustovice"
+  description="Informace o svátosti Eucharistie, svatém přijímání a eucharistické adoraci v naší farnosti."
+>
+  <div class="page-hero">
+    <h2>Eucharistie</h2>
+  </div>
 
-    <style>
-      body {
-        background-color: #ffffff;
-        margin: 0;
-        padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .site-header {
-        background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
-        padding: 1.5rem 1rem 1.2rem;
-        text-align: center;
-        position: relative;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      }
-
-      .header-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.8rem;
-      }
-
-      .header-favicon {
-        width: 70px;
-        height: 70px;
-        flex-shrink: 0;
-        background: white;
-        border-radius: 50%;
-        padding: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .header-favicon:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-      }
-
-      .header-favicon img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-
-      .header-text h1 {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 2.2rem;
-        color: #2c3e50;
-        margin: 0 0 0.2rem 0;
-        line-height: 1.2;
-        font-weight: 600;
-        text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-      }
-
-      .header-text p {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        font-size: 0.95rem;
-        color: #555;
-        margin: 0;
-        font-weight: 400;
-      }
-
-      .content {
-        flex: 1;
-        background-color: #fff;
-      }
-
-      .page-hero {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 3rem 1rem;
-        text-align: center;
-      }
-
-      .page-hero h2 {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        font-weight: 600;
-        font-size: 3rem;
-        color: #2c3e50;
-        margin-bottom: 1rem;
-        line-height: 1.2;
-      }
-
-      .page-hero p {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        color: #555;
-        font-size: 1.2rem;
-        line-height: 1.6;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .content-section {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 4rem 2rem;
-      }
-
-      .intro-quote {
-        font-family: Georgia, serif;
-        color: #444;
-        font-size: 1.15rem;
-        font-style: italic;
-        margin: 2rem 0 3rem;
-        padding: 2rem;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-left: 4px solid #FFD700;
-        border-radius: 8px;
-        line-height: 1.8;
-      }
-
-      .text-content {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        color: #333;
-        font-size: 1.05rem;
-        line-height: 1.8;
-        margin-bottom: 2rem;
-      }
-
-      .text-content p {
-        margin-bottom: 1.5rem;
-      }
-
-      .section-title {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        font-size: 2rem;
-        color: #2c3e50;
-        margin: 3rem 0 1.5rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 3px solid #FFD700;
-        font-weight: 600;
-      }
-
-      .section-subtitle {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        font-size: 1.5rem;
-        color: #34495e;
-        margin: 2rem 0 1rem;
-        font-weight: 600;
-      }
-
-      .highlight-box {
-        background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin: 2rem 0;
-        border-left: 4px solid #FFD700;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      }
-
-      .highlight-box p {
-        margin: 0.5rem 0;
-        color: #333;
-      }
-
-      .prayer-box {
-        background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
-        padding: 2rem;
-        border-radius: 12px;
-        margin: 2rem 0;
-        border-left: 4px solid #4682B4;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        font-style: italic;
-      }
-
-      .prayer-box p {
-        margin: 0.8rem 0;
-        color: #2c3e50;
-        line-height: 1.8;
-      }
-
-      .bullet-list {
-        margin: 1rem 0 1rem 1.5rem;
-        padding: 0;
-      }
-
-      .bullet-list li {
-        margin: 0.8rem 0;
-        line-height: 1.7;
-        color: #333;
-      }
-
-      strong {
-        color: #2c3e50;
-        font-weight: 600;
-      }
-
-      em {
-        color: #555;
-      }
-
-      /* Media query pro menší obrazovky (tablet/mobil) */
-      @media (max-width: 768px) {
-        .header-content {
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .header-favicon {
-          width: 55px;
-          height: 55px;
-          padding: 6px;
-        }
-
-        .header-text h1 {
-          font-size: 1.6rem;
-        }
-
-        .header-text p {
-          font-size: 0.85rem;
-        }
-
-        .page-hero {
-          padding: 2rem 1rem;
-        }
-
-        .page-hero h2 {
-          font-size: 2rem;
-        }
-
-        .page-hero p {
-          font-size: 1rem;
-        }
-
-        .content-section {
-          padding: 2rem 1rem;
-        }
-
-        .section-title {
-          font-size: 1.6rem;
-        }
-
-        .section-subtitle {
-          font-size: 1.3rem;
-        }
-
-        .text-content {
-          font-size: 1rem;
-        }
-
-        .intro-quote {
-          font-size: 1rem;
-          padding: 1.5rem;
-        }
-
-        .prayer-box {
-          padding: 1.5rem;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <MobileMenu />
-    
-    <!-- Site Header s faviconem -->
-    <header class="site-header">
-      <div class="header-content">
-        <a href="/" class="header-favicon" aria-label="Přejít na domovskou stránku">
-          <img src="/favicon/apple-touch-icon.png" alt="Logo farnosti" />
-        </a>
-        <div class="header-text">
-          <h1>Farnost Hrochův Týnec - Chroustovice</h1>
-          <p>Římskokatolická farnost</p>
-        </div>
-      </div>
-    </header>
-
-    <Navigation />
-
-    <!-- HLAVNÍ OBSAH STRÁNKY -->
-    <div class="content">
-      <div class="page-hero">
-        <h2>Eucharistie</h2>
-      </div>
-
-      <section class="content-section">
-        <div class="text-content">
-          <p>
-            Mezi všemi svátostmi zaujímá nejčestnější místo, je to <strong>živé tělo a krev Ježíše Krista</strong>. Slovo eucharistie je řeckého původu a znamená díkůvzdání. Ve svatém přijímání se věřící setkává s eucharistickým Kristem!
-          </p>
-          <p>
-            I když se chléb nebo víno rozdělí na menší části, vždy je přítomen celý Kristus. Proto je tak důležité, že kněz pečlivě očišťuje patenu a kalich (purifikace). Přítomnost Kristova trvá, pokud trvají způsoby chleba nebo vína.
-          </p>
-          <p>
-            V římském ritu používáme k eucharistii nekvašený chléb a čisté, přírodní víno bez jakékoli příměsi, nemusí být bílé. II. Vatikánský koncil povolil věřícím, pokud jsou přítomni na celé mši svaté, přistoupit podruhé ke svatému přijímání. Před přijímáním je nutné dodržet eucharistický půst, který trvá jednu hodinu. Voda a léky tento půst neporušují.
-          </p>
-          <p>
-            Přijetím eucharistie se odpouštějí lehké hříchy. Pokud můžeme, máme ke svatému přijímání přistupovat při každé mši svaté.
-          </p>
-          <p>
-            Přijímat pouze jednou za rok, jak to přikazuje církevní přikázání, svědčí jednak o velmi malé snaze o hlubší duchovní život a o malé lásce ke Kristu. Na cestě k věčnosti je nám třeba posily a tu nám může dát pouze Kristovo tělo.
-          </p>
-          <p>
-            <strong>Eucharistická adorace</strong> je jedním z projevů úcty ke Kristu, přítomnému v oltářní svátosti.
-          </p>
-        </div>
-
-        <div class="intro-quote">
-          Církev nedostala Eucharistii od Krista, svého Pána, jako jeden z mnoha darů, byť velmi cenný, nýbrž jako největší dar (dar par exellence), neboť Kristus dává sám sebe, svou osobu ve svém lidství a též své dílo spásy…<br/>
-          <em>(sv. Jan Pavel II.: Ecclesia de Eucharistia, 11)</em>
-        </div>
-
-        <div class="highlight-box">
-          <p><strong>„Kdo bude jíst tento chléb, bude žít navěky. A chléb, který já dám, je mé tělo"</strong> (Jan 6,54)</p>
-        </div>
-
-        <h3 class="section-title">Mše svatá jako oběť Krista</h3>
-
-        <div class="text-content">
-          <p>
-            Když celebrant při eucharistické modlitbě vyslovuje konsekrační slova, stáváme se účastníky nejdůležitějších událostí v dějinách lidstva: utrpení, smrti a zmrtvýchvstání Krista. Jsme na Kalvárii u nohou ukřižovaného Ježíše. Proto <strong>mše sv. je především oběť Ježíše Krista</strong>.
-          </p>
-          <p>
-            „To je zázrak všech zázraků," vysvětluje Panna Maria mystičce Catalině Rivas. – „Pán není omezený ani časem, ani prostorem. V okamžiku konsekrace je celé společenství shromážděno u paty kříže na Kalvárii při Ježíšově ukřižování. Zvedni své oči a kontempluj Ho. Dívej se na Něho a opakuj modlitbu:
-          </p>
-        </div>
-
-        <div class="prayer-box">
-          <ul class="bullet-list">
-            <li><strong>Pane, věřím, klaním se, důvěřuji a miluji Tě.</strong></li>
-            <li><strong>Prosím o odpuštění pro ty, kteří nevěří, neklanějí se, nedůvěřují a nemilují Tě.</strong></li>
-            <li><strong>Nyní Mu řekni, jak velmi Ho miluješ, a klaň se Králi králů.</strong></li>
-          </ul>
-        </div>
-
-        <div class="text-content">
-          <p>
-            Máme v duchu hledět na Ježíše umírajícího na kříži, protože víme, že byl přibit pro naše hříchy, za naše viny (srov. Iz 53,5). Když Ježíš umírá na kříži, přináší dokonalou oběť, která snímá hříchy všech lidí. Kristovo utrpení je utrpením božské Osoby, a proto má přístup všude tam, kam se dostala ničivá moc zla. On, naprosto nevinný a svatý, trpí a umírá za každého člověka v plné solidaritě s hříšnými lidmi. Pro nás, kteří se účastníme mše svaté, je to zcela mimořádná příležitost.
-          </p>
-        </div>
-
-        <h3 class="section-title">Svaté přijímání</h3>
-
-        <div class="text-content">
-          <p>
-            Eucharistie přijatá s čistým srdcem nás proměňuje a uvádí do nebeské reality, neboť máme účast na životě Nejsvětější Trojice. Jít na mši svatou je vstupem do nebe, kde sám Bůh stírá každou slzu (srov. Zj 21,3-4). Proto přijímej Ho s pokorou, pokud je to možné na kolenou a do úst, a jestli zdraví ti nedovoluje pokleknout tak vestoje a do úst. Církev také povoluje přijetí Těla Páně vestoje a na ruku, ale před přijetím poklekni a odevzdej Pánu úctu. Dávej též pozor, zda na ruce nezůstala nějaká částka Těla Ježíše Krista, pamatuj, že Ježíš je celý přítomen i v tom nejmenším drobku proměněného Chleba.
-          </p>
-          <p>
-            Nic nám nemůže dát víc než to, co dostáváme ve mši svaté, neboť přijímáme život a lásku samého Boha. To není metafora, předzvěst nebo symbol, ale pravá skutečnost. S pokorou před velikostí Boha, jenž vstupuje do lidského srdce, přijímáme eucharistického Ježíše s největší vnitřní usebraností a vroucností, jaké jsme v tu chvíli schopni. V prostotě Ho přivítej, raduj se z Jeho přítomnosti, spojuj se s Ním. Teprve potom Mu upřímně řekni o svých potřebách a těžkostech, aby onen „nejdrahocennější čas", jak ho nazvala svatá Faustyna, neuplynul jen vypočítáváním proseb.
-          </p>
-          <p>
-            Někteří lidé přijímají Pána Ježíše jen ze zvyku. Rutina způsobuje, že Mu buď nemají co říci, anebo jenom odříkávají modlitební formulky a nevkládají do nich srdce.
-          </p>
-        </div>
-
-        <h3 class="section-subtitle">Po svatém přijímání a po mši svaté…</h3>
-
-        <div class="text-content">
-          <p>
-            Po svatém přijímání je potřeba aspoň chvilku být sám s Ježíšem, v tichosti vlastního srdce. V této nejdůvěrnější jednotě s Bohem Mu odevzdejme sebe jako výlučný majetek. Můžeme použít slov modlitby:
-          </p>
-        </div>
-
-        <div class="prayer-box">
-          <p>
-            „Přijmi, Pane, všechnu mou svobodu. Přijmi mou paměť, můj rozum a všechnu mou vůli. Všechno, co mám a co mi patří, mám od tebe: všechno ti to odevzdávám, nalož s tím podle své vůle. Jenom o lásku k tobě tě prosím a o tvou milost, to mi stačí, nic jiného už nežádám. Amen."
-          </p>
-        </div>
-
-        <div class="text-content">
-          <p>
-            Ale musí to vyplývat z našeho přesvědčení a touhy! Po skončení mše svaté máme žít, pracovat i odpočívat v jednotě s Ježíšem. Čas po mši svaté je dobou, ve které žijeme z Toho, kterého jsme přijali. A zároveň je časem přípravy na další slavení Eucharistie a setkání s Ním.
-          </p>
-        </div>
-
-        <div class="highlight-box">
-          <p><strong>Časy bohoslužeb v naší farnosti</strong></p>
-          <p>Informace o časech mší svatých a možnosti přistoupit ke svatému přijímání najdete v sekci <a href="/#about" style="color: #2c3e50; text-decoration: underline;">Bohoslužby</a> na úvodní stránce.</p>
-        </div>
-      </section>
+  <section class="content-section">
+    <div class="text-content">
+      <p>
+        Mezi všemi svátostmi zaujímá nejčestnější místo, je to <strong>živé tělo a krev Ježíše Krista</strong>. Slovo eucharistie je řeckého původu a znamená díkůvzdání. Ve svatém přijímání se věřící setkává s eucharistickým Kristem!
+      </p>
+      <p>
+        I když se chléb nebo víno rozdělí na menší části, vždy je přítomen celý Kristus. Proto je tak důležité, že kněz pečlivě očišťuje patenu a kalich (purifikace). Přítomnost Kristova trvá, pokud trvají způsoby chleba nebo vína.
+      </p>
+      <p>
+        V římském ritu používáme k eucharistii nekvašený chléb a čisté, přírodní víno bez jakékoli příměsi, nemusí být bílé. II. Vatikánský koncil povolil věřícím, pokud jsou přítomni na celé mši svaté, přistoupit podruhé ke svatému přijímání. Před přijímáním je nutné dodržet eucharistický půst, který trvá jednu hodinu. Voda a léky tento půst neporušují.
+      </p>
+      <p>
+        Přijetím eucharistie se odpouštějí lehké hříchy. Pokud můžeme, máme ke svatému přijímání přistupovat při každé mši svaté.
+      </p>
+      <p>
+        Přijímat pouze jednou za rok, jak to přikazuje církevní přikázání, svědčí jednak o velmi malé snaze o hlubší duchovní život a o malé lásce ke Kristu. Na cestě k věčnosti je nám třeba posily a tu nám může dát pouze Kristovo tělo.
+      </p>
+      <p>
+        <strong>Eucharistická adorace</strong> je jedním z projevů úcty ke Kristu, přítomnému v oltářní svátosti.
+      </p>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
-    <script type="module" src="/script.js" defer></script>
-    <Footer />
-  </body>
-</html>
+    <div class="intro-quote">
+      Církev nedostala Eucharistii od Krista, svého Pána, jako jeden z mnoha darů, byť velmi cenný, nýbrž jako největší dar (dar par exellence), neboť Kristus dává sám sebe, svou osobu ve svém lidství a též své dílo spásy…<br/>
+      <em>(sv. Jan Pavel II.: Ecclesia de Eucharistia, 11)</em>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>„Kdo bude jíst tento chléb, bude žít navěky. A chléb, který já dám, je mé tělo"</strong> (Jan 6,54)</p>
+    </div>
+
+    <h3 class="section-title">Mše svatá jako oběť Krista</h3>
+
+    <div class="text-content">
+      <p>
+        Když celebrant při eucharistické modlitbě vyslovuje konsekrační slova, stáváme se účastníky nejdůležitějších událostí v dějinách lidstva: utrpení, smrti a zmrtvýchvstání Krista. Jsme na Kalvárii u nohou ukřižovaného Ježíše. Proto <strong>mše sv. je především oběť Ježíše Krista</strong>.
+      </p>
+      <p>
+        „To je zázrak všech zázraků," vysvětluje Panna Maria mystičce Catalině Rivas. – „Pán není omezený ani časem, ani prostorem. V okamžiku konsekrace je celé společenství shromážděno u paty kříže na Kalvárii při Ježíšově ukřižování. Zvedni své oči a kontempluj Ho. Dívej se na Něho a opakuj modlitbu:
+      </p>
+    </div>
+
+    <div class="prayer-box">
+      <ul class="bullet-list">
+        <li><strong>Pane, věřím, klaním se, důvěřuji a miluji Tě.</strong></li>
+        <li><strong>Prosím o odpuštění pro ty, kteří nevěří, neklanějí se, nedůvěřují a nemilují Tě.</strong></li>
+        <li><strong>Nyní Mu řekni, jak velmi Ho miluješ, a klaň se Králi králů.</strong></li>
+      </ul>
+    </div>
+
+    <div class="text-content">
+      <p>
+        Máme v duchu hledět na Ježíše umírajícího na kříži, protože víme, že byl přibit pro naše hříchy, za naše viny (srov. Iz 53,5). Když Ježíš umírá na kříži, přináší dokonalou oběť, která snímá hříchy všech lidí. Kristovo utrpení je utrpením božské Osoby, a proto má přístup všude tam, kam se dostala ničivá moc zla. On, naprosto nevinný a svatý, trpí a umírá za každého člověka v plné solidaritě s hříšnými lidmi. Pro nás, kteří se účastníme mše svaté, je to zcela mimořádná příležitost.
+      </p>
+    </div>
+
+    <h3 class="section-title">Svaté přijímání</h3>
+
+    <div class="text-content">
+      <p>
+        Eucharistie přijatá s čistým srdcem nás proměňuje a uvádí do nebeské reality, neboť máme účast na životě Nejsvětější Trojice. Jít na mši svatou je vstupem do nebe, kde sám Bůh stírá každou slzu (srov. Zj 21,3-4). Proto přijímej Ho s pokorou, pokud je to možné na kolenou a do úst, a jestli zdraví ti nedovoluje pokleknout tak vestoje a do úst. Církev také povoluje přijetí Těla Páně vestoje a na ruku, ale před přijetím poklekni a odevzdej Pánu úctu. Dávej též pozor, zda na ruce nezůstala nějaká částka Těla Ježíše Krista, pamatuj, že Ježíš je celý přítomen i v tom nejmenším drobku proměněného Chleba.
+      </p>
+      <p>
+        Nic nám nemůže dát víc než to, co dostáváme ve mši svaté, neboť přijímáme život a lásku samého Boha. To není metafora, předzvěst nebo symbol, ale pravá skutečnost. S pokorou před velikostí Boha, jenž vstupuje do lidského srdce, přijímáme eucharistického Ježíše s největší vnitřní usebraností a vroucností, jaké jsme v tu chvíli schopni. V prostotě Ho přivítej, raduj se z Jeho přítomnosti, spojuj se s Ním. Teprve potom Mu upřímně řekni o svých potřebách a těžkostech, aby onen „nejdrahocennější čas", jak ho nazvala svatá Faustyna, neuplynul jen vypočítáváním proseb.
+      </p>
+      <p>
+        Někteří lidé přijímají Pána Ježíše jen ze zvyku. Rutina způsobuje, že Mu buď nemají co říci, anebo jenom odříkávají modlitební formulky a nevkládají do nich srdce.
+      </p>
+    </div>
+
+    <h3 class="section-subtitle">Po svatém přijímání a po mši svaté…</h3>
+
+    <div class="text-content">
+      <p>
+        Po svatém přijímání je potřeba aspoň chvilku být sám s Ježíšem, v tichosti vlastního srdce. V této nejdůvěrnější jednotě s Bohem Mu odevzdejme sebe jako výlučný majetek. Můžeme použít slov modlitby:
+      </p>
+    </div>
+
+    <div class="prayer-box">
+      <p>
+        „Přijmi, Pane, všechnu mou svobodu. Přijmi mou paměť, můj rozum a všechnu mou vůli. Všechno, co mám a co mi patří, mám od tebe: všechno ti to odevzdávám, nalož s tím podle své vůle. Jenom o lásku k tobě tě prosím a o tvou milost, to mi stačí, nic jiného už nežádám. Amen."
+      </p>
+    </div>
+
+    <div class="text-content">
+      <p>
+        Ale musí to vyplývat z našeho přesvědčení a touhy! Po skončení mše svaté máme žít, pracovat i odpočívat v jednotě s Ježíšem. Čas po mši svaté je dobou, ve které žijeme z Toho, kterého jsme přijali. A zároveň je časem přípravy na další slavení Eucharistie a setkání s Ním.
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>Časy bohoslužeb v naší farnosti</strong></p>
+      <p>Informace o časech mší svatých a možnosti přistoupit ke svatému přijímání najdete v sekci <a href="/#about" style="color: #2c3e50; text-decoration: underline;">Bohoslužby</a> na úvodní stránce.</p>
+    </div>
+  </section>
+</Layout>

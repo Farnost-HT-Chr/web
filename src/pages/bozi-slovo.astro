@@ -1,11 +1,9 @@
 ---
-import Navigation from '../components/Navigation.astro';
-import MobileMenu from '../components/MobileMenu.astro';
-import Footer from '../components/Footer.astro';
+import Layout from '../layouts/Layout.astro';
 import fs from 'fs';
 import path from 'path';
 
-// Načtení PDF souborů z podsložek podle roku
+// Načtení PDF souborů z podsložek podle roku, dříve Boží slovo
 const liturgicalTextsDir = path.join(process.cwd(), 'public', 'liturgical_texts');
 let pdfsByYear: Record<string, Array<{fileName: string, filePath: string}>> = {};
 
@@ -63,51 +61,23 @@ const currentYearData = pdfsByYear[currentYear] || [];
 const otherYears = allYears.filter(year => year !== currentYear).reverse();
 ---
 
-<!doctype html>
-<html lang="cs">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Liturgie - Farnost Hrochův Týnec - Chroustovice</title>
-    <meta name="description" content="Liturgické texty, kalendář a zdroje pro farnost Hrochův Týnec - Chroustovice." />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    
-    <!-- Preload fonts -->
+<Layout 
+  title="Liturgie - Farnost Hrochův Týnec - Chroustovice"
+  description="Liturgické texty, kalendář a zdroje pro farnost Hrochův Týnec - Chroustovice."
+>
+  <Fragment slot="head">
+    <!-- Font preloads -->
     <link rel="preload" href="/fonts/Ohrada.otf" as="font" type="font/otf" crossorigin="anonymous" />
     <link rel="preload" href="/fonts/HelveticaNow.otf" as="font" type="font/otf" crossorigin="anonymous" />
     <link rel="preload" href="/fonts/HelveticaNowBold.otf" as="font" type="font/otf" crossorigin="anonymous" />
     <link rel="preload" href="/fonts/OpenSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href="/fonts/OpenSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="/styles_v3.css" />
-  </head>
+  </Fragment>
 
-  <body>
-    <MobileMenu />
-    
-    <header class="site-header">
-      <div class="header-content">
-        <a href="/" class="header-favicon" aria-label="Přejít na domovskou stránku">
-          <img src="/favicon/apple-touch-icon.png" alt="Logo farnosti" />
-        </a>
-        <div class="header-text">
-          <h1>Farnost Hrochův Týnec - Chroustovice</h1>
-          <p>Římskokatolická farnost</p>
-        </div>
-      </div>
-    </header>
-
-    <Navigation />
-
-    <div class="content">
-      <div class="container">
-        <!-- Liturgické texty ke stažení -->
-        <h1 class="page-title">Boží slovo</h1>
-        <div class="liturgical-files-section">
+  <div class="container">
+    <!-- Liturgické texty ke stažení -->
+    <h1 class="page-title">Boží slovo</h1>
+    <div class="liturgical-files-section">
           
           {Object.keys(pdfsByYear).length === 0 ? (
             <div class="no-files">
@@ -265,32 +235,27 @@ const otherYears = allYears.filter(year => year !== currentYear).reverse();
           )}
         </div>
       </div>
-    </div>
 
-    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
-    <script type="module" src="/script.js" defer></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const toggleBtn = document.getElementById('toggleExtraYears');
-        const extraYears = document.getElementById('extraYears');
-        const btnText = document.getElementById('btnText');
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('toggleExtraYears');
+      const extraYears = document.getElementById('extraYears');
+      const btnText = document.getElementById('btnText');
 
-        if (toggleBtn && extraYears) {
-          toggleBtn.addEventListener('click', () => {
-            const isOpen = extraYears.classList.toggle('is-open');
+      if (toggleBtn && extraYears) {
+        toggleBtn.addEventListener('click', () => {
+          const isOpen = extraYears.classList.toggle('is-open');
+          
+          if (isOpen) {
+            btnText.innerHTML = '<span>▲ Zobrazit méně</span>';
+          } else {
+            const yearCount = extraYears.querySelectorAll('.year-group').length;
+            btnText.innerHTML = '<span>📅 Zobrazit starší roky</span><span class="count">+' + yearCount + '</span>';
             
-            if (isOpen) {
-              btnText.innerHTML = '<span>▲ Zobrazit méně</span>';
-            } else {
-              const yearCount = extraYears.querySelectorAll('.year-group').length;
-              btnText.innerHTML = '<span>📅 Zobrazit starší roky</span><span class="count">+' + yearCount + '</span>';
-              
-              extraYears.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            }
-          });
-        }
-      });
-    </script>
-    <Footer />
-  </body>
-</html>
+            extraYears.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          }
+        });
+      }
+    });
+  </script>
+</Layout>

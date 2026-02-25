@@ -1,489 +1,111 @@
----
-import Navigation from '../components/Navigation.astro';
-import MobileMenu from '../components/MobileMenu.astro';
-import Footer from '../components/Footer.astro';
+﻿---
+import Layout from '../layouts/Layout.astro';
 ---
 
-<!doctype html>
-<html lang="cs">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Svátost pomazání nemocných - Farnost Hrochův Týnec - Chroustovice</title>
-    <meta name="description" content="Informace o svátosti pomazání nemocných v naší farnosti - pro koho je určena, jak se uděluje, kontakt na faráře." />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://farnostht-chr.cz/pomazani-nemocnych" />
-    <meta property="og:title" content="Svátost pomazání nemocných - Farnost Hrochův Týnec - Chroustovice" />
-    <meta property="og:description" content="Informace o svátosti pomazání nemocných v naší farnosti - pro koho je určena, jak se uděluje, kontakt na faráře." />
-    
-    <!-- preload fonts -->
-    <link
-      rel="preload"
-      href="/fonts/Ohrada.otf"
-      as="font"
-      type="font/otf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/HelveticaNow.otf"
-      as="font"
-      type="font/otf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/HelveticaNowBold.otf"
-      as="font"
-      type="font/otf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/OpenSans-Regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/OpenSans-Italic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/OpenSans-Bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="styles_v3.css" />
+<Layout 
+  title="Svátost pomazání nemocných - Farnost Hrochův Týnec - Chroustovice"
+  description="Informace o svátosti pomazání nemocných v naší farnosti - pro koho je určena, jak se uděluje, kontakt na faráře."
+>
+  <div class="page-hero">
+    <h2>Svátost pomazání nemocných</h2>
+  </div>
 
-    <style>
-      body {
-        background-color: #ffffff;
-        margin: 0;
-        padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .site-header {
-        background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
-        padding: 1.5rem 1rem 1.2rem;
-        text-align: center;
-        position: relative;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      }
-
-      .header-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.8rem;
-      }
-
-      .header-favicon {
-        width: 70px;
-        height: 70px;
-        flex-shrink: 0;
-        background: white;
-        border-radius: 50%;
-        padding: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .header-favicon:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-      }
-
-      .header-favicon img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-
-      .header-text h1 {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 2.2rem;
-        color: #2c3e50;
-        margin: 0 0 0.2rem 0;
-        line-height: 1.2;
-        font-weight: 600;
-        text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-      }
-
-      .header-text p {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        font-size: 0.95rem;
-        color: #555;
-        margin: 0;
-        font-weight: 400;
-      }
-
-      .content {
-        flex: 1;
-        background-color: #fff;
-      }
-
-      .page-hero {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 3rem 1rem;
-        text-align: center;
-      }
-
-      .page-hero h2 {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        font-weight: 600;
-        font-size: 3rem;
-        color: #2c3e50;
-        margin-bottom: 1rem;
-        line-height: 1.2;
-      }
-
-      .page-hero p {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        color: #555;
-        font-size: 1.2rem;
-        line-height: 1.6;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .content-section {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 4rem 2rem;
-      }
-
-      .intro-quote {
-        font-family: Georgia, serif;
-        color: #444;
-        font-size: 1.15rem;
-        font-style: italic;
-        margin: 2rem 0 3rem;
-        padding: 2rem;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-left: 4px solid #FFD700;
-        border-radius: 8px;
-        line-height: 1.8;
-      }
-
-      .text-content {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        color: #333;
-        font-size: 1.05rem;
-        line-height: 1.8;
-        margin-bottom: 2rem;
-      }
-
-      .text-content p {
-        margin-bottom: 1.5rem;
-      }
-
-      .section-title {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        font-size: 2rem;
-        color: #2c3e50;
-        margin: 3rem 0 1.5rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 3px solid #FFD700;
-        font-weight: 600;
-      }
-
-      .section-subtitle {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        font-size: 1.5rem;
-        color: #34495e;
-        margin: 2rem 0 1rem;
-        font-weight: 600;
-      }
-
-      .highlight-box {
-        background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin: 2rem 0;
-        border-left: 4px solid #FFD700;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      }
-
-      .highlight-box p {
-        margin: 0.5rem 0;
-        color: #333;
-      }
-
-      .highlight-box ul {
-        margin: 0.5rem 0;
-        padding-left: 1.5rem;
-      }
-
-      .highlight-box li {
-        margin: 0.5rem 0;
-        color: #333;
-      }
-
-      .scripture-box {
-        background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin: 2rem 0;
-        border-left: 4px solid #4682B4;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        font-style: italic;
-      }
-
-      .scripture-box p {
-        margin: 0.5rem 0;
-        color: #2c3e50;
-        line-height: 1.8;
-      }
-
-      .contact-box {
-        background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-        padding: 2rem;
-        border-radius: 12px;
-        margin: 2rem 0;
-        border-left: 4px solid #4CAF50;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      }
-
-      .contact-box p {
-        margin: 0.5rem 0;
-        color: #2c3e50;
-      }
-
-      .warning-box {
-        background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-        padding: 2rem;
-        border-radius: 12px;
-        margin: 2rem 0;
-        border-left: 4px solid #f44336;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      }
-
-      .warning-box p {
-        margin: 0.5rem 0;
-        color: #2c3e50;
-        font-weight: 600;
-        font-size: 1.1rem;
-      }
-
-      strong {
-        color: #2c3e50;
-        font-weight: 600;
-      }
-
-      em {
-        color: #555;
-        font-style: italic;
-      }
-
-      a {
-        color: #2c3e50;
-        text-decoration: underline;
-      }
-
-      /* Media query pro menší obrazovky (tablet/mobil) */
-      @media (max-width: 768px) {
-        .header-content {
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .header-favicon {
-          width: 55px;
-          height: 55px;
-          padding: 6px;
-        }
-
-        .header-text h1 {
-          font-size: 1.6rem;
-        }
-
-        .header-text p {
-          font-size: 0.85rem;
-        }
-
-        .page-hero {
-          padding: 2rem 1rem;
-        }
-
-        .page-hero h2 {
-          font-size: 2rem;
-        }
-
-        .page-hero p {
-          font-size: 1rem;
-        }
-
-        .content-section {
-          padding: 2rem 1rem;
-        }
-
-        .section-title {
-          font-size: 1.6rem;
-        }
-
-        .section-subtitle {
-          font-size: 1.3rem;
-        }
-
-        .text-content {
-          font-size: 1rem;
-        }
-
-        .intro-quote {
-          font-size: 1rem;
-          padding: 1.5rem;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <MobileMenu />
-    
-    <!-- Site Header s faviconem -->
-    <header class="site-header">
-      <div class="header-content">
-        <a href="/" class="header-favicon" aria-label="Přejít na domovskou stránku">
-          <img src="/favicon/apple-touch-icon.png" alt="Logo farnosti" />
-        </a>
-        <div class="header-text">
-          <h1>Farnost Hrochův Týnec - Chroustovice</h1>
-          <p>Římskokatolická farnost</p>
-        </div>
-      </div>
-    </header>
-
-    <Navigation />
-
-    <!-- HLAVNÍ OBSAH STRÁNKY -->
-    <div class="content">
-      <div class="page-hero">
-        <h2>Svátost pomazání nemocných</h2>
-      </div>
-
-      <section class="content-section">
-        <div class="intro-quote">
-          „Svátostí pomazání nemocných a modlitbou kněží doporučuje celá církev své nemocné trpícímu a oslavenému Pánu, aby jim ulehčil a zachránil je. Vybízí je, aby se dobrovolně přidružili ke Kristovu utrpení a k jeho smrti, a tak byli prospěšní Božímu lidu" (KKC 1499).
-        </div>
-
-        <div class="text-content">
-          <p>
-            <strong>Svátost pomazání nemocných je setkání s Ježíšem, který chce člověka posílit a pomoci mu v jeho nemoci a slabosti.</strong>
-          </p>
-          <p>
-            Nemoc a utrpení patří k lidskému životu. Dříve nebo později, ve větší či menší míře, na sobě či u druhých, každý z nás se s nimi někdy setká. V nemoci člověk zakouší vlastní bezmocnost, ohroženost a křehkost. Nemoc může vést k úzkosti, k uzavření do sebe, dokonce k zoufalství a vzpouře proti Bohu. Může však také napomáhat člověku k větší zralosti či v rozlišování mezi důležitým a nepodstatným. Velmi často nemoc vyvolává hledání Boha a návrat k němu.
-          </p>
-          <p>
-            Jakubův list nám dosvědčuje víru prvních křesťanů, že křesťan ani v nemoci a v utrpení nezůstává opuštěn, ale že i za této situace je zahrnut Ježíšovou láskou:
-          </p>
-        </div>
-
-        <div class="scripture-box">
-          <p>
-            „Je někdo z vás nemocný? Ať si zavolá představené církevní obce a ti ať se nad ním modlí a mažou ho olejem ve jménu Páně; modlitba spojená s vírou zachrání nemocného, Pán ho pozdvihne, a jestliže se dopustil hříchů, bude mu odpuštěno." (Jak 5,14-15)
-          </p>
-        </div>
-
-        <div class="text-content">
-          <p>
-            Z uvedeného úryvku můžeme také vyčíst některé důležité charakteristiky svátosti pomazání nemocných:
-          </p>
-        </div>
-
-        <div class="highlight-box">
-          <ul>
-            <li>pomazání nemocných uděluje představený církevní obce – dnes biskup nebo kněz</li>
-            <li>podstatou slavení této svátosti je pomazání olejem, doprovázené modlitbou kněze</li>
-            <li>pomazání nemocných působí jak na tělo, tak na duši</li>
-          </ul>
-          <p style="margin-top: 1rem;">
-            Olej, používaný při slavení této svátosti, je jedním ze tří olejů, které světí biskup na Zelený čtvrtek ve své katedrále (kromě oleje nemocných ještě olej katechumenů a křižmo).
-          </p>
-        </div>
-
-        <h3 class="section-title">Slavení pomazání nemocných</h3>
-
-        <div class="text-content">
-          <p>
-            Svátost nemocných či pomazání nemocných je určena lidem, kteří <strong>vážně onemocněli</strong> nebo jejichž <strong>síly jsou stářím značně oslabeny</strong>. Svátost je nemocnému v jeho vážné nemoci posilou na duchu a mnohdy skrze ní může nemocný přijmout i tělesné uzdravení.
-          </p>
-          <p>
-            Svátost nemocných lze přijmout <strong>vícekrát za život</strong>, pokud se člověk uzdraví a znovu onemocní nebo pokud se jeho stav výrazně zhorší a on o tuto pomoc znovu žádá. Při určování „vážného" stupně nemoci se mají brát rozvážně a bez zbytečné úzkostlivosti v úvahu potíže jak tělesné, tak duševní. Samotná stísněnost způsobená chorobou, i když tato není sama o sobě těžká, může být příležitostí k udělení svátosti nemocných.
-          </p>
-        </div>
-
-        <div class="highlight-box">
-          <p><strong>Kdy se může svátost udělit:</strong></p>
-          <ul>
-            <li>Před chirurgickým zákrokem (operací), který vzbuzuje starost a obavy</li>
-            <li>Starým lidem, jejichž síly značně ochabují, i když není na nich vidět žádnou nebezpečnou nemoc</li>
-            <li>Svátost se může opakovat, když se během nemoci přitíží</li>
-          </ul>
-        </div>
-
-        <h4 class="section-subtitle">Jak se svátost uděluje</h4>
-
-        <div class="text-content">
-          <p>
-            Udílí se <strong>vkládáním rukou kněze</strong> na hlavu nemocného a následným <strong>mazáním posvěceným olejem</strong> na hlavě a na rukou.
-          </p>
-          <p>
-            Pomazání nemocných lze udělit v kostele při mši i mimo mši, doma, v nemocnici, v domově důchodců, kdekoliv, kde se nemocný nachází a kde k němu může kněz přijít.
-          </p>
-        </div>
-
-        <div class="contact-box">
-          <p><strong>Jak požádat o svátost pomazání nemocných:</strong></p>
-          <p>Požádat o udělení svátosti nemocných lze kdykoli osobně nebo telefonicky:</p>
-          <p style="margin-top: 1rem;">
-            <strong>Tel:</strong> <a href="tel:731598782">731 598 782</a><br/>
-            <strong>Email:</strong> <a href="mailto:fas@farnostht-chr.cz">fas@farnostht-chr.cz</a>
-          </p>
-        </div>
-
-        <div class="warning-box">
-          <p>⚠️ Neodkládejte udělení této svátosti vašim blízkým!</p>
-        </div>
-
-        <h3 class="section-title">Příprava na přijetí pomazání nemocných</h3>
-
-        <div class="text-content">
-          <p>
-            O svátost pomazání nemocných si má především požádat <strong>sám nemocný</strong> podle svého zdravotního stavu, případně požádá s jeho souhlasem někdo z jeho okolí.
-          </p>
-          <p>
-            Předpokládá se, že ten, kdo jí přijímá, se smířil s Bohem ve svátosti smíření. Pokud to není možné, je tato svátost chápána jako mimořádný prostředek ke smíření s Bohem.
-          </p>
-          <p>
-            Je vhodné se na slavení svátosti pomazání nemocných připravit společnou modlitbou celé rodiny nebo úzkého okruhu přátel nemocného. Je-li to možné, mohou pak tito nejbližší být také účastni vlastního slavení svátosti.
-          </p>
-        </div>
-      </section>
+  <section class="content-section">
+    <div class="intro-quote">
+      „Svátostí pomazání nemocných a modlitbou kněží doporučuje celá církev své nemocné trpícímu a oslavenému Pánu, aby jim ulehčil a zachránil je. Vybízí je, aby se dobrovolně přidružili ke Kristovu utrpení a k jeho smrti, a tak byli prospěšní Božímu lidu" (KKC 1499).
     </div>
 
-    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
-    <script type="module" src="/script.js" defer></script>
-    <Footer />
-  </body>
-</html>
+    <div class="text-content">
+      <p>
+        <strong>Svátost pomazání nemocných je setkání s Ježíšem, který chce člověka posílit a pomoci mu v jeho nemoci a slabosti.</strong>
+      </p>
+      <p>
+        Nemoc a utrpení patří k lidskému životu. Dříve nebo později, ve větší či menší míře, na sobě či u druhých, každý z nás se s nimi někdy setká. V nemoci člověk zakouší vlastní bezmocnost, ohroženost a křehkost. Nemoc může vést k úzkosti, k uzavření do sebe, dokonce k zoufalství a vzpouře proti Bohu. Může však také napomáhat člověku k větší zralosti či v rozlišování mezi důležitým a nepodstatným. Velmi často nemoc vyvolává hledání Boha a návrat k němu.
+      </p>
+      <p>
+        Jakubův list nám dosvědčuje víru prvních křesťanů, že křesťan ani v nemoci a v utrpení nezůstává opuštěn, ale že i za této situace je zahrnut Ježíšovou láskou:
+      </p>
+    </div>
+
+    <div class="scripture-box">
+      <p>
+        „Je někdo z vás nemocný? Ať si zavolá představené církevní obce a ti ať se nad ním modlí a mažou ho olejem ve jménu Páně; modlitba spojená s vírou zachrání nemocného, Pán ho pozdvihne, a jestliže se dopustil hříchů, bude mu odpuštěno." (Jak 5,14-15)
+      </p>
+    </div>
+
+    <div class="text-content">
+      <p>
+        Z uvedeného úryvku můžeme také vyčíst některé důležité charakteristiky svátosti pomazání nemocných:
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <ul>
+        <li>pomazání nemocných uděluje představený církevní obce – dnes biskup nebo kněz</li>
+        <li>podstatou slavení této svátosti je pomazání olejem, doprovázené modlitbou kněze</li>
+        <li>pomazání nemocných působí jak na tělo, tak na duši</li>
+      </ul>
+      <p style="margin-top: 1rem;">
+        Olej, používaný při slavení této svátosti, je jedním ze tří olejů, které světí biskup na Zelený čtvrtek ve své katedrále (kromě oleje nemocných ještě olej katechumenů a křižmo).
+      </p>
+    </div>
+
+    <h3 class="section-title">Slavení pomazání nemocných</h3>
+
+    <div class="text-content">
+      <p>
+        Svátost nemocných či pomazání nemocných je určena lidem, kteří <strong>vážně onemocněli</strong> nebo jejichž <strong>síly jsou stářím značně oslabeny</strong>. Svátost je nemocnému v jeho vážné nemoci posilou na duchu a mnohdy skrze ní může nemocný přijmout i tělesné uzdravení.
+      </p>
+      <p>
+        Svátost nemocných lze přijmout <strong>vícekrát za život</strong>, pokud se člověk uzdraví a znovu onemocní nebo pokud se jeho stav výrazně zhorší a on o tuto pomoc znovu žádá. Při určování „vážného" stupně nemoci se mají brát rozvážně a bez zbytečné úzkostlivosti v úvahu potíže jak tělesné, tak duševní. Samotná stísněnost způsobená chorobou, i když tato není sama o sobě těžká, může být příležitostí k udělení svátosti nemocných.
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>Kdy se může svátost udělit:</strong></p>
+      <ul>
+        <li>Před chirurgickým zákrokem (operací), který vzbuzuje starost a obavy</li>
+        <li>Starým lidem, jejichž síly značně ochabují, i když není na nich vidět žádnou nebezpečnou nemoc</li>
+        <li>Svátost se může opakovat, když se během nemoci přitíží</li>
+      </ul>
+    </div>
+
+    <h4 class="section-subtitle">Jak se svátost uděluje</h4>
+
+    <div class="text-content">
+      <p>
+        Udílí se <strong>vkládáním rukou kněze</strong> na hlavu nemocného a následným <strong>mazáním posvěceným olejem</strong> na hlavě a na rukou.
+      </p>
+      <p>
+        Pomazání nemocných lze udělit v kostele při mši i mimo mši, doma, v nemocnici, v domově důchodců, kdekoliv, kde se nemocný nachází a kde k němu může kněz přijít.
+      </p>
+    </div>
+
+    <div class="contact-box">
+      <p><strong>Jak požádat o svátost pomazání nemocných:</strong></p>
+      <p>Požádat o udělení svátosti nemocných lze kdykoli osobně nebo telefonicky:</p>
+      <p style="margin-top: 1rem;">
+        <strong>Tel:</strong> <a href="tel:731598782">731 598 782</a><br/>
+        <strong>Email:</strong> <a href="mailto:fas@farnostht-chr.cz">fas@farnostht-chr.cz</a>
+      </p>
+    </div>
+
+    <div class="warning-box">
+      <p>⚠️ Neodkládejte udělení této svátosti vašim blízkým!</p>
+    </div>
+
+    <h3 class="section-title">Příprava na přijetí pomazání nemocných</h3>
+
+    <div class="text-content">
+      <p>
+        O svátost pomazání nemocných si má především požádat <strong>sám nemocný</strong> podle svého zdravotního stavu, případně požádá s jeho souhlasem někdo z jeho okolí.
+      </p>
+      <p>
+        Předpokládá se, že ten, kdo jí přijímá, se smířil s Bohem ve svátosti smíření. Pokud to není možné, je tato svátost chápána jako mimořádný prostředek ke smíření s Bohem.
+      </p>
+      <p>
+        Je vhodné se na slavení svátosti pomazání nemocných připravit společnou modlitbou celé rodiny nebo úzkého okruhu přátel nemocného. Je-li to možné, mohou pak tito nejbližší být také účastni vlastního slavení svátosti.
+      </p>
+    </div>
+  </section>
+</Layout>
