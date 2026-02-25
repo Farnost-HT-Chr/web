@@ -10,10 +10,10 @@ const { name, path, index } = Astro.props;
 
 <div class="pdf-item" data-pdf-id={index}>
   <div class="pdf-header">
-    <h2 class="pdf-title">
+    <h3 class="pdf-title">
       <span class="expand-icon">▼</span>
       {name}
-    </h2>
+    </h3>
     <div class="pdf-actions">
       <a href={path} download class="btn btn-download">
         ⬇ Stáhnout PDF

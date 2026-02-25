@@ -1,436 +1,92 @@
----
-import Navigation from '../components/Navigation.astro';
-import MobileMenu from '../components/MobileMenu.astro';
-import Footer from '../components/Footer.astro';
+﻿---
+import Layout from '../layouts/Layout.astro';
 ---
 
-<!doctype html>
-<html lang="cs">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Svátost smíření - Farnost Hrochův Týnec - Chroustovice</title>
-    <meta name="description" content="Informace o svátosti smíření (zpovědi) v naší farnosti - příprava, časy zpovědi, význam svátosti pokání." />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://farnostht-chr.cz/svatost-smireni" />
-    <meta property="og:title" content="Svátost smíření - Farnost Hrochův Týnec - Chroustovice" />
-    <meta property="og:description" content="Informace o svátosti smíření (zpovědi) v naší farnosti - příprava, časy zpovědi, význam svátosti pokání." />
-    
-    <!-- preload fonts -->
-    <link
-      rel="preload"
-      href="/fonts/Ohrada.otf"
-      as="font"
-      type="font/otf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/HelveticaNow.otf"
-      as="font"
-      type="font/otf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/HelveticaNowBold.otf"
-      as="font"
-      type="font/otf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/OpenSans-Regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/OpenSans-Italic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/OpenSans-Bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="styles_v3.css" />
+<Layout 
+  title="Svátost smíření - Farnost Hrochův Týnec - Chroustovice"
+  description="Informace o svátosti smíření (zpovědi) v naší farnosti - příprava, časy zpovědi, význam svátosti pokání."
+>
+  <div class="page-hero">
+    <h2>Svátost smíření</h2>
+  </div>
 
-    <style>
-      body {
-        background-color: #ffffff;
-        margin: 0;
-        padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .site-header {
-        background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
-        padding: 1.5rem 1rem 1.2rem;
-        text-align: center;
-        position: relative;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      }
-
-      .header-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.8rem;
-      }
-
-      .header-favicon {
-        width: 70px;
-        height: 70px;
-        flex-shrink: 0;
-        background: white;
-        border-radius: 50%;
-        padding: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .header-favicon:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-      }
-
-      .header-favicon img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-
-      .header-text h1 {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 2.2rem;
-        color: #2c3e50;
-        margin: 0 0 0.2rem 0;
-        line-height: 1.2;
-        font-weight: 600;
-        text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-      }
-
-      .header-text p {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        font-size: 0.95rem;
-        color: #555;
-        margin: 0;
-        font-weight: 400;
-      }
-
-      .content {
-        flex: 1;
-        background-color: #fff;
-      }
-
-      .page-hero {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 3rem 1rem;
-        text-align: center;
-      }
-
-      .page-hero h2 {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        font-weight: 600;
-        font-size: 3rem;
-        color: #2c3e50;
-        margin-bottom: 1rem;
-        line-height: 1.2;
-      }
-
-      .page-hero p {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        color: #555;
-        font-size: 1.2rem;
-        line-height: 1.6;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .content-section {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 4rem 2rem;
-      }
-
-      .intro-quote {
-        font-family: Georgia, serif;
-        color: #444;
-        font-size: 1.15rem;
-        font-style: italic;
-        margin: 2rem 0 3rem;
-        padding: 2rem;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-left: 4px solid #FFD700;
-        border-radius: 8px;
-        line-height: 1.8;
-      }
-
-      .text-content {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        color: #333;
-        font-size: 1.05rem;
-        line-height: 1.8;
-        margin-bottom: 2rem;
-      }
-
-      .text-content p {
-        margin-bottom: 1.5rem;
-      }
-
-      .section-title {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        font-size: 2rem;
-        color: #2c3e50;
-        margin: 3rem 0 1.5rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 3px solid #FFD700;
-        font-weight: 600;
-      }
-
-      .section-subtitle {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        font-size: 1.5rem;
-        color: #34495e;
-        margin: 2rem 0 1rem;
-        font-weight: 600;
-      }
-
-      .highlight-box {
-        background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin: 2rem 0;
-        border-left: 4px solid #FFD700;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      }
-
-      .highlight-box p {
-        margin: 0.5rem 0;
-        color: #333;
-      }
-
-      .info-box {
-        background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin: 2rem 0;
-        border-left: 4px solid #4CAF50;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      }
-
-      .info-box p {
-        margin: 0.5rem 0;
-        color: #2c3e50;
-      }
-
-      .definition-box {
-        background: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin: 1.5rem 0;
-        border-left: 4px solid #6c757d;
-      }
-
-      .definition-box p {
-        margin: 0.5rem 0;
-        color: #333;
-      }
-
-      strong {
-        color: #2c3e50;
-        font-weight: 600;
-      }
-
-      em {
-        color: #555;
-        font-style: italic;
-      }
-
-      /* Media query pro menší obrazovky (tablet/mobil) */
-      @media (max-width: 768px) {
-        .header-content {
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .header-favicon {
-          width: 55px;
-          height: 55px;
-          padding: 6px;
-        }
-
-        .header-text h1 {
-          font-size: 1.6rem;
-        }
-
-        .header-text p {
-          font-size: 0.85rem;
-        }
-
-        .page-hero {
-          padding: 2rem 1rem;
-        }
-
-        .page-hero h2 {
-          font-size: 2rem;
-        }
-
-        .page-hero p {
-          font-size: 1rem;
-        }
-
-        .content-section {
-          padding: 2rem 1rem;
-        }
-
-        .section-title {
-          font-size: 1.6rem;
-        }
-
-        .section-subtitle {
-          font-size: 1.3rem;
-        }
-
-        .text-content {
-          font-size: 1rem;
-        }
-
-        .intro-quote {
-          font-size: 1rem;
-          padding: 1.5rem;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <MobileMenu />
-    
-    <!-- Site Header s faviconem -->
-    <header class="site-header">
-      <div class="header-content">
-        <a href="/" class="header-favicon" aria-label="Přejít na domovskou stránku">
-          <img src="/favicon/apple-touch-icon.png" alt="Logo farnosti" />
-        </a>
-        <div class="header-text">
-          <h1>Farnost Hrochův Týnec - Chroustovice</h1>
-          <p>Římskokatolická farnost</p>
-        </div>
-      </div>
-    </header>
-
-    <Navigation />
-
-    <!-- HLAVNÍ OBSAH STRÁNKY -->
-    <div class="content">
-      <div class="page-hero">
-        <h2>Svátost smíření</h2>
-      </div>
-
-      <section class="content-section">
-        <div class="intro-quote">
-          „Ti, kdo přistupují ke svátosti pokání, dostávají od Božího milosrdenství odpuštění urážek, kterých se proti Bohu dopustili, a zároveň se smiřují s církví, kterou zranili svými hříchy a která svou láskou, příkladem a modlitbami pracuje na jejich obrácení" (KKC 1422).
-        </div>
-
-        <div class="text-content">
-          <p>
-            <strong>Svátost smíření</strong> někdy nazývaná jako (svatá) zpověď je setkání s Ježíšem, který mi odpouští hříchy.
-          </p>
-          <p>
-            Hříchem se myslí, jakékoliv porušení a poškození vztahu k Bohu, k druhým lidem a k sobě. První křesťané nazývali hřích řeckým slovem <em>hamartia</em>. Byl to termín převzatý ze světského života. Hamartia byla situace lukostřelce, který se netrefil do terče. Dneska bychom tedy mohli místo slova „hřích" použít slovo „trefa vedle". Hřích je tedy situace člověka, který se míjí svým cílem. Míjí se s Bohem i s druhými.
-          </p>
-        </div>
-
-        <div class="definition-box">
-          <p>
-            Člověk po hříchu většinou prožívá pocity hnusu, odporu, ponížení, krachu, ohluchnutí, zaslepenosti, tmy, smutku, tvrdosti, chladu. Hřích chce totiž člověka vyloučit, vyčlenit ze společenství.
-          </p>
-        </div>
-
-        <div class="text-content">
-          <p>
-            A právě <strong>Ježíš může takovému člověku pomoci dostat se z tohoto vězení ven</strong>. Podmínkou je, že člověk lituje toho, co způsobil a čím tento vztah narušil. Najde odvahu a tyto věci vyzná před knězem, který zde zastupuje samotného Ježíše. Je nutné vyznat všechny hříchy, ony „trefy vedle". Pak následuje modlitba rozhřešení, po níž člověk dostává pokání, které má za cíl napravit porušený vztah, jak na rovině duchovní, tak i lidské.
-          </p>
-        </div>
-
-        <h3 class="section-title">Slavení svátosti smíření</h3>
-
-        <div class="text-content">
-          <p>
-            Svátost smíření či pokání slouží k odpuštění hříchů těm, kdo byli v katolické církvi pokřtěni, litují svých hříchů, nesetrvávají v situaci, která je nedovolená (např. neplatné manželství) a mají touhu po zlepšení.
-          </p>
-          <p>
-            Každý katolík by se měl vyzpovídat <strong>alespoň jednou za rok</strong>, nejlépe v postní době, a kromě toho vždy, když se těžce proviní. Svátost smíření je ovšem užitečná i tehdy, když člověk nemá na svědomí těžké hříchy (tj. zcela vědomé a zcela svobodné rozhodnutí se vykonat nějaký čin proti Boží vůli v závažné záležitosti).
-          </p>
-        </div>
-
-        <div class="info-box">
-          <p><strong>Pravidelná příležitost ke slavení svátosti smíření v naší farnosti:</strong></p>
-          <ul style="margin: 0.5rem 0 0 1.5rem; padding: 0;">
-            <li style="margin: 0.5rem 0;">Vždy <strong>20 minut přede mší svatou</strong></li>
-            <li style="margin: 0.5rem 0;">V postní době také <strong>během pobožnosti Křížové cesty</strong></li>
-          </ul>
-          <p style="margin-top: 1rem;">
-            Je samozřejmě možné (a často i vhodné) i mimo tyto doby o svátost smíření kněze požádat osobně nebo telefonicky.
-          </p>
-        </div>
-
-        <h3 class="section-title">Příprava ke svátosti smíření</h3>
-
-        <div class="text-content">
-          <p>
-            K první svátosti smíření se většinou připravují děti školního věku v rámci přípravy na první svaté přijímání.
-          </p>
-          <p>
-            Pokud se někdo poté, co začal praktikovat křesťanskou víru, od ní na delší čas odklonil, je vhodné svůj návrat k životu z víry zpečetit slavením tzv. <strong>„generální zpovědi"</strong>, tj. slavením svátosti smíření, ve které svěřujeme Bohu celý svůj život z období našeho odklonu od něj. V tom případě je vhodné se na takovéto slavení nejprve připravit pastoračním rozhovorem s knězem.
-          </p>
-          <p>
-            Pokud byl někdo pokřtěn jako malé dítě a nikdy víru nepraktikoval, slavení svátosti smíření se pak stává součástí jeho dlouhodobé přípravy na obnovu křtu, která je podobná přípravě na křest dospělých (viz oddíl <a href="/krest" style="color: #2c3e50; text-decoration: underline;">Křest</a>).
-          </p>
-        </div>
-
-        <h4 class="section-subtitle">Osobní příprava na zpověď</h4>
-
-        <div class="text-content">
-          <p>
-            Při běžném pravidelném slavení svátosti smíření je vhodná osobní příprava doprovázená životní reflexí a modlitbou, k čemuž lze použít i nějaké, dnešní době přizpůsobené „zpovědní zrcadlo". Pomoci zde mohou různé texty jako „pomůcky ke zpytování svědomí":
-          </p>
-        </div>
-
-        <div class="highlight-box">
-          <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-            <li style="margin: 0.5rem 0;">podle Božího slova</li>
-            <li style="margin: 0.5rem 0;">podle vztahů v našem životě</li>
-            <li style="margin: 0.5rem 0;">podle manželského slibu</li>
-            <li style="margin: 0.5rem 0;">podle Desatera</li>
-          </ul>
-        </div>
-      </section>
+  <section class="content-section">
+    <div class="intro-quote">
+      „Ti, kdo přistupují ke svátosti pokání, dostávají od Božího milosrdenství odpuštění urážek, kterých se proti Bohu dopustili, a zároveň se smiřují s církví, kterou zranili svými hříchy a která svou láskou, příkladem a modlitbami pracuje na jejich obrácení" (KKC 1422).
     </div>
 
-    <button id="scrollTopBtn" aria-label="Zpět nahoru"></button>
-    <script type="module" src="/script.js" defer></script>
-    <Footer />
-  </body>
-</html>
+    <div class="text-content">
+      <p>
+        <strong>Svátost smíření</strong> někdy nazývaná jako (svatá) zpověď je setkání s Ježíšem, který mi odpouští hříchy.
+      </p>
+      <p>
+        Hříchem se myslí, jakékoliv porušení a poškození vztahu k Bohu, k druhým lidem a k sobě. První křesťané nazývali hřích řeckým slovem <em>hamartia</em>. Byl to termín převzatý ze světského života. Hamartia byla situace lukostřelce, který se netrefil do terče. Dneska bychom tedy mohli místo slova „hřích" použít slovo „trefa vedle". Hřích je tedy situace člověka, který se míjí svým cílem. Míjí se s Bohem i s druhými.
+      </p>
+    </div>
+
+    <div class="definition-box">
+      <p>
+        Člověk po hříchu většinou prožívá pocity hnusu, odporu, ponížení, krachu, ohluchnutí, zaslepenosti, tmy, smutku, tvrdosti, chladu. Hřích chce totiž člověka vyloučit, vyčlenit ze společenství.
+      </p>
+    </div>
+
+    <div class="text-content">
+      <p>
+        A právě <strong>Ježíš může takovému člověku pomoci dostat se z tohoto vězení ven</strong>. Podmínkou je, že člověk lituje toho, co způsobil a čím tento vztah narušil. Najde odvahu a tyto věci vyzná před knězem, který zde zastupuje samotného Ježíše. Je nutné vyznat všechny hříchy, ony „trefy vedle". Pak následuje modlitba rozhřešení, po níž člověk dostává pokání, které má za cíl napravit porušený vztah, jak na rovině duchovní, tak i lidské.
+      </p>
+    </div>
+
+    <h3 class="section-title">Slavení svátosti smíření</h3>
+
+    <div class="text-content">
+      <p>
+        Svátost smíření či pokání slouží k odpuštění hříchů těm, kdo byli v katolické církvi pokřtěni, litují svých hříchů, nesetrvávají v situaci, která je nedovolená (např. neplatné manželství) a mají touhu po zlepšení.
+      </p>
+      <p>
+        Každý katolík by se měl vyzpovídat <strong>alespoň jednou za rok</strong>, nejlépe v postní době, a kromě toho vždy, když se těžce proviní. Svátost smíření je ovšem užitečná i tehdy, když člověk nemá na svědomí těžké hříchy (tj. zcela vědomé a zcela svobodné rozhodnutí se vykonat nějaký čin proti Boží vůli v závažné záležitosti).
+      </p>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Pravidelná příležitost ke slavení svátosti smíření v naší farnosti:</strong></p>
+      <ul style="margin: 0.5rem 0 0 1.5rem; padding: 0;">
+        <li style="margin: 0.5rem 0;">Vždy <strong>20 minut přede mší svatou</strong></li>
+        <li style="margin: 0.5rem 0;">V postní době také <strong>během pobožnosti Křížové cesty</strong></li>
+      </ul>
+      <p style="margin-top: 1rem;">
+        Je samozřejmě možné (a často i vhodné) i mimo tyto doby o svátost smíření kněze požádat osobně nebo telefonicky.
+      </p>
+    </div>
+
+    <h3 class="section-title">Příprava ke svátosti smíření</h3>
+
+    <div class="text-content">
+      <p>
+        K první svátosti smíření se většinou připravují děti školního věku v rámci přípravy na první svaté přijímání.
+      </p>
+      <p>
+        Pokud se někdo poté, co začal praktikovat křesťanskou víru, od ní na delší čas odklonil, je vhodné svůj návrat k životu z víry zpečetit slavením tzv. <strong>„generální zpovědi"</strong>, tj. slavením svátosti smíření, ve které svěřujeme Bohu celý svůj život z období našeho odklonu od něj. V tom případě je vhodné se na takovéto slavení nejprve připravit pastoračním rozhovorem s knězem.
+      </p>
+      <p>
+        Pokud byl někdo pokřtěn jako malé dítě a nikdy víru nepraktikoval, slavení svátosti smíření se pak stává součástí jeho dlouhodobé přípravy na obnovu křtu, která je podobná přípravě na křest dospělých (viz oddíl <a href="/krest" style="color: #2c3e50; text-decoration: underline;">Křest</a>).
+      </p>
+    </div>
+
+    <h4 class="section-subtitle">Osobní příprava na zpověď</h4>
+
+    <div class="text-content">
+      <p>
+        Při běžném pravidelném slavení svátosti smíření je vhodná osobní příprava doprovázená životní reflexí a modlitbou, k čemuž lze použít i nějaké, dnešní době přizpůsobené „zpovědní zrcadlo". Pomoci zde mohou různé texty jako „pomůcky ke zpytování svědomí":
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+        <li style="margin: 0.5rem 0;">podle Božího slova</li>
+        <li style="margin: 0.5rem 0;">podle vztahů v našem životě</li>
+        <li style="margin: 0.5rem 0;">podle manželského slibu</li>
+        <li style="margin: 0.5rem 0;">podle Desatera</li>
+      </ul>
+    </div>
+  </section>
+</Layout>
