@@ -1,0 +1,165 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Rezervace intence - Farnost Hrochův Týnec - Chroustovice"
+  description="Rezervace mešní intence ve farnosti Hrochův Týnec a Chroustovice."
+>
+  <div class="page-hero">
+    <h2>Rezervace intence</h2>
+  </div>
+
+  <section class="content-section">
+    <form id="intenceForm" class="intence-form">
+      <!-- Jméno a příjmení -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">
+            Křestní jméno <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="firstName" 
+            name="firstName" 
+            placeholder="Jan"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">
+            Příjmení <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="lastName" 
+            name="lastName" 
+            placeholder="Novák"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Telefon -->
+      <div class="form-group">
+        <label for="phone">
+          Telefon <span class="required">*</span>
+        </label>
+        <input 
+          type="tel" 
+          id="phone" 
+          name="phone" 
+          placeholder="+420"
+          required
+        />
+      </div>
+
+      <!-- E-mail -->
+      <div class="form-group">
+        <label for="email">
+          E-mail <span class="required">*</span>
+        </label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          placeholder="Váš e-mail"
+          required
+        />
+      </div>
+
+      <!-- Datum -->
+      <div class="form-group">
+        <label for="customDate">
+          Datum <span class="required">*</span>
+        </label>
+        <input 
+          type="text" 
+          id="customDate" 
+          name="customDate" 
+          placeholder="15.3.2026"
+        />
+      </div>
+
+      <!-- Ve farnosti -->
+      <div class="form-group">
+        <label for="parish">
+          Ve farnosti <span class="required">*</span>
+        </label>
+        <select id="parish" name="parish" required>
+          <option value="ht">Hrochův Týnec</option>
+          <option value="chr">Chroustovice</option>
+        </select>
+      </div>
+
+      <!-- Znění intence -->
+      <div class="form-group">
+        <label for="intention">
+          Napište přesné znění intence <span class="required">*</span>
+        </label>
+        <textarea 
+          id="intention" 
+          name="intention" 
+          rows="4"
+          required
+        ></textarea>
+      </div>
+
+      <!-- Tlačítko -->
+      <button type="submit" class="submit-btn">
+        Rezervovat intenci
+      </button>
+    </form>
+
+    <!-- Informační boxy -->
+    <div class="info-box calendar-info">
+      <p>
+        Aktuální informace o již plánovaných intencích naleznete v kalendáři 
+        <a href="/kalendar">zde</a>.
+      </p>
+    </div>
+
+    <div class="info-box important">
+      <p>
+        <strong>Rezervace je platná až po jejím potvrzení e-mailem.</strong>
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Zobrazení/skrytí pole pro vlastní datum
+  const dateTypeSelect = document.getElementById('dateType') as HTMLSelectElement;
+  const customDateGroup = document.getElementById('customDateGroup');
+  const customDateInput = document.getElementById('customDate') as HTMLInputElement;
+
+  dateTypeSelect?.addEventListener('change', (e) => {
+    const target = e.target as HTMLSelectElement;
+    if (target.value === 'custom') {
+      customDateGroup!.style.display = 'block';
+      customDateInput.required = true;
+    } else {
+      customDateGroup!.style.display = 'none';
+      customDateInput.required = false;
+      customDateInput.value = '';
+    }
+  });
+
+  // Zpracování formuláře
+  const form = document.getElementById('intenceForm') as HTMLFormElement;
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    
+    // Zde by bylo odeslání formuláře na server
+    console.log('Formulář byl odeslán:', data);
+    
+    // Zobrazení potvrzení
+    alert('Děkujeme za odeslání rezervace intence. Brzy obdržíte potvrzovací e-mail.');
+    form.reset();
+    customDateGroup!.style.display = 'none';
+  });
+</script>
