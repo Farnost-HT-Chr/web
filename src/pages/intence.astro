@@ -11,7 +11,18 @@ import Layout from '../layouts/Layout.astro';
   </div>
 
   <section class="content-section">
-    <form id="intenceForm" class="intence-form">
+    <form 
+      id="intenceForm" 
+      class="intence-form"
+      action="https://formsubmit.co/pepino1.balek@gmail.com"
+      method="POST"
+    >
+      <!-- FormSubmit konfigurace -->
+      <input type="hidden" name="_subject" value="Nová rezervace intence" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="text" name="_honey" style="display:none" />
+      
       <!-- Jméno a příjmení -->
       <div class="form-row">
         <div class="form-group">
@@ -129,37 +140,41 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <script>
-  // Zobrazení/skrytí pole pro vlastní datum
-  const dateTypeSelect = document.getElementById('dateType') as HTMLSelectElement;
-  const customDateGroup = document.getElementById('customDateGroup');
-  const customDateInput = document.getElementById('customDate') as HTMLInputElement;
-
-  dateTypeSelect?.addEventListener('change', (e) => {
-    const target = e.target as HTMLSelectElement;
-    if (target.value === 'custom') {
-      customDateGroup!.style.display = 'block';
-      customDateInput.required = true;
-    } else {
-      customDateGroup!.style.display = 'none';
-      customDateInput.required = false;
-      customDateInput.value = '';
-    }
-  });
-
   // Zpracování formuláře
   const form = document.getElementById('intenceForm') as HTMLFormElement;
-  form?.addEventListener('submit', (e) => {
+  
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    const submitBtn = form.querySelector('.submit-btn') as HTMLButtonElement;
+    const originalText = submitBtn.textContent;
     
-    // Zde by bylo odeslání formuláře na server
-    console.log('Formulář byl odeslán:', data);
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Odesílám...';
     
-    // Zobrazení potvrzení
-    alert('Děkujeme za odeslání rezervace intence. Brzy obdržíte potvrzovací e-mail.');
-    form.reset();
-    customDateGroup!.style.display = 'none';
+    try {
+      const formData = new FormData(form);
+      
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        alert('Děkujeme za odeslání rezervace intence. Brzy obdržíte potvrzovací e-mail.');
+        form.reset();
+      } else {
+        alert('Omlouváme se, došlo k chybě při odesílání. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.');
+      }
+    } catch (error) {
+      console.error('Chyba:', error);
+      alert('Omlouváme se, došlo k chybě při odesílání. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
   });
 </script>
