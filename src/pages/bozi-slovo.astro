@@ -62,7 +62,7 @@ const otherYears = allYears.filter(year => year !== currentYear).reverse();
 ---
 
 <Layout 
-  title="Liturgie - Farnost Hrochův Týnec - Chroustovice"
+  title="Boží slovo - Farnost Hrochův Týnec - Chroustovice"
   description="Liturgické texty, kalendář a zdroje pro farnost Hrochův Týnec - Chroustovice."
 >
   <Fragment slot="head">
@@ -171,53 +171,49 @@ const otherYears = allYears.filter(year => year !== currentYear).reverse();
                   </div>
                 )}
 
-                <!-- Skryté starší roky -->
-                {otherYears.length > 0 && (
-                  <div class="extra-items-container" id="extraYears">
-                    {otherYears.map((year) => (
-                      <div class="year-group" data-year={year}>
-                        <h4 class="year-header">{year}</h4>
-                        <div class="files-grid">
-                          {pdfsByYear[year].map(({fileName, filePath}) => {
-                            const displayName = fileName
-                              .replace('.pdf', '')
-                              .replace(/^\d{4}-\d{2}-\d{2}[-_]?/, '')
-                              .replace(/[-_]/g, ' ')
-                              .trim();
-                            
-                            return (
-                              <div class="file-item">
-                                <div class="file-info">
-                                  <span class="file-icon">📄</span>
-                                  <span class="file-name">{displayName}</span>
-                                </div>
-                                <div class="file-actions">
-                                  <a 
-                                    href={`/liturgical_texts/${filePath}`} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    class="file-btn view-btn"
-                                    aria-label={`Zobrazit ${displayName}`}
-                                  >
-                                    👁️ Zobrazit
-                                  </a>
-                                  <a 
-                                    href={`/liturgical_texts/${filePath}`} 
-                                    download
-                                    class="file-btn download-btn"
-                                    aria-label={`Stáhnout ${displayName}`}
-                                  >
-                                    ⬇️ Stáhnout
-                                  </a>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
+                <!-- Starší roky - skrývané -->
+                {otherYears.map((year) => (
+                  <div class="year-group extra-year-item" data-year={year} style="display: none;">
+                    <h4 class="year-header">{year}</h4>
+                    <div class="files-grid">
+                      {pdfsByYear[year].map(({fileName, filePath}) => {
+                        const displayName = fileName
+                          .replace('.pdf', '')
+                          .replace(/^\d{4}-\d{2}-\d{2}[-_]?/, '')
+                          .replace(/[-_]/g, ' ')
+                          .trim();
+                        
+                        return (
+                          <div class="file-item">
+                            <div class="file-info">
+                              <span class="file-icon">📄</span>
+                              <span class="file-name">{displayName}</span>
+                            </div>
+                            <div class="file-actions">
+                              <a 
+                                href={`/liturgical_texts/${filePath}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                class="file-btn view-btn"
+                                aria-label={`Zobrazit ${displayName}`}
+                              >
+                                👁️ Zobrazit
+                              </a>
+                              <a 
+                                href={`/liturgical_texts/${filePath}`} 
+                                download
+                                class="file-btn download-btn"
+                                aria-label={`Stáhnout ${displayName}`}
+                              >
+                                ⬇️ Stáhnout
+                              </a>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                )}
+                ))}
               </div>
 
               <!-- Tlačítko pro načtení starších let -->
@@ -239,20 +235,23 @@ const otherYears = allYears.filter(year => year !== currentYear).reverse();
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const toggleBtn = document.getElementById('toggleExtraYears');
-      const extraYears = document.getElementById('extraYears');
+      const extraYearItems = document.querySelectorAll('.extra-year-item');
       const btnText = document.getElementById('btnText');
-
-      if (toggleBtn && extraYears) {
+      
+      if (toggleBtn && extraYearItems.length > 0) {
+        let isOpen = false;
+        
         toggleBtn.addEventListener('click', () => {
-          const isOpen = extraYears.classList.toggle('is-open');
+          isOpen = !isOpen;
+          
+          extraYearItems.forEach(item => {
+            item.style.display = isOpen ? 'block' : 'none';
+          });
           
           if (isOpen) {
             btnText.innerHTML = '<span>▲ Zobrazit méně</span>';
           } else {
-            const yearCount = extraYears.querySelectorAll('.year-group').length;
-            btnText.innerHTML = '<span>📅 Zobrazit starší roky</span><span class="count">+' + yearCount + '</span>';
-            
-            extraYears.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            btnText.innerHTML = '<span>📅 Zobrazit starší roky</span><span class="count">+' + extraYearItems.length + '</span>';
           }
         });
       }
