@@ -37,26 +37,66 @@ import Layout from '../layouts/Layout.astro';
     <div class="cover-content">
       <div class="cover-text">
         <h2>Vítejte v naší farnosti</h2>
-        <p class="verse">
-          „Hledejte Hospodina, dokud je možno ho najít, volejte ho, dokud je blízko."<br/>
-          (Iz 55,6)
-        </p>
+        
+        <!-- Slider s fotkami kostelů -->
+        <div class="church-slider">
+          <div class="slider-container">
+            <div class="slider-track">
+              <div class="slide">
+                <img src="/images/kostelht.jpg" alt="Kostel Hrochův Týnec" />
+                <div class="slide-caption">Kostel Hrochův Týnec</div>
+              </div>
+              <div class="slide">
+                <img src="/images/kostelchr.jpg" alt="Kostel Chroustovice" />
+                <div class="slide-caption">Kostel Chroustovice</div>
+              </div>
+              <div class="slide">
+                <img src="/images/kostelhonbice.jpg" alt="Kostel Honbice" />
+                <div class="slide-caption">Kostel Honbice</div>
+              </div>
+              <div class="slide">
+                <img src="/images/kosteltroj.jpg" alt="Kostel Trojovice" />
+                <div class="slide-caption">Kostel Trojovice</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Navigační tlačítka -->
+          <div class="slider-controls">
+            <button class="prev-btn" onclick="changeSlide(-1)">‹</button>
+            <button class="next-btn" onclick="changeSlide(1)">›</button>
+          </div>
+          
+          <!-- Dot indikátory -->
+          <div class="slider-dots">
+            <span class="dot active" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- O farnosti -->
+  <!-- Novinky -->
   <section id="about">
-    <h2 class="about-flex">Bohoslužby a duchovní život</h2>
+    <h2 class="about-flex">Novinky</h2>
 
     <div class="about-flex" style="margin-top: 3rem;">
       <div class="about-text">
-        <h2>Přijďte mezi nás</h2>
-        <p>
-          Ať už jste stálý obyvatel našich obcí, nebo jen návštěvník, 
-          srdečně vás zveme na bohoslužby a do našeho farního společenství. 
-          Těšíme se na setkání s vámi!
-        </p>
+        <h2>Připravujeme</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- O farnosti -->
+  <section id="about">
+    <h2 class="about-flex">Bohoslužby a následující akce</h2>
+
+    <div class="about-flex" style="margin-top: 3rem;">
+      <div class="about-text">
+        <h2>Připravujeme</h2>
       </div>
     </div>
   </section>

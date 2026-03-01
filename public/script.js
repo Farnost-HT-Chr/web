@@ -176,4 +176,65 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    // Church Slider functionality
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const sliderTrack = document.querySelector('.slider-track');
+
+    if (slides.length > 0 && sliderTrack) {
+        function updateSlider() {
+            const translateX = -currentSlideIndex * 25; // 25% per slide (4 slides = 100%)
+            sliderTrack.style.transform = `translateX(${translateX}%)`;
+
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlideIndex);
+            });
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            
+            if (currentSlideIndex >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex < 0) {
+                currentSlideIndex = slides.length - 1;
+            }
+            
+            updateSlider();
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index - 1; // Convert to 0-based index
+            updateSlider();
+        }
+
+        // Auto-advance slider every 4 seconds
+        let autoSlideInterval = setInterval(() => {
+            changeSlide(1);
+        }, 4000);
+
+        // Pause auto-advance on hover
+        const sliderContainer = document.querySelector('.slider-container');
+        if (sliderContainer) {
+            sliderContainer.addEventListener('mouseenter', () => {
+                clearInterval(autoSlideInterval);
+            });
+
+            sliderContainer.addEventListener('mouseleave', () => {
+                autoSlideInterval = setInterval(() => {
+                    changeSlide(1);
+                }, 4000);
+            });
+        }
+
+        // Make functions globally available for onclick handlers
+        window.changeSlide = changeSlide;
+        window.currentSlide = currentSlide;
+
+        // Initialize slider
+        updateSlider();
+    }
 });

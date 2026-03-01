@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Dokumenty ke stažení - Farnost Hrochův Týnec - Chroustovice"
+  description="Důležité dokumenty a formuláře ke stažení pro farnost Hrochův Týnec - Chroustovice."
+>
+  <Fragment slot="head">
+    <!-- Font preloads -->
+    <link rel="preload" href="/fonts/Ohrada.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/HelveticaNow.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/HelveticaNowBold.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/OpenSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/OpenSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  </Fragment>
+
+  <div class="container">
+    <!-- Dokumenty ke stažení -->
+    <h1 class="page-title">Dokumenty ke stažení</h1>
+    <div class="liturgical-files-section">
+      <div class="files-by-year">
+        <div class="year-group">
+          <h4 class="year-header">Formuláře a dokumenty</h4>
+          <div class="files-grid">
+            <!-- Přihláška na náboženství -->
+            <div class="file-item">
+              <div class="file-info">
+                <span class="file-icon">📋</span>
+                <span class="file-name">Přihláška na náboženství</span>
+              </div>
+              <div class="file-actions">
+                <a 
+                  href="/downloads/prihlaska_nabozenstvi.doc" 
+                  download
+                  class="file-btn download-btn"
+                  aria-label="Stáhnout přihlášku na náboženství"
+                >
+                  ⬇️ Stáhnout
+                </a>
+              </div>
+            </div>
+
+            <!-- Křestní zápis dítěte -->
+            <div class="file-item">
+              <div class="file-info">
+                <span class="file-icon">👶</span>
+                <span class="file-name">Křestní zápis dítěte</span>
+              </div>
+              <div class="file-actions">
+                <a 
+                  href="/downloads/krestni_zapis.docx" 
+                  download
+                  class="file-btn download-btn"
+                  aria-label="Stáhnout křestní zápis dítěte"
+                >
+                  ⬇️ Stáhnout
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
