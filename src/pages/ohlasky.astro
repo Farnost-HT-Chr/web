@@ -1,162 +1,247 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PdfItem from '../components/PdfItem.astro';
 import fs from 'fs';
 import path from 'path';
 
-// Get all PDF files from public/announcements directory
-let pdfFiles: { name: string; path: string }[] = [];
+// Načtení PDF souborů z adresáře announcements a seskupení podle let
+const announcementsDir = path.join(process.cwd(), 'public', 'announcements');
+let pdfsByYear: Record<string, Array<{fileName: string, filePath: string, modifiedTime: Date}>> = {};
+
+// Funkce pro extrakci roku z názvu souboru nebo data modifikace
+const extractYearFromFile = (filename: string, modifiedTime: Date): string => {
+  // Pokus o extrakci roku z názvu souboru
+  // Format: DD.MM.YYYY nebo D.M.YYYY (např. 1.9.2020, 23.12.2025)
+  const ddmmyyyyRegex = /(\d{1,2})\.(\d{1,2})\.(\d{4})/;
+  // Format: YYYY-MM-DD nebo YYYY.MM.DD (např. 2024-12-25, 2024.12.25)
+  const yyyymmddRegex = /(\d{4})[-.]\d{1,2}[-.]\d{1,2}/;
+  
+  let match = filename.match(yyyymmddRegex);
+  if (match) {
+    return match[1];
+  }
+  
+  match = filename.match(ddmmyyyyRegex);
+  if (match) {
+    return match[3];
+  }
+  
+  // Pokud rok není v názvu, použij rok z data modifikace
+  return modifiedTime.getFullYear().toString();
+};
 
 try {
-  const announcementsDir = path.join(process.cwd(), 'public', 'announcements');
-  
-  const files = fs.readdirSync(announcementsDir);
-  pdfFiles = files
-    .filter(file => file.toLowerCase().endsWith('.pdf'))
-    .map(file => ({
-      name: file.replace('.pdf', ''),
-      path: `/announcements/${file}`
-    }))
-    .sort((a, b) => {
-      // Helper function to extract and normalize date from filename
-      const extractDate = (filename: string): Date | null => {
-        // Format: DD.MM.YYYY or D.M.YYYY (e.g., 1.9.2020, 23.12.2025)
-        const ddmmyyyyRegex = /(\d{1,2})\.(\d{1,2})\.(\d{4})/;
-        // Format: YYYY-MM-DD or YYYY.MM.DD (e.g., 2024-12-25, 2024.12.25)
-        const yyyymmddRegex = /(\d{4})[-.](\d{1,2})[-.](\d{1,2})/;
+  if (fs.existsSync(announcementsDir)) {
+    const files = fs.readdirSync(announcementsDir);
+    const pdfFileList = files.filter(file => file.toLowerCase().endsWith('.pdf'));
+    
+    if (pdfFileList.length > 0) {
+      pdfFileList.forEach(file => {
+        const fullFilePath = path.join(announcementsDir, file);
+        const stats = fs.statSync(fullFilePath);
+        const year = extractYearFromFile(file, stats.mtime);
         
-        let match = filename.match(ddmmyyyyRegex);
-        if (match) {
-          const [, day, month, year] = match;
-          return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+        if (!pdfsByYear[year]) {
+          pdfsByYear[year] = [];
         }
         
-        match = filename.match(yyyymmddRegex);
-        if (match) {
-          const [, year, month, day] = match;
-          return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-        }
-        
-        return null;
-      };
+        pdfsByYear[year].push({
+          fileName: file,
+          filePath: file,
+          modifiedTime: stats.mtime
+        });
+      });
       
-      const dateA = extractDate(a.name);
-      const dateB = extractDate(b.name);
+      // Seřazení souborů v každém roce podle data modifikace (nejnovější první)
+      Object.keys(pdfsByYear).forEach(year => {
+        pdfsByYear[year].sort((a, b) => b.modifiedTime.getTime() - a.modifiedTime.getTime());
+      });
+    }
+    
+    // Seřazení let sestupně (nejnovější první)
+    const sortedYears = Object.keys(pdfsByYear).sort((a, b) => {
+      const yearA = parseInt(a, 10);
+      const yearB = parseInt(b, 10);
       
-      // If both have valid dates, compare them
-      if (dateA && dateB) {
-        return dateB.getTime() - dateA.getTime(); // Descending order (newest first)
-      }
+      if (isNaN(yearA) && isNaN(yearB)) return b.localeCompare(a);
+      if (isNaN(yearA)) return 1;
+      if (isNaN(yearB)) return -1;
       
-      // If only one has a date, prioritize it
-      if (dateA) return -1;
-      if (dateB) return 1;
-      
-      // If neither has a date, sort alphabetically descending
-      return b.name.localeCompare(a.name);
+      return yearB - yearA;
     });
+    
+    pdfsByYear = sortedYears.reduce((obj, key) => {
+      obj[key] = pdfsByYear[key];
+      return obj;
+    }, {} as Record<string, Array<{fileName: string, filePath: string, modifiedTime: Date}>>);
+  }
 } catch (error) {
-  console.error('Error reading PDF files:', error);
+  console.error('Chyba při načítání PDF souborů:', error);
 }
 
-const itemsPerPage = 6;
-const remainingItems = pdfFiles.length - itemsPerPage;
+// Získání aktuálního roku a rozdělení dat
+const currentYear = new Date().getFullYear().toString();
+const allYears = Object.keys(pdfsByYear);
+const currentYearData = pdfsByYear[currentYear] || [];
+// Ostatní roky (starší) - obrácené pořadí (od nejstaršího k nejnovějšímu)
+const otherYears = allYears.filter(year => year !== currentYear).reverse();
 ---
 
 <Layout 
   title="Ohlášky - Farnost Hrochův Týnec - Chroustovice"
   description="Aktuální ohlášky a oznámení farnosti Hrochův Týnec - Chroustovice."
 >
+  <Fragment slot="head">
+    <!-- Font preloads -->
+    <link rel="preload" href="/fonts/Ohrada.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/HelveticaNow.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/HelveticaNowBold.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/OpenSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/OpenSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  </Fragment>
+
   <div class="container">
+    <!-- Ohlášky ke stažení -->
     <h1 class="page-title">Ohlášky</h1>
-        
-      {pdfFiles.length === 0 ? (
-        <div class="no-pdfs">
-          <p>Momentálně nejsou k dispozici žádné ohlášky.</p>
-        </div>
-      ) : (
-        <>
-          <div class="pdf-list">
-            {/* Prvních X položek, které jsou vidět vždy */}
-            {pdfFiles.slice(0, itemsPerPage).map((pdf, index) => (
-              <PdfItem name={pdf.name} path={pdf.path} index={index} />
-            ))}
-
-            {/* Skrytý kontejner pro zbytek ohlášek */}
-            {pdfFiles.length > itemsPerPage && (
-              <div class="extra-items-container" id="extraItems">
-                {pdfFiles.slice(itemsPerPage).map((pdf, index) => {
-                  const globalIndex = index + itemsPerPage;
-                  return (
-                    <PdfItem name={pdf.name} path={pdf.path} index={globalIndex} />
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {pdfFiles.length > itemsPerPage && (
-            <div class="pagination">
-              <button class="load-more-btn" id="toggleExtraBtn">
-                <span class="btn-text" id="btnText">
-                  <span>📄 Zobrazit starší ohlášky</span>
-                  <span class="count">+{remainingItems}</span>
-                </span>
-              </button>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-
-  <script is:inline>
-    window.togglePDF = function(index) {
-      const pdfItem = document.querySelector(`[data-pdf-id="${index}"]`);
-      if (pdfItem) {
-        const isExpanding = !pdfItem.classList.contains('expanded');
-        pdfItem.classList.toggle('expanded');
-        
-        if (isExpanding) {
-          const iframe = pdfItem.querySelector('.pdf-viewer');
-          const pdfSrc = iframe?.getAttribute('data-pdf-src');
-          if (iframe && pdfSrc && !iframe.src) {
-            iframe.src = pdfSrc;
-          }
-        }
-      }
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // Add click handlers to ALL pdf headers (including extra items)
-      document.querySelectorAll('.pdf-header').forEach((header) => {
-        header.addEventListener('click', (e) => {
-          // Don't toggle if clicking on download button
-          if (!e.target.closest('.pdf-actions')) {
-            const pdfItem = header.closest('.pdf-item');
-            const index = pdfItem?.getAttribute('data-pdf-id');
-            if (index !== null) {
-              togglePDF(parseInt(index));
-            }
-          }
-        });
-      });
-
-      const toggleBtn = document.getElementById('toggleExtraBtn');
-      const extraItems = document.getElementById('extraItems');
-      const btnText = document.getElementById('btnText');
-
-      if (toggleBtn && extraItems) {
-        toggleBtn.addEventListener('click', () => {
-          const isOpen = extraItems.classList.toggle('is-open');
+    <div class="liturgical-files-section">
           
-          // Změna textu tlačítka
+          {Object.keys(pdfsByYear).length === 0 ? (
+            <div class="no-files">
+              <p>Momentálně nejsou k dispozici žádné ohlášky.</p>
+            </div>
+          ) : (
+            <>
+              <div class="files-by-year">
+                <!-- Aktuální rok - vždy viditelný -->
+                {currentYearData.length > 0 ? (
+                  <div class="year-group" data-year={currentYear}>
+                    <h4 class="year-header">{currentYear}</h4>
+                    <div class="files-grid">
+                      {currentYearData.map(({fileName, filePath}) => {
+                        const displayName = fileName
+                          .replace('.pdf', '')
+                          .replace(/^\d{4}-\d{2}-\d{2}[-_]?/, '')
+                          .replace(/[-_]/g, ' ')
+                          .trim();
+                        
+                        return (
+                          <a 
+                            href={`/announcements/${filePath}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="file-item clickable"
+                            aria-label={`Zobrazit ${displayName}`}
+                          >
+                            <div class="file-info">
+                              <span class="file-icon">📄</span>
+                              <span class="file-name">{displayName}</span>
+                            </div>
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : allYears.length > 0 && (
+                  <div class="year-group" data-year={allYears[0]}>
+                    <h4 class="year-header">{allYears[0]}</h4>
+                    <div class="files-grid">
+                      {pdfsByYear[allYears[0]].map(({fileName, filePath}) => {
+                        const displayName = fileName
+                          .replace('.pdf', '')
+                          .replace(/^\d{4}-\d{2}-\d{2}[-_]?/, '')
+                          .replace(/[-_]/g, ' ')
+                          .trim();
+                        
+                        return (
+                          <div class="file-item-wrapper">
+                            <a 
+                              href={`/announcements/${filePath}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              class="file-item clickable"
+                              aria-label={`Zobrazit ${displayName}`}
+                            >
+                              <div class="file-info">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">{displayName}</span>
+                              </div>
+                            </a>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                <!-- Starší roky - skryté -->
+                {otherYears.map((year) => (
+                  <div class="year-group extra-year-item" data-year={year} style="display: none;">
+                    <h4 class="year-header">{year}</h4>
+                    <div class="files-grid">
+                      {pdfsByYear[year].map(({fileName, filePath}) => {
+                        const displayName = fileName
+                          .replace('.pdf', '')
+                          .replace(/^\d{4}-\d{2}-\d{2}[-_]?/, '')
+                          .replace(/[-_]/g, ' ')
+                          .trim();
+                        
+                        return (
+                          <div class="file-item-wrapper">
+                            <a 
+                              href={`/announcements/${filePath}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              class="file-item clickable"
+                              aria-label={`Zobrazit ${displayName}`}
+                            >
+                              <div class="file-info">
+                                <span class="file-icon">📄</span>
+                                <span class="file-name">{displayName}</span>
+                              </div>
+                            </a>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <!-- Tlačítko pro načtení starších let -->
+              {otherYears.length > 0 && (
+                <div class="pagination">
+                  <button class="load-more-btn" id="toggleExtraYears">
+                    <span class="btn-text" id="btnText">
+                      <span>📄 Zobrazit starší roky</span>
+                      <span class="count">+{otherYears.length}</span>
+                    </span>
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('toggleExtraYears');
+      const extraYearItems = document.querySelectorAll('.extra-year-item');
+      const btnText = document.getElementById('btnText');
+      
+      if (toggleBtn && extraYearItems.length > 0) {
+        let isOpen = false;
+        
+        toggleBtn.addEventListener('click', () => {
+          isOpen = !isOpen;
+          
+          extraYearItems.forEach(item => {
+            item.style.display = isOpen ? 'block' : 'none';
+          });
+          
           if (isOpen) {
             btnText.innerHTML = '<span>▲ Zobrazit méně</span>';
           } else {
-            btnText.innerHTML = '<span>📄 Zobrazit starší ohlášky</span><span class="count">+' + (extraItems.children.length) + '</span>';
-            
-            // Volitelné: Odrolovat zpět nahoru k začátku seznamu při zavření
-            extraItems.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            btnText.innerHTML = '<span>📄 Zobrazit starší roky</span><span class="count">+' + extraYearItems.length + '</span>';
           }
         });
       }
