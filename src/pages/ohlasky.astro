@@ -5,10 +5,10 @@ import path from 'path';
 
 // Načtení PDF souborů z adresáře announcements a seskupení podle let
 const announcementsDir = path.join(process.cwd(), 'public', 'announcements');
-let pdfsByYear: Record<string, Array<{fileName: string, filePath: string, modifiedTime: Date}>> = {};
+let pdfsByYear: Record<string, Array<{fileName: string, filePath: string}>> = {};
 
-// Funkce pro extrakci roku z názvu souboru nebo data modifikace
-const extractYearFromFile = (filename: string, modifiedTime: Date): string => {
+// Funkce pro extrakci roku z názvu souboru
+const extractYearFromFile = (filename: string): string => {
   // Pokus o extrakci roku z názvu souboru
   // Format: DD.MM.YYYY nebo D.M.YYYY (např. 1.9.2020, 23.12.2025)
   const ddmmyyyyRegex = /(\d{1,2})\.(\d{1,2})\.(\d{4})/;
@@ -25,8 +25,24 @@ const extractYearFromFile = (filename: string, modifiedTime: Date): string => {
     return match[3];
   }
   
-  // Pokud rok není v názvu, použij rok z data modifikace
-  return modifiedTime.getFullYear().toString();
+  // Pokud rok není v názvu, použij aktuální rok
+  return new Date().getFullYear().toString();
+};
+
+// Funkce pro parsování data z názvu souboru pro řazení
+const parseDateFromFilename = (filename: string): Date => {
+  const ddmmyyyyRegex = /(\d{1,2})\.(\d{1,2})\.(\d{4})/;
+  const match = filename.match(ddmmyyyyRegex);
+  
+  if (match) {
+    const day = parseInt(match[1], 10);
+    const month = parseInt(match[2], 10) - 1; // JavaScript měsíce jsou 0-indexované
+    const year = parseInt(match[3], 10);
+    return new Date(year, month, day);
+  }
+  
+  // Pokud se nepodaří parsovat datum, vrátí epoch
+  return new Date(0);
 };
 
 try {
@@ -36,9 +52,7 @@ try {
     
     if (pdfFileList.length > 0) {
       pdfFileList.forEach(file => {
-        const fullFilePath = path.join(announcementsDir, file);
-        const stats = fs.statSync(fullFilePath);
-        const year = extractYearFromFile(file, stats.mtime);
+        const year = extractYearFromFile(file);
         
         if (!pdfsByYear[year]) {
           pdfsByYear[year] = [];
@@ -46,14 +60,17 @@ try {
         
         pdfsByYear[year].push({
           fileName: file,
-          filePath: file,
-          modifiedTime: stats.mtime
+          filePath: file
         });
       });
       
-      // Seřazení souborů v každém roce podle data modifikace (nejnovější první)
+      // Seřazení souborů v každém roce podle data v názvu souboru (nejnovější první)
       Object.keys(pdfsByYear).forEach(year => {
-        pdfsByYear[year].sort((a, b) => b.modifiedTime.getTime() - a.modifiedTime.getTime());
+        pdfsByYear[year].sort((a, b) => {
+          const dateA = parseDateFromFilename(a.fileName);
+          const dateB = parseDateFromFilename(b.fileName);
+          return dateB.getTime() - dateA.getTime();
+        });
       });
     }
     
@@ -72,7 +89,7 @@ try {
     pdfsByYear = sortedYears.reduce((obj, key) => {
       obj[key] = pdfsByYear[key];
       return obj;
-    }, {} as Record<string, Array<{fileName: string, filePath: string, modifiedTime: Date}>>);
+    }, {} as Record<string, Array<{fileName: string, filePath: string}>>);
   }
 } catch (error) {
   console.error('Chyba při načítání PDF souborů:', error);
