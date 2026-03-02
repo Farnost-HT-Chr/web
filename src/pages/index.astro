@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CalendarCards from '../components/CalendarCards.astro';
 ---
 
 <Layout 
@@ -93,11 +94,14 @@ import Layout from '../layouts/Layout.astro';
 
   <!-- O farnosti -->
   <section id="about">
-    <h2 class="about-flex">Bohoslužby a následující akce</h2>
+    <h2 class="about-flex">Bohoslužby a nadcházející akce</h2>
 
-    <div class="about-flex" style="margin-top: 3rem;">
-      <div class="about-text">
-        <h2>Připravujeme</h2>
+    <!-- Actions Container with Border -->
+    <div class="actions-container">
+      <div class="actions-content">
+        <!-- Event Cards Container - nyní server-side rendered -->
+        <CalendarCards />
+        
       </div>
     </div>
   </section>
