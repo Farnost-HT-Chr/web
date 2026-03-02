@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CalendarCards from '../components/CalendarCards.astro';
 ---
 
 <Layout 
@@ -84,20 +85,46 @@ import Layout from '../layouts/Layout.astro';
   <section id="about">
     <h2 class="about-flex">Novinky</h2>
 
-    <div class="about-flex" style="margin-top: 3rem;">
-      <div class="about-text">
-        <h2>Připravujeme</h2>
+    <div class="about-flex">
+      <div class="news-cards-container">
+        <div class="news-cards">
+          <a href="/objednani-intence" class="news-card-link">
+            <div class="news-card">
+              <div class="news-card-header">
+                <h3>Objednání intence mše sv.</h3>
+              </div>
+            </div>
+          </a>
+          
+          <a href="/prvni-patek-sobota" class="news-card-link">
+            <div class="news-card">
+              <div class="news-card-header">
+                <h3>První pátek a první sobota v měsíci</h3>
+              </div>
+            </div>
+          </a>
+          
+          <a href="/pozvanka-fara" class="news-card-link">
+            <div class="news-card">
+              <div class="news-card-header">
+                <h3>Pozvánka na faru po mši sv. v Hrochově Týnci</h3>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- O farnosti -->
   <section id="about">
-    <h2 class="about-flex">Bohoslužby a následující akce</h2>
+    <h2 class="about-flex">Bohoslužby a nadcházející akce</h2>
 
-    <div class="about-flex" style="margin-top: 3rem;">
-      <div class="about-text">
-        <h2>Připravujeme</h2>
+    <!-- Actions Container with Border -->
+    <div class="actions-container">
+      <div class="actions-content">
+        <!-- Event Cards Container - nyní server-side rendered -->
+        <CalendarCards />
       </div>
     </div>
   </section>

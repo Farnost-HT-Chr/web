@@ -1,0 +1,307 @@
+---
+// src/components/CalendarCards.astro
+const API_KEY = 'AIzaSyDKi8TYFz1MK3kekjHKrGAveum1EewoZzA';
+
+// List all IDs from your existing iframe - převzato z index.astro
+const CALENDAR_IDS = [
+  "c5ec6d5e48c7e538fc249a79a499bb2a7f014604f1f3aba049e767ff21aedcaf@group.calendar.google.com", // Hlavní farní kalendář
+  "8a4cfcf8e209162a9eaad4ac5aca64af38b3eb024eab92685e2cffcc34a100d1@group.calendar.google.com"   // Druhý kalendář
+];
+
+async function getEvents() {
+  const now = new Date().toISOString();
+  const timeMax = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)).toISOString(); // Příštích 30 dní
+  let allEvents = [];
+
+  for (const id of CALENDAR_IDS) {
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(id)}/events?key=${API_KEY}&timeMin=${now}&timeMax=${timeMax}&orderBy=startTime&singleEvents=true&maxResults=20`;
+    
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.items) {
+        allEvents.push(...data.items);
+      }
+    } catch (e) {
+      console.error("Error fetching calendar:", e);
+    }
+  }
+
+  // Seřazení všech událostí podle data a vzít prvních 8
+  const finalEvents = allEvents
+    .sort((a, b) => new Date(a.start.dateTime || a.start.date) - new Date(b.start.dateTime || b.start.date))
+    .slice(0, 4);
+
+  return finalEvents;
+}
+
+// Funkce pro parsování názvu mše
+function parseMassTitle(title) {
+  if (!title) return { time: '', place: '', intention: '' };
+  
+  // Normalizace textu - nahrazení různých pomlček za standardní
+  const normalizedTitle = title
+    .replace(/[–—−]/g, '-')  // Normalizace pomlček
+    .replace(/\s+/g, ' ')    // Normalizace mezer
+    .trim();
+  
+  // Pokročilé parsování - hlavní formát "HT v 17.00 - intence" nebo "CHR. v 17:00 -"
+  const mainPattern = /^(HT|CHR\.?|Hrochův Týnec|Chroustovice|Hon|Honbice|Troj|Trojovice)\s+v\s+(\d{1,2}[\.:,]\d{2})\s*-\s*(.*)$/i;
+  const mainMatch = normalizedTitle.match(mainPattern);
+  
+  if (mainMatch) {
+    const [, placeCode, time, intention] = mainMatch;
+    const placeName = convertPlaceCode(placeCode.replace('.', '')); // Odstranit tečku z CHR.
+    const cleanIntention = intention.trim();
+    
+    return {
+      time: normalizeTime(time),
+      place: placeName,
+      intention: cleanIntention
+    };
+  }
+  
+  // Další patterny pro jiné formáty
+  const fallbackPatterns = [
+    // "Mše svatá HT 17:00 - intence"
+    /^(?:mše\s+svatá\s+)?(.+?)\s+(\d{1,2}[\.:,]\d{2})\s*-\s*(.*)$/i,
+    
+    // "17:00 HT - intence" 
+    /^(\d{1,2}[\.:,]\d{2})\s+(HT|CHR\.?|Hrochův Týnec|Chroustovice|Hon|Honbice|Troj|Trojovice)\s*-\s*(.*)$/i,
+    
+    // "HT 17:00 intence" (bez pomlčky a bez "v")
+    /^(HT|CHR\.?|Hrochův Týnec|Chroustovice|Hon|Honbice|Troj|Trojovice)\s+(\d{1,2}[\.:,]\d{2})\s+(.*)$/i
+  ];
+  
+  for (const pattern of fallbackPatterns) {
+    const match = normalizedTitle.match(pattern);
+    if (match) {
+      let place, time, intention;
+      
+      if (pattern === fallbackPatterns[1]) {
+        // Formát "17:00 HT - intence"
+        [, time, place, intention] = match;
+      } else {
+        // Ostatní formáty
+        [, place, time, intention] = match;
+      }
+      
+      const placeName = convertPlaceCode(place.replace('.', ''));
+      const cleanIntention = intention.trim();
+      
+      return {
+        time: normalizeTime(time),
+        place: placeName,
+        intention: cleanIntention || 'Mše svatá'
+      };
+    }
+  }
+  
+  // Úplný fallback
+  return fallbackParsing(normalizedTitle);
+}
+
+// Pomocná funkce pro převod zkratek míst
+function convertPlaceCode(placeCode) {
+  const placeMap = {
+    'HT': 'Hrochův Týnec',
+    'CHR': 'Chroustovice', 
+    'HON': 'Honbice',
+    'TROJ': 'Trojovice',
+    'HROCHŮV TÝNEC': 'Hrochův Týnec',
+    'CHROUSTOVICE': 'Chroustovice',
+    'HONBICE': 'Honbice',
+    'TROJOVICE': 'Trojovice'
+  };
+  
+  return placeMap[placeCode.toUpperCase()] || placeCode;
+}
+
+// Pomocná funkce pro normalizaci času
+function normalizeTime(time) {
+  return time.replace(/[.,]/, ':');
+}
+
+// Fallback parsování pro složitější případy
+function fallbackParsing(title) {
+  // Extrahuj čas
+  const timeMatch = title.match(/(\d{1,2}[\.:,]\d{2})/);
+  const time = timeMatch ? normalizeTime(timeMatch[1]) : '';
+  
+  // Extrahuj místo
+  const placePatterns = [
+    { regex: /\b(HT|Hrochův\s+Týnec)\b/i, name: 'Hrochův Týnec' },
+    { regex: /\b(CHR|Chroustovice)\b/i, name: 'Chroustovice' },
+    { regex: /\b(Hon|Honbice)\b/i, name: 'Honbice' },
+    { regex: /\b(Troj|Trojovice)\b/i, name: 'Trojovice' }
+  ];
+  
+  let place = '';
+  let placeMatch = null;
+  
+  for (const { regex, name } of placePatterns) {
+    const match = title.match(regex);
+    if (match) {
+      place = name;
+      placeMatch = match[0];
+      break;
+    }
+  }
+  
+  // Extrahuj intenci - vše co zbývá po odstranění času a místa
+  let intention = title;
+  if (timeMatch) intention = intention.replace(timeMatch[0], '');
+  if (placeMatch) intention = intention.replace(placeMatch, '');
+  
+  // Vyčištění intence
+  intention = intention
+    .replace(/^[\s\-–—−,.:;]+|[\s\-–—−,.:;]+$/g, '') // Odstranění speciálních znaků z krajů
+    .replace(/\s+/g, ' ') // Normalizace mezer
+    .trim();
+  
+  return { 
+    time, 
+    place, 
+    intention: intention || 'Mše svatá'
+  };
+}
+
+const upcomingEvents = await getEvents();
+---
+
+<div class="event-cards-container">
+  {upcomingEvents.length > 0 ? (
+    upcomingEvents.map((event) => {
+      const parsed = parseMassTitle(event.summary);
+      const eventDate = new Date(event.start.dateTime || event.start.date);
+      
+      return (
+        <div class="event-card mass-card">
+          <div class="mass-details">
+            <div class="mass-date">
+              {eventDate.toLocaleDateString('cs-CZ', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'long'
+              })}
+            </div>
+            <div class="mass-time">⏰ {parsed.time}</div>
+            <div class="mass-place">⛪ {parsed.place}</div>
+            <div class="mass-intention">🙏 {parsed.intention}</div>
+          </div>
+        </div>
+      );
+    })
+  ) : (
+    <div class="loading-message">Žádné nadcházející mše nenalezeny.</div>
+  )}
+</div>
+
+<style>
+  .event-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .mass-card {
+    background: linear-gradient(135deg, #f8f6f0 0%, #ffffff 100%);
+    border: 2px solid #d4ac7a;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(212, 172, 122, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #8B4513, #d4ac7a);
+  }
+
+  .mass-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212, 172, 122, 0.25);
+    border-color: #8B4513;
+  }
+
+  .mass-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .mass-date {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #8B4513;
+    text-transform: capitalize;
+    text-align: center;
+    padding: 0.5rem;
+    background: rgba(212, 172, 122, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #8B4513;
+  }
+
+  .mass-time, .mass-place, .mass-intention {
+    font-size: 0.95rem;
+    padding: 0.3rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .mass-time {
+    color: #2c5530;
+    font-weight: 600;
+  }
+
+  .mass-place {
+    color: #8B4513;
+    font-weight: 500;
+  }
+
+  .mass-intention {
+    color: #4a4a4a;
+    line-height: 1.4;
+    flex-grow: 1;
+  }
+
+  .loading-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-style: italic;
+    border: 2px dashed #d4ac7a;
+    border-radius: 15px;
+    background: #f8f6f0;
+  }
+
+  @media (max-width: 768px) {
+    .event-cards-container {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .mass-card {
+      padding: 1rem;
+    }
+    
+    .mass-date {
+      font-size: 1rem;
+    }
+    
+    .mass-time, .mass-place, .mass-intention {
+      font-size: 0.9rem;
+    }
+  }
+</style>
