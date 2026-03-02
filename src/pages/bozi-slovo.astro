@@ -5,10 +5,37 @@ import path from 'path';
 
 // Načtení PDF souborů z podsložek podle roku, dříve Boží slovo
 const liturgicalTextsDir = path.join(process.cwd(), 'public', 'liturgical_texts');
-let pdfsByYear: Record<string, Array<{fileName: string, filePath: string, modifiedTime: Date}>> = {};
+let pdfsByYear: Record<string, Array<{fileName: string, filePath: string, modifiedTime: Date, originalMtime?: Date}>> = {};
+
+// JSON metadata system pro zachování původních modification times
+const metadataFile = path.join(liturgicalTextsDir, '.file-metadata.json');
+
+function loadMetadata(): Record<string, string> {
+  try {
+    if (fs.existsSync(metadataFile)) {
+      const content = fs.readFileSync(metadataFile, 'utf8');
+      return JSON.parse(content);
+    }
+  } catch (error) {
+    console.log('Warning: Could not load metadata file:', error);
+  }
+  return {};
+}
+
+function saveMetadata(metadata: Record<string, string>) {
+  try {
+    fs.writeFileSync(metadataFile, JSON.stringify(metadata, null, 2));
+  } catch (error) {
+    console.log('Warning: Could not save metadata file:', error);
+  }
+}
 
 try {
   if (fs.existsSync(liturgicalTextsDir)) {
+    // Load existing metadata
+    const metadata = loadMetadata();
+    const newMetadata = { ...metadata };
+    let metadataChanged = false;
     const yearDirs = fs.readdirSync(liturgicalTextsDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory());
     
@@ -24,12 +51,26 @@ try {
           pdfsByYear[year] = pdfFiles.map(file => {
             const fullFilePath = path.join(yearPath, file);
             const stats = fs.statSync(fullFilePath);
+            const fileKey = `${year}/${file}`;
+            
+            // Store original mtime for new files
+            if (!metadata[fileKey]) {
+              newMetadata[fileKey] = stats.mtime.toISOString();
+              metadataChanged = true;
+            }
+            
+            // Use stored original time or current mtime as fallback
+            const originalMtime = metadata[fileKey] 
+              ? new Date(metadata[fileKey]) 
+              : stats.mtime;
+            
             return {
               fileName: file,
               filePath: `${year}/${file}`,
-              modifiedTime: stats.mtime
+              modifiedTime: stats.mtime, // Current filesystem time
+              originalMtime: originalMtime // Preserved original time for sorting
             };
-          }).sort((a, b) => b.modifiedTime.getTime() - a.modifiedTime.getTime()); // Nejnovější první
+          }).sort((a, b) => b.originalMtime!.getTime() - a.originalMtime!.getTime()); // Sort by original time
         }
       }
     });
@@ -52,7 +93,12 @@ try {
     pdfsByYear = sortedYears.reduce((obj, key) => {
       obj[key] = pdfsByYear[key];
       return obj;
-    }, {} as Record<string, Array<{fileName: string, filePath: string, modifiedTime: Date}>>);
+    }, {} as Record<string, Array<{fileName: string, filePath: string, modifiedTime: Date, originalMtime?: Date}>>);
+    
+    // Save metadata if there were changes
+    if (metadataChanged) {
+      saveMetadata(newMetadata);
+    }
   }
 } catch (error) {
   console.error('Chyba při načítání PDF souborů:', error);
