@@ -4,7 +4,7 @@ const API_KEY = 'AIzaSyDKi8TYFz1MK3kekjHKrGAveum1EewoZzA';
 
 // List all IDs from your existing iframe - převzato z index.astro
 const CALENDAR_IDS = [
-  "c5ec6d5e48c7e538fc249a79a499bb2a7f014604f1f3aba049e767ff21aedcaf@group.calendar.google.com", // Hlavní farní kalendář
+  "c5ec6d5e48c7e538fc249a79a499bb2a7f014604f1f3aba049e767ff21aedcaf@group.calendar.google.com", // Hlavní farní kalendář  
   "8a4cfcf8e209162a9eaad4ac5aca64af38b3eb024eab92685e2cffcc34a100d1@group.calendar.google.com"   // Druhý kalendář
 ];
 
@@ -48,6 +48,71 @@ async function getEvents() {
     .slice(0, 4);
 
   return finalEvents;
+}
+
+// Pomocná funkce pro převod zkratek míst
+function convertPlaceCode(placeCode) {
+  const placeMap = {
+    'HT': 'Hrochův Týnec',
+    'CHR': 'Chroustovice', 
+    'HON': 'Honbice',
+    'TROJ': 'Trojovice',
+    'HROCHŮV TÝNEC': 'Hrochův Týnec',
+    'CHROUSTOVICE': 'Chroustovice',
+    'HONBICE': 'Honbice',
+    'TROJOVICE': 'Trojovice'
+  };
+  
+  return placeMap[placeCode.toUpperCase()] || placeCode;
+}
+
+// Pomocná funkce pro normalizaci času
+function normalizeTime(time) {
+  return time.replace(/[.,]/, ':');
+}
+
+// Fallback parsování pro složitější případy
+function fallbackParsing(title) {
+  // Extrahuj čas
+  const timeMatch = title.match(/(\d{1,2}[\.:,]\d{2})/);
+  const time = timeMatch ? normalizeTime(timeMatch[1]) : '';
+  
+  // Extrahuj místo
+  const placePatterns = [
+    { regex: /\b(HT|Hrochův\s+Týnec)\b/i, name: 'Hrochův Týnec' },
+    { regex: /\b(CHR|Chroustovice)\b/i, name: 'Chroustovice' },
+    { regex: /\b(Hon|Honbice)\b/i, name: 'Honbice' },
+    { regex: /\b(Troj|Trojovice)\b/i, name: 'Trojovice' }
+  ];
+  
+  let place = '';
+  let placeMatch = null;
+  
+  for (const { regex, name } of placePatterns) {
+    const match = title.match(regex);
+    if (match) {
+      place = name;
+      placeMatch = match[0];
+      break;
+    }
+  }
+  
+  // Extrahuj intenci - vše co zbývá po odstranění času a místa
+  let intention = title;
+  if (timeMatch) intention = intention.replace(timeMatch[0], '');
+  if (placeMatch) intention = intention.replace(placeMatch, '');
+  
+  // Vyčištění intence
+  intention = intention
+    .replace(/^[\s\-–—−,.:;]+|[\s\-–—−,.:;]+$/g, '') // Odstranění speciálních znaků z krajů
+    .replace(/\s+/g, ' ') // Normalizace mezer
+    .trim();
+  
+  return { 
+    time, 
+    place, 
+    intention: intention || 'Mše svatá'
+  };
 }
 
 // Funkce pro parsování názvu mše
@@ -116,228 +181,36 @@ function parseMassTitle(title) {
   return fallbackParsing(normalizedTitle);
 }
 
-// Pomocná funkce pro převod zkratek míst
-function convertPlaceCode(placeCode) {
-  const placeMap = {
-    'HT': 'Hrochův Týnec',
-    'CHR': 'Chroustovice', 
-    'HON': 'Honbice',
-    'TROJ': 'Trojovice',
-    'HROCHŮV TÝNEC': 'Hrochův Týnec',
-    'CHROUSTOVICE': 'Chroustovice',
-    'HONBICE': 'Honbice',
-    'TROJOVICE': 'Trojovice'
-  };
-  
-  return placeMap[placeCode.toUpperCase()] || placeCode;
-}
+const upcomingEvents = await getEvents();
+---
 
-  function normalizeTime(time) {
-    return time.replace(/[.,]/, ':');
-  }
-
-  function fallbackParsing(title) {
-    const timeMatch = title.match(/(\d{1,2}[\.:,]\d{2})/);
-    const time = timeMatch ? normalizeTime(timeMatch[1]) : '';
-    
-    const placePatterns = [
-      { regex: /\b(HT|Hrochův\s+Týnec)\b/i, name: 'Hrochův Týnec' },
-      { regex: /\b(CHR|Chroustovice)\b/i, name: 'Chroustovice' },
-      { regex: /\b(Hon|Honbice)\b/i, name: 'Honbice' },
-      { regex: /\b(Troj|Trojovice)\b/i, name: 'Trojovice' }
-    ];
-    
-    let place = '';
-    let placeMatch = null;
-    
-    for (const { regex, name } of placePatterns) {
-      const match = title.match(regex);
-      if (match) {
-        place = name;
-        placeMatch = match[0];
-        break;
-      }
-    }
-    
-    let intention = title;
-    if (timeMatch) intention = intention.replace(timeMatch[0], '');
-    if (placeMatch) intention = intention.replace(placeMatch, '');
-    
-    intention = intention
-      .replace(/^[\s\-–—−,.:;]+|[\s\-–—−,.:;]+$/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-    
-    return { 
-      time, 
-      place, 
-      intention: intention || 'Mše svatá'
-    };
-  }
-
-  function parseMassTitle(title) {
-    if (!title) return { time: '', place: '', intention: '' };
-    
-    const normalizedTitle = title
-      .replace(/[–—−]/g, '-')
-      .replace(/\s+/g, ' ')
-      .trim();
-    
-    const mainPattern = /^(HT|CHR\.?|Hrochův Týnec|Chroustovice|Hon|Honbice|Troj|Trojovice)\s+v\s+(\d{1,2}[\.:,]\d{2})\s*-\s*(.*)$/i;
-    const mainMatch = normalizedTitle.match(mainPattern);
-    
-    if (mainMatch) {
-      const [, placeCode, time, intention] = mainMatch;
-      const placeName = convertPlaceCode(placeCode.replace('.', ''));
-      const cleanIntention = intention.trim();
-      
-      return {
-        time: normalizeTime(time),
-        place: placeName,
-        intention: cleanIntention
-      };
-    }
-    
-    const fallbackPatterns = [
-      /^(?:mše\s+svatá\s+)?(.+?)\s+(\d{1,2}[\.:,]\d{2})\s*-\s*(.*)$/i,
-      /^(\d{1,2}[\.:,]\d{2})\s+(HT|CHR\.?|Hrochův Týnec|Chroustovice|Hon|Honbice|Troj|Trojovice)\s*-\s*(.*)$/i,
-      /^(HT|CHR\.?|Hrochův Týnec|Chroustovice|Hon|Honbice|Troj|Trojovice)\s+(\d{1,2}[\.:,]\d{2})\s+(.*)$/i
-    ];
-    
-    for (const pattern of fallbackPatterns) {
-      const match = normalizedTitle.match(pattern);
-      if (match) {
-        let place, time, intention;
-        
-        if (pattern === fallbackPatterns[1]) {
-          [, time, place, intention] = match;
-        } else {
-          [, place, time, intention] = match;
-        }
-        
-        const placeName = convertPlaceCode(place.replace('.', ''));
-        const cleanIntention = intention.trim();
-        
-        return {
-          time: normalizeTime(time),
-          place: placeName,
-          intention: cleanIntention || 'Mše svatá'
-        };
-      }
-    }
-    
-    return fallbackParsing(normalizedTitle);
-  }
-
-  // Funkce pro načtení událostí z kalendáře
-  async function getEvents(forceRefresh = false) {
-    const now = Date.now();
-    
-    // Check cache if not forcing refresh
-    if (!forceRefresh && now - lastFetchTime < CACHE_DURATION) {
-      return null; // Použij cache
-    }
-
-    const currentTime = new Date().toISOString();
-    const timeMax = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)).toISOString();
-    let allEvents = [];
-
-    for (const id of CALENDAR_IDS) {
-      const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(id)}/events?key=${API_KEY}&timeMin=${currentTime}&timeMax=${timeMax}&orderBy=startTime&singleEvents=true&maxResults=20`;
-      
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        if (data.items) {
-          allEvents.push(...data.items);
-        }
-      } catch (e) {
-        console.error("Error fetching calendar:", e);
-      }
-    }
-
-    const finalEvents = allEvents
-      .sort((a, b) => new Date(a.start.dateTime || a.start.date) - new Date(b.start.dateTime || b.start.date))
-      .slice(0, 4);
-
-    lastFetchTime = now;
-    return finalEvents;
-  }
-
-  // Funkce pro vykreslení událostí
-  function renderEvents(events) {
-    const container = document.getElementById('calendar-container');
-    
-    if (!events || events.length === 0) {
-      container.innerHTML = '<div class="loading-message">Žádné nadcházející mše nenalezeny.</div>';
-      return;
-    }
-
-    const html = events.map(event => {
+<div class="event-cards-container">
+  {upcomingEvents.length > 0 ? (
+    upcomingEvents.map((event) => {
       const parsed = parseMassTitle(event.summary);
       const eventDate = new Date(event.start.dateTime || event.start.date);
       
-      return `
+      return (
         <div class="event-card mass-card">
           <div class="mass-details">
             <div class="mass-date">
-              ${eventDate.toLocaleDateString('cs-CZ', {
+              {eventDate.toLocaleDateString('cs-CZ', {
                 weekday: 'short',
                 day: 'numeric',
                 month: 'long'
               })}
             </div>
-            <div class="mass-time">⏰ ${parsed.time}</div>
-            <div class="mass-place">⛪ ${parsed.place}</div>
-            <div class="mass-intention">🙏 ${parsed.intention}</div>
+            <div class="mass-time">⏰ {parsed.time}</div>
+            <div class="mass-place">⛪ {parsed.place}</div>
+            <div class="mass-intention">🙏 {parsed.intention}</div>
           </div>
         </div>
-      `;
-    }).join('');
-
-    container.innerHTML = html;
-  }
-
-  // Načti události při načtení stránky
-  async function initCalendar() {
-    try {
-      const events = await getEvents(true);
-      renderEvents(events);
-    } catch (error) {
-      console.error('Error loading calendar:', error);
-      document.getElementById('calendar-container').innerHTML = 
-        '<div class="loading-message">Chyba při načítání kalendáře.</div>';
-    }
-  }
-
-  // Funkce pro obnovení dat
-  async function refreshCalendar() {
-    const events = await getEvents(true);
-    if (events) {
-      renderEvents(events);
-    }
-  }
-
-  // Automatické obnovování každých 10 minut
-  function startAutoRefresh() {
-    setInterval(() => {
-      refreshCalendar();
-    }, 10 * 60 * 1000); // 10 minut
-  }
-
-  // Inicializace při načtení stránky
-  document.addEventListener('DOMContentLoaded', () => {
-    initCalendar();
-    startAutoRefresh();
-  });
-
-  // Refresh when page becomes visible again (user returns to tab)
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      refreshCalendar();
-    }
-  });
-</script>
+      );
+    })
+  ) : (
+    <div class="loading-message">Žádné nadcházející mše nenalezeny.</div>
+  )}
+</div>
 
 <style>
   .event-cards-container {

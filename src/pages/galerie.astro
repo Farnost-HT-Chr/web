@@ -1,5 +1,102 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import fs from 'fs';
+import path from 'path';
+
+// Funkce pro načtení počtu fotek z adresáře
+function countImagesInDir(dirPath: string) {
+  try {
+    return fs.readdirSync(dirPath)
+      .filter(file => 
+        file.toLowerCase().endsWith('.jpg') || 
+        file.toLowerCase().endsWith('.jpeg') || 
+        file.toLowerCase().endsWith('.png') || 
+        file.toLowerCase().endsWith('.webp')
+      ).length;
+  } catch (error) {
+    return 0;
+  }
+}
+
+// Funkce pro získání první fotky z adresáře
+function getFirstImage(dirPath: string, subdirectory?: string) {
+  try {
+    const images = fs.readdirSync(dirPath)
+      .filter(file => 
+        file.toLowerCase().endsWith('.jpg') || 
+        file.toLowerCase().endsWith('.jpeg') || 
+        file.toLowerCase().endsWith('.png') || 
+        file.toLowerCase().endsWith('.webp')
+      )
+      .sort();
+    
+    if (images.length > 0) {
+      return subdirectory ? `/images/gallery/${subdirectory}/${images[0]}` : `/images/gallery/${images[0]}`;
+    }
+    return null;
+  } catch (error) {
+    return null;
+  }
+}
+
+// Definice galerií
+const galleryPath = path.join(process.cwd(), 'public', 'images', 'gallery');
+
+// Funkce pro správný skloňování textu fotografií
+function getPhotoText(count: number) {
+  if (count === 1) return 'fotografie';
+  if (count <= 4) return 'fotografie';
+  return 'fotografií';
+}
+
+const galleries = [
+  { 
+    id: 'chroustovice', 
+    name: 'Chroustovice', 
+    description: 'Fotografie z kostela a akcí v Chroustovicích',
+    count: countImagesInDir(path.join(galleryPath, 'chroustovice')),
+    previewImage: getFirstImage(path.join(galleryPath, 'chroustovice'), 'chroustovice'),
+    url: '/galerie/chroustovice'
+  },
+  { 
+    id: 'sbor', 
+    name: 'Sbor', 
+    description: 'Fotografie ze sborových aktivit a setkání',
+    count: countImagesInDir(path.join(galleryPath, 'sbor')),
+    previewImage: getFirstImage(path.join(galleryPath, 'sbor'), 'sbor'),
+    url: '/galerie/sbor'
+  },
+  { 
+    id: 'farni_rada', 
+    name: 'Farní rada', 
+    description: 'Fotografie z jednání a aktivit farní rady',
+    count: countImagesInDir(path.join(galleryPath, 'farni_rada')),
+    previewImage: getFirstImage(path.join(galleryPath, 'farni_rada'), 'farni_rada'),
+    url: '/galerie/farni-rada'
+  },
+  { 
+    id: 'duchovni_obnova', 
+    name: 'Duchovní obnova', 
+    description: 'Fotografie z duchovních obnov a exercicií',
+    count: countImagesInDir(path.join(galleryPath, 'duchovni_obnova')),
+    previewImage: getFirstImage(path.join(galleryPath, 'duchovni_obnova'), 'duchovni_obnova'),
+    url: '/galerie/duchovni-obnova'
+  },
+  { 
+    id: 'ostatni', 
+    name: 'Ostatní fotografie', 
+    description: 'Další fotografie ze života farnosti',
+    count: countImagesInDir(galleryPath) - fs.readdirSync(galleryPath).filter(item => 
+      fs.statSync(path.join(galleryPath, item)).isDirectory()
+    ).length,
+    previewImage: getFirstImage(galleryPath),
+    url: '/galerie/ostatni'
+  }
+];
+
+// Filtrování galerií s fotkami
+const activeGalleries = galleries.filter(gallery => gallery.count > 0);
+const totalImages = activeGalleries.reduce((sum, gallery) => sum + gallery.count, 0);
 ---
 
 <Layout 
@@ -13,17 +110,215 @@ import Layout from '../layouts/Layout.astro';
     <link rel="preload" href="/fonts/HelveticaNowBold.otf" as="font" type="font/otf" crossorigin="anonymous" />
     <link rel="preload" href="/fonts/OpenSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href="/fonts/OpenSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    
+    <style>
+      .gallery-intro {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, var(--color-secondary), var(--color-background));
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .gallery-intro p {
+        font-size: 1.1rem;
+        color: var(--color-text);
+        margin: 1rem 0;
+        opacity: 0.8;
+      }
+
+      .total-count {
+        font-size: 1rem;
+        color: var(--color-accent);
+        font-weight: 600;
+      }
+
+      .gallery-overview {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        padding: 0 1rem;
+      }
+
+      .gallery-card {
+        background: var(--color-white);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      .gallery-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .gallery-card-image {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: var(--color-background);
+      }
+
+      .gallery-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-card:hover .gallery-card-image img {
+        transform: scale(1.1);
+      }
+
+      .gallery-card-overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: var(--color-accent);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0 0 0 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .gallery-card-content {
+        padding: 1.5rem;
+      }
+
+      .gallery-card-title {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        color: var(--color-primary);
+        margin: 0 0 0.5rem 0;
+      }
+
+      .gallery-card-description {
+        color: var(--color-text);
+        font-size: 1rem;
+        line-height: 1.5;
+        margin: 0 0 1rem 0;
+        opacity: 0.8;
+      }
+
+      .gallery-card-stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        color: var(--color-accent);
+        font-weight: 600;
+      }
+
+      .gallery-card-link {
+        color: var(--color-accent);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .gallery-card-link:hover {
+        color: var(--color-accent-hover);
+      }
+
+      .placeholder-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        background: linear-gradient(45deg, var(--color-background), var(--color-secondary));
+        color: var(--color-text);
+        font-size: 3rem;
+        opacity: 0.5;
+      }
+
+      @media (max-width: 768px) {
+        .gallery-overview {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+          padding: 0 0.5rem;
+        }
+
+        .gallery-card-title {
+          font-size: 1.3rem;
+        }
+
+        .gallery-card-content {
+          padding: 1.25rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .gallery-intro {
+          padding: 1.5rem 1rem;
+        }
+
+        .gallery-card-image {
+          height: 180px;
+        }
+      }
+    </style>
   </Fragment>
 
   <div class="container">
     <h1 class="page-title">Galerie</h1>
     
-    <div class="liturgical-files-section">
-      <div class="content-text">
-        <div class="preparation-message">
-          <p>Tuto sekci připravujeme</p>
-        </div>
+    <div class="gallery-intro">
+      <p>Procházejte fotogalerií ze života naší farnosti. Fotografie jsou rozdělené do tematických kategorií.</p>
+      <div class="total-count">
+        Celkem fotografií: {totalImages}
       </div>
     </div>
+    
+    {activeGalleries.length > 0 ? (
+      <div class="gallery-overview">
+        {activeGalleries.map((gallery) => (
+          <a href={gallery.url} class="gallery-card">
+            <div class="gallery-card-image">
+              {gallery.previewImage ? (
+                <img 
+                  src={gallery.previewImage} 
+                  alt={`Náhled galerie ${gallery.name}`}
+                  loading="lazy"
+                />
+              ) : (
+                <div class="placeholder-image">
+                  📸
+                </div>
+              )}
+              <div class="gallery-card-overlay">
+                {gallery.count} {getPhotoText(gallery.count)}
+              </div>
+            </div>
+            <div class="gallery-card-content">
+              <h2 class="gallery-card-title">{gallery.name}</h2>
+              <p class="gallery-card-description">{gallery.description}</p>
+              <div class="gallery-card-stats">
+                <span class="gallery-card-link">
+                  Zobrazit galerii →
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="liturgical-files-section">
+        <div class="content-text">
+          <div class="preparation-message">
+            <p>Momentálně nejsou k dispozici žádné fotografie</p>
+          </div>
+        </div>
+      </div>
+    )}
   </div>
 </Layout>
