@@ -27,8 +27,23 @@ async function getEvents() {
     }
   }
 
-  // Seřazení všech událostí podle data a vzít prvních 8
-  const finalEvents = allEvents
+  const currentTime = new Date();
+  
+  // Filtrování událostí - pouze ty, které ještě neproběhly
+  const upcomingEvents = allEvents.filter(event => {
+    const eventDateTime = new Date(event.start.dateTime || event.start.date);
+    
+    // Pokud je událost celodenní (pouze datum), zobrazí se
+    if (event.start.date && !event.start.dateTime) {
+      return eventDateTime >= currentTime.setHours(0, 0, 0, 0);
+    }
+    
+    // Pokud má událost konkrétní čas, porovnáváme s aktuálním časem
+    return eventDateTime > currentTime;
+  });
+
+  // Seřazení všech událostí podle data a vzít prvních 4
+  const finalEvents = upcomingEvents
     .sort((a, b) => new Date(a.start.dateTime || a.start.date) - new Date(b.start.dateTime || b.start.date))
     .slice(0, 4);
 
@@ -199,10 +214,34 @@ const upcomingEvents = await getEvents();
 
 <style>
   .event-cards-container {
+    container-type: inline-size;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
     margin: 2rem 0;
+  }
+
+  /* Container queries pro lepší responsivitu */
+  @container (max-width: 600px) {
+    .event-cards-container {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+  }
+
+  @container (min-width: 601px) and (max-width: 900px) {
+    .event-cards-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+    }
+  }
+
+  @container (min-width: 901px) {
+    .event-cards-container {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
   }
 
   .mass-card {
@@ -214,6 +253,7 @@ const upcomingEvents = await getEvents();
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    container-type: inline-size;
   }
 
   .mass-card::before {
@@ -285,13 +325,8 @@ const upcomingEvents = await getEvents();
     background: #f8f6f0;
   }
 
-  @media (max-width: 768px) {
-    .event-cards-container {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-    
+  /* Container queries pro karty */
+  @container (max-width: 250px) {
     .mass-card {
       padding: 1rem;
     }
@@ -302,6 +337,29 @@ const upcomingEvents = await getEvents();
     
     .mass-time, .mass-place, .mass-intention {
       font-size: 0.9rem;
+    }
+  }
+
+  /* Fallback media queries pro starší prohlížeče */
+  @supports not (container-type: inline-size) {
+    @media (max-width: 768px) {
+      .event-cards-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin: 1rem 0;
+      }
+      
+      .mass-card {
+        padding: 1rem;
+      }
+      
+      .mass-date {
+        font-size: 1rem;
+      }
+      
+      .mass-time, .mass-place, .mass-intention {
+        font-size: 0.9rem;
+      }
     }
   }
 </style>
