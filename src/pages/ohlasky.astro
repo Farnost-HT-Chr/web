@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import FontPreload from '../components/FontPreload.astro';
 import fs from 'fs';
 import path from 'path';
 
@@ -107,14 +108,7 @@ const otherYears = allYears.filter(year => year !== currentYear).reverse();
   title="Ohlášky - Farnost Hrochův Týnec - Chroustovice"
   description="Aktuální ohlášky a oznámení farnosti Hrochův Týnec - Chroustovice."
 >
-  <Fragment slot="head">
-    <!-- Font preloads -->
-    <link rel="preload" href="/fonts/Ohrada.otf" as="font" type="font/otf" crossorigin="anonymous" />
-    <link rel="preload" href="/fonts/HelveticaNow.otf" as="font" type="font/otf" crossorigin="anonymous" />
-    <link rel="preload" href="/fonts/HelveticaNowBold.otf" as="font" type="font/otf" crossorigin="anonymous" />
-    <link rel="preload" href="/fonts/OpenSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href="/fonts/OpenSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-  </Fragment>
+  <FontPreload />
 
   <div class="container">
     <!-- Ohlášky ke stažení -->
