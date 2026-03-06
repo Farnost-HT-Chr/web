@@ -272,13 +272,6 @@ const totalImages = activeGalleries.reduce((sum, gallery) => sum + gallery.count
   <div class="container">
     <h1 class="page-title">Galerie</h1>
     
-    <div class="gallery-intro">
-      <p>Procházejte fotogalerií ze života naší farnosti. Fotografie jsou rozdělené do tematických kategorií.</p>
-      <div class="total-count">
-        Celkem fotografií: {totalImages}
-      </div>
-    </div>
-    
     {activeGalleries.length > 0 ? (
       <div class="gallery-overview">
         {activeGalleries.map((gallery) => (
