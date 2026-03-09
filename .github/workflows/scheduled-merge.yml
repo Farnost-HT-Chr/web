@@ -1,0 +1,32 @@
+name: Scheduled Squash and Merge
+
+on:
+  # This triggers the script (e.g., every day at 08:00 UTC)
+  schedule:
+    - cron: '0 8 * * *' 
+  workflow_dispatch: # Allows you to run it manually for testing
+
+jobs:
+  scheduled-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Squash and Merge PRs with 'scheduled-merge' label
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 1. Find PRs with the specific label
+          PR_LIST=$(gh pr list --label "scheduled-merge" --json number --jq '.[].number')
+
+          if [ -z "$PR_LIST" ]; then
+            echo "No PRs found with the 'scheduled-merge' label."
+            exit 0
+          fi
+
+          # 2. Loop through and squash merge them
+          for PR in $PR_LIST; do
+            echo "Merging PR #$PR..."
+            gh pr merge $PR --squash --auto --delete-branch
+          done
