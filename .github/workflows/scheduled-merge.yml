@@ -17,16 +17,68 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 1. Find PRs with the specific label
-          PR_LIST=$(gh pr list --label "scheduled-merge" --json number --jq '.[].number')
+          # 1. Debug: Show current repository and branch info
+          echo "=== Repository Info ==="
+          echo "Repository: ${{ github.repository }}"
+          echo "Current branch: ${{ github.ref }}"
+          echo "Default branch: ${{ github.event.repository.default_branch }}"
+          
+          # 2. Debug: List ALL PRs (from any branch, any state) with their details
+          echo "=== All PRs in repository ==="
+          gh pr list --state all --json number,title,labels,state,headRefName,baseRefName,isDraft --jq '.[] | {number, title, state, headBranch: .headRefName, baseBranch: .baseRefName, isDraft, labels: [.labels[].name]}'
+          
+          # 3. Debug: List all available labels in the repository
+          echo "=== All available labels ==="
+          gh label list --json name,description --jq '.[] | {name, description}'
+          
+          # 4. Find open PRs with the scheduled-merge label (targeting any branch)
+          echo "=== Searching for open PRs with 'scheduled-merge' label ==="
+          PR_LIST=$(gh pr list --state open --label "scheduled-merge" --json number,title,isDraft,baseRefName --jq '.[] | select(.isDraft == false) | "\(.number):\(.baseRefName)"')
 
           if [ -z "$PR_LIST" ]; then
-            echo "No PRs found with the 'scheduled-merge' label."
+            echo "No ready PRs found with the 'scheduled-merge' label."
+            
+            # Check for draft PRs with this label
+            echo "=== Checking for draft PRs ==="
+            DRAFT_PR_LIST=$(gh pr list --state open --label "scheduled-merge" --json number,title,isDraft --jq '.[] | select(.isDraft == true) | .number')
+            if [ ! -z "$DRAFT_PR_LIST" ]; then
+              echo "Found draft PRs with 'scheduled-merge' label: $DRAFT_PR_LIST"
+              echo "Draft PRs will not be merged automatically."
+            fi
+            
+            # Check for closed PRs with this label
+            echo "=== Checking for closed PRs ==="
+            CLOSED_PR_LIST=$(gh pr list --state closed --label "scheduled-merge" --json number,title,state --jq '.[] | "\(.number) (\(.state))"')
+            if [ ! -z "$CLOSED_PR_LIST" ]; then
+              echo "Found closed/merged PRs with 'scheduled-merge' label: $CLOSED_PR_LIST"
+            fi
+            
             exit 0
           fi
 
-          # 2. Loop through and squash merge them
-          for PR in $PR_LIST; do
-            echo "Merging PR #$PR..."
-            gh pr merge $PR --squash --auto --delete-branch
+          echo "Found PRs to merge: $PR_LIST"
+
+          # 5. Process each PR
+          for PR_INFO in $PR_LIST; do
+            PR_NUMBER=$(echo $PR_INFO | cut -d: -f1)
+            BASE_BRANCH=$(echo $PR_INFO | cut -d: -f2)
+            
+            echo "Processing PR #$PR_NUMBER (target branch: $BASE_BRANCH)..."
+            
+            # Check if PR is still mergeable
+            MERGEABLE=$(gh pr view $PR_NUMBER --json mergeable,mergeStateStatus --jq '{mergeable, status: .mergeStateStatus}')
+            echo "PR #$PR_NUMBER merge status: $MERGEABLE"
+            
+            MERGEABLE_STATE=$(echo $MERGEABLE | jq -r '.mergeable')
+            if [ "$MERGEABLE_STATE" != "MERGEABLE" ]; then
+              echo "PR #$PR_NUMBER is not mergeable (status: $MERGEABLE_STATE). Skipping."
+              continue
+            fi
+            
+            echo "Attempting to merge PR #$PR_NUMBER..."
+            if gh pr merge $PR_NUMBER --squash --auto --delete-branch; then
+              echo "✅ Successfully merged PR #$PR_NUMBER"
+            else
+              echo "❌ Failed to merge PR #$PR_NUMBER"
+            fi
           done
