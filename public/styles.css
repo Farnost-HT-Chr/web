@@ -3895,22 +3895,15 @@ p {
 }
 
 /* Container queries pro lepší responsivitu */
-@container (max-width: 600px) {
+@container (max-width: 768px) {
   .event-cards-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
+    gap: 1rem;
     margin: 1rem auto;
   }
 }
 
-@container (min-width: 601px) and (max-width: 900px) {
-  .event-cards-container {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.2rem;
-  }
-}
-
-@container (min-width: 901px) {
+@container (min-width: 769px) {
   .event-cards-container {
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
@@ -4015,28 +4008,28 @@ p {
 
 /* Fallback media queries pro starší prohlížeče */
 @supports not (container-type: inline-size) {
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .event-cards-container {
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.8rem;
+      gap: 1rem;
       margin: 1rem auto;
       max-width: 100%;
     }
     
     .mass-card {
-      padding: 0.8rem;
+      padding: 1rem;
     }
     
     .mass-date {
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
     
     .mass-time, .mass-place, .mass-intention {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
   }
   
-  @media (min-width: 601px) {
+  @media (min-width: 769px) {
     .event-cards-container {
       grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
@@ -4064,21 +4057,15 @@ p {
   width: 100%;
 }
 
-/* Ensure event cards are properly centered */
-.event-cards-container {
-  max-width: 1000px;
-  width: 100%;
-  margin: 1rem auto !important;
-  justify-self: center;
-}
-
 @media (max-width: 768px) {
   .actions-container {
     padding: 1rem;
   }
   
   .event-cards-container {
-    max-width: 100%;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+    max-width: 100% !important;
     margin: 1rem auto !important;
   }
 }
