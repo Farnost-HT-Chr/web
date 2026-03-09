@@ -4080,6 +4080,9 @@ p {
   .event-cards-container {
     max-width: 100%;
     margin: 1rem auto !important;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 }
 
@@ -4245,11 +4248,15 @@ p {
 
 .mobile-menu nav a,
 .mobile-menu nav .submenu-toggle {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: #fff;
   text-decoration: none;
   padding: 1rem 1.5rem;
   font-size: 1rem;
+  line-height: 1.5;
+  min-height: 54px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   transition: background-color 0.3s ease;
   background: none;
@@ -4257,6 +4264,7 @@ p {
   width: 100%;
   text-align: left;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .mobile-menu nav a:hover,
@@ -4264,10 +4272,9 @@ p {
   background-color: rgba(212, 175, 55, 0.15);
 }
 
-.submenu-toggle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Ensure regular links without arrows also use flex layout for consistency */
+.mobile-menu nav a {
+  justify-content: flex-start;
 }
 
 .submenu-toggle .arrow {
