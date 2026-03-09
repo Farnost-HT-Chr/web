@@ -17,61 +17,82 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 1. Debug: Show current repository and branch info
+          # 1. Debug: Show current repository and branch info  
           echo "=== Repository Info ==="
           echo "Repository: ${{ github.repository }}"
           echo "Current branch: ${{ github.ref }}"
           echo "Default branch: ${{ github.event.repository.default_branch }}"
           
-          # 2. Debug: List ALL PRs (from any branch, any state) with their details
-          echo "=== All PRs in repository ==="
-          gh pr list --state all --json number,title,labels,state,headRefName,baseRefName,isDraft --jq '.[] | {number, title, state, headBranch: .headRefName, baseBranch: .baseRefName, isDraft, labels: [.labels[].name]}'
+          # 2. Debug: List ALL PRs using simple format (no GraphQL)
+          echo "=== All Open PRs ==="
+          gh pr list --state open || echo "No open PRs found"
           
-          # 3. Debug: List all available labels in the repository
+          echo "=== All Closed PRs ==="  
+          gh pr list --state closed || echo "No closed PRs found"
+          
+          echo "=== All Merged PRs ==="
+          gh pr list --state merged || echo "No merged PRs found"
+          
+          # 3. Debug: List all repository labels using REST API
           echo "=== All available labels ==="
-          gh label list --json name,description --jq '.[] | {name, description}'
+          curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/labels" | \
+            jq -r '.[] | .name' 2>/dev/null || echo "Could not fetch labels"
           
-          # 4. Find open PRs with the scheduled-merge label (targeting any branch)
-          echo "=== Searching for open PRs with 'scheduled-merge' label ==="
-          PR_LIST=$(gh pr list --state open --label "scheduled-merge" --json number,title,isDraft,baseRefName --jq '.[] | select(.isDraft == false) | "\(.number):\(.baseRefName)"')
-
-          if [ -z "$PR_LIST" ]; then
+          # 4. Simple search for PRs with scheduled-merge label
+          echo "=== Searching for PRs with 'scheduled-merge' label ==="
+          
+          # Use REST API to find PRs with the label
+          RESPONSE=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls?state=open")
+          
+          if [ $? -ne 0 ]; then
+            echo "Failed to fetch PRs via REST API"
+            exit 1
+          fi  
+          
+          # Parse the response to find PRs with our label
+          PR_NUMBERS=$(echo "$RESPONSE" | jq -r '.[] | select(.labels[]?.name == "scheduled-merge") | select(.draft == false) | .number' 2>/dev/null)
+          
+          if [ -z "$PR_NUMBERS" ]; then
             echo "No ready PRs found with the 'scheduled-merge' label."
             
             # Check for draft PRs with this label
-            echo "=== Checking for draft PRs ==="
-            DRAFT_PR_LIST=$(gh pr list --state open --label "scheduled-merge" --json number,title,isDraft --jq '.[] | select(.isDraft == true) | .number')
-            if [ ! -z "$DRAFT_PR_LIST" ]; then
-              echo "Found draft PRs with 'scheduled-merge' label: $DRAFT_PR_LIST"
-              echo "Draft PRs will not be merged automatically."
+            DRAFT_PR_NUMBERS=$(echo "$RESPONSE" | jq -r '.[] | select(.labels[]?.name == "scheduled-merge") | select(.draft == true) | .number' 2>/dev/null)
+            if [ ! -z "$DRAFT_PR_NUMBERS" ]; then
+              echo "Found draft PRs with 'scheduled-merge' label: $DRAFT_PR_NUMBERS"
             fi
             
-            # Check for closed PRs with this label
-            echo "=== Checking for closed PRs ==="
-            CLOSED_PR_LIST=$(gh pr list --state closed --label "scheduled-merge" --json number,title,state --jq '.[] | "\(.number) (\(.state))"')
-            if [ ! -z "$CLOSED_PR_LIST" ]; then
-              echo "Found closed/merged PRs with 'scheduled-merge' label: $CLOSED_PR_LIST"
+            # Also check closed PRs
+            echo "=== Checking closed PRs ==="
+            CLOSED_RESPONSE=$(curl -s -H "Authorization: token $GH_TOKEN" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed")
+            CLOSED_PR_NUMBERS=$(echo "$CLOSED_RESPONSE" | jq -r '.[] | select(.labels[]?.name == "scheduled-merge") | .number' 2>/dev/null)
+            if [ ! -z "$CLOSED_PR_NUMBERS" ]; then
+              echo "Found closed PRs with 'scheduled-merge' label: $CLOSED_PR_NUMBERS"
             fi
             
             exit 0
           fi
 
-          echo "Found PRs to merge: $PR_LIST"
+          echo "Found PRs to merge: $PR_NUMBERS"
 
           # 5. Process each PR
-          for PR_INFO in $PR_LIST; do
-            PR_NUMBER=$(echo $PR_INFO | cut -d: -f1)
-            BASE_BRANCH=$(echo $PR_INFO | cut -d: -f2)
+          for PR_NUMBER in $PR_NUMBERS; do            
+            echo "Processing PR #$PR_NUMBER..."
             
-            echo "Processing PR #$PR_NUMBER (target branch: $BASE_BRANCH)..."
+            # Get PR details
+            PR_DETAILS=$(curl -s -H "Authorization: token $GH_TOKEN" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER")
             
-            # Check if PR is still mergeable
-            MERGEABLE=$(gh pr view $PR_NUMBER --json mergeable,mergeStateStatus --jq '{mergeable, status: .mergeStateStatus}')
-            echo "PR #$PR_NUMBER merge status: $MERGEABLE"
+            BASE_BRANCH=$(echo "$PR_DETAILS" | jq -r '.base.ref')
+            MERGEABLE=$(echo "$PR_DETAILS" | jq -r '.mergeable')
             
-            MERGEABLE_STATE=$(echo $MERGEABLE | jq -r '.mergeable')
-            if [ "$MERGEABLE_STATE" != "MERGEABLE" ]; then
-              echo "PR #$PR_NUMBER is not mergeable (status: $MERGEABLE_STATE). Skipping."
+            echo "PR #$PR_NUMBER targets branch: $BASE_BRANCH"
+            echo "PR #$PR_NUMBER mergeable status: $MERGEABLE"
+            
+            if [ "$MERGEABLE" != "true" ]; then
+              echo "PR #$PR_NUMBER is not mergeable. Skipping."
               continue
             fi
             
