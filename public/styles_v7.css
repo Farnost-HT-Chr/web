@@ -50,13 +50,13 @@
 
 :root {
   /* Colors */
-  --color-primary: #1a2764;
+  --color-primary: #E6C55A;
   --color-secondary: #e4cea1;
-  --color-accent: #eeaf13;
-  --color-accent-hover: #cfa00f;
-  --color-text: #424753;
-  --color-background: #f4f5f7;
-  --color-footer-bg: #031a2b;
+  --color-accent: #E6C55A;
+  --color-accent-hover: #D4AF37;
+  --color-text: #333333;
+  --color-background: #FFFDF5;
+  --color-footer-bg: #800020;
   --color-white: #ffffff;
 
   /* Fonts */
@@ -128,7 +128,7 @@ html {
 body {
   width: 100%;
   overflow-x: hidden;
-  background-color: #ffffff;
+  background-color: var(--color-background);
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -531,7 +531,7 @@ p {
     height: 100vh;
     min-height: auto;
     max-width: none;
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, var(--color-footer-bg) 0%, #600018 100%);
     flex-direction: column;
     align-items: center;
     transition: transform var(--transition-base);
@@ -674,7 +674,7 @@ p {
    ========================================================================== */
 
 .site-header {
-  background: linear-gradient(135deg, #ffe449e3 0%, #ffeb13e3 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
   padding: 1.5rem 1rem 1.2rem;
   text-align: center;
   position: relative;
@@ -716,7 +716,7 @@ p {
 .header-text h1 {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 2.2rem;
-  color: #2c3e50;
+  color: var(--color-text);
   margin: 0 0 0.2rem 0;
   line-height: 1.2;
   font-weight: 600;
@@ -725,7 +725,7 @@ p {
 .header-text h2 {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.8rem;
-  color: #2c3e50;
+  color: var(--color-text);
   margin: 0 0 0.2rem 0;
   line-height: 1.2;
   font-weight: 600;
@@ -735,14 +735,14 @@ p {
 .header-text p {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 0.95rem;
-  color: #555;
+  color: var(--color-text);
   margin: 0;
   font-weight: 400;
 }
 
 .content {
   flex: 1;
-  background-color: #f8f9fa;
+  background-color: var(--color-background);
 }
 
 .container {
@@ -754,7 +754,7 @@ p {
 .page-title {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   font-size: 2.5rem;
-  color: #495057;
+  color: var(--color-text);
   text-align: center;
   margin-bottom: 3rem;
   font-weight: 600;
@@ -777,7 +777,7 @@ p {
 }
 
 .pdf-item {
-  background: white;
+  background: var(--color-background);
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   overflow: hidden;
@@ -810,8 +810,8 @@ p {
 
 .pdf-header {
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #600018 100%);
+  color: var(--color-white);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1067,7 +1067,7 @@ p {
    ========================================================================== */
 
 .menu-bar {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #34495e 100%);
   padding: 0;
   box-shadow: 0 3px 8px rgba(0,0,0,0.15);
   position: sticky;
@@ -1104,8 +1104,8 @@ p {
 }
 
 .menu-bar nav a:hover {
-  background-color: rgba(255,215,0,0.15);
-  border-bottom-color: #FFD700;
+  background-color: rgba(212, 175, 55, 0.15);
+  border-bottom-color: var(--color-accent);
 }
 
 .dropdown {
@@ -1125,7 +1125,7 @@ p {
 .dropdown-content {
   display: none;
   position: absolute;
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #34495e 100%);
   min-width: 200px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   z-index: 1000;
@@ -1146,7 +1146,7 @@ p {
 }
 
 .dropdown-content a:hover {
-  background-color: rgba(255,215,0,0.2);
+  background-color: rgba(212, 175, 55, 0.2);
   border-bottom-color: transparent;
 }
 
@@ -1180,23 +1180,13 @@ p {
 }
 
 .cover {
-  background: 
-    radial-gradient(circle at 20px 20px, rgba(173, 216, 230, 0.15) 1px, transparent 1px),
-    radial-gradient(circle at 40px 40px, rgba(176, 196, 222, 0.1) 1px, transparent 1px),
-    linear-gradient(135deg, 
-      rgba(245, 248, 252, 0.95) 0%, 
-      rgba(233, 240, 248, 0.95) 30%, 
-      rgba(220, 232, 245, 0.95) 70%, 
-      rgba(207, 224, 242, 0.95) 100%),
-    linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, 
-      transparent 75%, rgba(255, 255, 255, 0.1) 75%);
-  background-size: 60px 60px, 80px 80px, 100% 100%, 40px 40px;
+  background: var(--color-background);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 65vh;
-  padding: 4rem 1rem;
+  padding: 2rem 1rem;
   text-align: center;
 }
 
@@ -1206,21 +1196,21 @@ p {
 }
 
 .cover-text {
-  padding: 0 1rem;
+  padding: 0 0.5rem;
 }
 
 .cover-text h2 {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   font-weight: 500;
   font-size: 3rem;
-  color: #2c3e50;
+  color: var(--color-text);
   margin-bottom: 1.2rem;
   line-height: 1.1;
 }
 
 .subtitle {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #555;
+  color: var(--color-text);
   font-size: 1.6rem;
   font-weight: 400;
   margin-bottom: 1.5rem;
@@ -1229,7 +1219,7 @@ p {
 
 .verse {
   font-family: Georgia, serif;
-  color: #666;
+  color: var(--color-text);
   font-size: 1.15rem;
   font-style: italic;
   margin-top: 2rem;
@@ -1238,7 +1228,7 @@ p {
   margin-left: auto;
   margin-right: auto;
   padding: 1.5rem;
-  background: white;
+  background: var(--color-background);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
@@ -1255,8 +1245,8 @@ p {
 
 .uvod-button {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-  color: #2c3e50;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  color: var(--color-text);
   width: auto;
   min-width: 190px;
   height: 56px;
@@ -1269,23 +1259,23 @@ p {
   font-weight: 600;
   transition: all 0.3s ease;
   padding: 0 2.2rem;
-  box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 .uvod-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255,215,0,0.4);
-  background: linear-gradient(135deg, #FFC700 0%, #FF9500 100%);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  background: linear-gradient(135deg, var(--color-accent-hover) 0%, #A67C00 100%);
 }
 
 #about {
-  background-color: #fff;
-  padding: 2rem 2rem 1.5rem;
+  background-color: var(--color-background);
+  padding: 0.5rem 1rem 0.5rem;
   flex: 1;
 }
 
 #about:first-of-type {
-  padding-top: 3rem;
+  padding-top: 1rem;
 }
 
 #about + #about {
@@ -1303,7 +1293,7 @@ p {
 }
 
 .about-text {
-  color: #424753;
+  color: var(--color-text);
   text-align: center;
   width: 560px;
 }
@@ -1371,7 +1361,7 @@ p {
 }
 
 .info-box {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, var(--color-background) 0%, #F5F1E8 100%);
   padding: 2.5rem;
   border-radius: 16px;
   text-align: center;
@@ -1386,7 +1376,7 @@ p {
 
 .info-box h3 {
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  color: #2c3e50;
+  color: var(--color-text);
   margin-bottom: 1.2rem;
   font-size: 1.6rem;
   font-weight: 600;
@@ -1394,18 +1384,18 @@ p {
 
 .info-box p {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #555;
+  color: var(--color-text);
   line-height: 1.8;
   margin: 0.5rem 0;
 }
 
 .info-box strong {
-  color: #2c3e50;
+  color: var(--color-footer-bg);
   font-weight: 600;
 }
 
 .schedule {
-  background: white;
+  background: var(--color-background);
   padding: 1.8rem;
   border-radius: 12px;
   margin-top: 1.2rem;
@@ -1529,21 +1519,21 @@ p {
 
 /* Liturgical files section */
 .liturgical-files-section {
-  background: white;
+  background: var(--color-background);
   border-radius: 16px;
-  padding: 2.5rem;
+  padding: 0.5rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 .section-title {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   font-size: 2rem;
-  color: #2c3e50;
+  color: var(--color-text);
   margin: 0 0 2rem 0;
   font-weight: 600;
   text-align: center;
-  border-bottom: 3px solid #FFD700;
+  border-bottom: 3px solid var(--color-accent);
   padding-bottom: 1rem;
 }
 
@@ -1588,7 +1578,7 @@ p {
 }
 
 .file-item {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, var(--color-background) 0%, #F5F1E8 100%);
   border-radius: 8px;
   padding: 0.8rem;
   display: flex;
@@ -1600,9 +1590,9 @@ p {
 }
 
 .file-item:hover {
-  border-color: #FFD700;
+  border-color: var(--color-accent);
   transform: translateX(5px);
-  box-shadow: 0 4px 12px rgba(255,215,0,0.2);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
 }
 
 .file-info {
@@ -1620,7 +1610,7 @@ p {
 
 .file-name {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #2c3e50;
+  color: var(--color-text);
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1648,14 +1638,14 @@ p {
 }
 
 .view-btn {
-  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #600018 100%);
+  color: var(--color-white);
 }
 
 .view-btn:hover {
-  background: linear-gradient(135deg, #2980b9 0%, #21618c 100%);
+  background: linear-gradient(135deg, #600018 0%, var(--color-footer-bg) 100%);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(52,152,219,0.3);
+  box-shadow: 0 4px 8px rgba(128, 0, 32, 0.3);
 }
 
 .download-btn {
@@ -1677,7 +1667,7 @@ p {
 }
 
 .liturgie-card {
-  background: white;
+  background: var(--color-background);
   border-radius: 16px;
   padding: 2.5rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -1730,21 +1720,21 @@ p {
 }
 
 .liturgie-card a {
-  color: #FFD700;
+  color: var(--color-accent);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
 .liturgie-card a:hover {
-  color: #FFA500;
+  color: var(--color-accent-hover);
   text-decoration: underline;
 }
 
 .link-button {
   display: inline-block;
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-  color: #2c3e50;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  color: var(--color-text);
   padding: 0.9rem 2rem;
   border-radius: 28px;
   text-decoration: none;
@@ -2379,8 +2369,8 @@ p {
    ========================================================================== */
 
 .page-hero {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  padding: 3rem 1rem;
+  background: var(--color-background);
+  padding: 2rem 1rem;
   text-align: center;
 }
 
@@ -2389,7 +2379,7 @@ p {
   font-weight: 600;
   font-size: 3rem;
   color: #2c3e50;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   line-height: 1.2;
 }
 
@@ -2406,7 +2396,7 @@ p {
 .calendar-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 2rem 2rem;
 }
 
 .calendar-section h2 {
@@ -2442,7 +2432,7 @@ p {
 
 @media (max-width: 768px) {
   .calendar-section {
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .calendar-section h2 {
@@ -2468,7 +2458,7 @@ p {
 .content-section {
   max-width: 900px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 0.5rem 1rem;
 }
 
 .intro-quote {
@@ -2476,8 +2466,8 @@ p {
   color: #444;
   font-size: 1.15rem;
   font-style: italic;
-  margin: 2rem 0 3rem;
-  padding: 2rem;
+  margin: 1rem 0 1rem;
+  padding: 1rem;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border-left: 4px solid #FFD700;
   border-radius: 8px;
@@ -2611,7 +2601,7 @@ p {
 /* Sacraments Pages - Mobile Styles */
 @media (max-width: 768px) {
   .page-hero {
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .page-hero h2 {
@@ -2722,7 +2712,7 @@ p {
 .schedule-table {
   max-width: 900px;
   margin: 0 auto 3rem;
-  background: #fff;
+  background: var(--color-background);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -2755,16 +2745,16 @@ p {
   padding: 1.5rem 2rem;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #495057;
-  background-color: #f8f9fa;
-  border-right: 3px solid #8b4513;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  border-right: 3px solid var(--color-footer-bg);
   display: flex;
   align-items: center;
 }
 
 .schedule-row.highlight .day-name {
-  background-color: #ffeaa7;
-  border-right-color: #d4a017;
+  background-color: rgba(212, 175, 55, 0.2);
+  border-right-color: var(--color-accent);
 }
 
 .service-info {
@@ -3038,15 +3028,15 @@ p {
 .submit-btn {
   width: 100%;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #600018 100%);
+  color: var(--color-white);
   border: none;
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(139, 69, 19, 0.2);
+  box-shadow: 0 4px 8px rgba(128, 0, 32, 0.2);
 }
 
 .submit-btn:hover {
@@ -3354,7 +3344,7 @@ p {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .column {
@@ -3641,8 +3631,8 @@ p {
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  color: var(--color-text);
   border: none;
   padding: 1rem 2rem;
   border-radius: 8px;
@@ -3687,7 +3677,7 @@ p {
    ========================================================================== */
 
 .church-slider {
-  margin-top: 3rem;
+  margin-top: 2rem;
   position: relative;
   max-width: 800px;
   width: 100%;
@@ -3889,6 +3879,596 @@ p {
   box-shadow: 0 4px 12px rgba(255,215,0,0.2);
 }
 
+/* ==========================================================================
+   CalendarCards Component Styles  
+   ========================================================================== */
+
+.event-cards-container {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 2rem auto;
+  max-width: 1000px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Container queries pro lepší responsivitu */
+@container (max-width: 600px) {
+  .event-cards-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin: 1rem auto;
+  }
+}
+
+@container (min-width: 601px) and (max-width: 900px) {
+  .event-cards-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+@container (min-width: 901px) {
+  .event-cards-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.mass-card {
+  background: linear-gradient(135deg, #f8f6f0 0%, #ffffff 100%);
+  border: 2px solid #d4ac7a;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(212, 172, 122, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.mass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #8B4513, #d4ac7a);
+}
+
+.mass-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 172, 122, 0.25);
+  border-color: #8B4513;
+}
+
+.mass-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.mass-date {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #8B4513;
+  text-transform: capitalize;
+  text-align: center;
+  padding: 0.5rem;
+  background: rgba(212, 172, 122, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #8B4513;
+}
+
+.mass-time, .mass-place, .mass-intention {
+  font-size: 0.95rem;
+  padding: 0.3rem 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.mass-time {
+  color: #2c5530;
+  font-weight: 600;
+}
+
+.mass-place {
+  color: #8B4513;
+  font-weight: 500;
+}
+
+.mass-intention {
+  color: #4a4a4a;
+  line-height: 1.4;
+  flex-grow: 1;
+}
+
+.loading-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
+  border: 2px dashed #d4ac7a;
+  border-radius: 15px;
+  background: #f8f6f0;
+}
+
+/* Container queries pro karty */
+@container (max-width: 250px) {
+  .mass-card {
+    padding: 1rem;
+  }
+  
+  .mass-date {
+    font-size: 1rem;
+  }
+  
+  .mass-time, .mass-place, .mass-intention {
+    font-size: 0.9rem;
+  }
+}
+
+/* Fallback media queries pro starší prohlížeče */
+@supports not (container-type: inline-size) {
+  @media (max-width: 600px) {
+    .event-cards-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+      margin: 1rem auto;
+      max-width: 100%;
+    }
+    
+    .mass-card {
+      padding: 0.8rem;
+    }
+    
+    .mass-date {
+      font-size: 0.9rem;
+    }
+    
+    .mass-time, .mass-place, .mass-intention {
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (min-width: 601px) {
+    .event-cards-container {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin: 2rem auto;
+      max-width: 1000px;
+    }
+  }
+}
+
+/* ==========================================================================
+   Actions Container Styles  
+   ========================================================================== */
+
+.actions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 100%;
+}
+
+.actions-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Ensure event cards are properly centered */
+.event-cards-container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 1rem auto !important;
+  justify-self: center;
+}
+
+@media (max-width: 768px) {
+  .actions-container {
+    padding: 1rem;
+  }
+  
+  .event-cards-container {
+    max-width: 100%;
+    margin: 1rem auto !important;
+  }
+}
+
+/* ==========================================================================
+   Site Footer Styles  
+   ========================================================================== */
+
+.site-footer {
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #600018 100%);
+  color: var(--color-white);
+  padding: 2rem 1rem;
+  text-align: center;
+  margin-top: auto;
+  width: 100%;
+}
+
+.footer-content {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-contact {
+  margin-bottom: 2rem;
+  padding-bottom: 0;
+}
+
+.footer-contact h3 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: var(--color-accent);
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
+
+.footer-contact p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #bdc3c7;
+  line-height: 1.6;
+}
+
+.footer-contact a {
+  color: var(--color-white);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-contact a:hover {
+  color: var(--color-accent);
+}
+
+.footer-copyright {
+  text-align: center;
+}
+
+.footer-copyright p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #95a5a6;
+}
+
+.footer-copyright a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.footer-copyright a:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Mobile Menu Styles  
+   ========================================================================== */
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 50%;
+  max-width: 320px;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #600018 100%);
+  box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+  padding-top: 60px;
+}
+
+.mobile-menu.open {
+  right: 0;
+}
+
+.hamburger,
+.hamburger-close {
+  display: none;
+  position: fixed;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1001;
+}
+
+.hamburger {
+  top: 15px;
+  right: 15px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.hide {
+  transform: translateY(-100px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hamburger-close {
+  top: 10px;
+  right: 10px;
+}
+
+.hamburger span,
+.hamburger-close span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background-color: #fff;
+  margin: 5px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+.hamburger-close span:nth-child(1) {
+  transform: rotate(-45deg) translate(-6px, 6px);
+}
+
+.hamburger-close span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-close span:nth-child(3) {
+  transform: rotate(45deg) translate(-6px, -6px);
+}
+
+.mobile-menu nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-menu nav > ul > li {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-menu nav a,
+.mobile-menu nav .submenu-toggle {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: background-color 0.3s ease;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-menu nav a:hover,
+.mobile-menu nav .submenu-toggle:hover {
+  background-color: rgba(212, 175, 55, 0.15);
+}
+
+.submenu-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submenu-toggle .arrow {
+  font-size: 0.7em;
+  transition: transform 0.3s ease;
+}
+
+.submenu-toggle[aria-expanded="true"] .arrow {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background-color: rgba(0,0,0,0.2);
+}
+
+.submenu.active {
+  max-height: 1000px;
+}
+
+.submenu li {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.submenu a,
+.submenu .submenu-toggle {
+  padding-left: 2.5rem;
+  font-size: 0.95rem;
+}
+
+.submenu .submenu a,
+.submenu .submenu .submenu-toggle {
+  padding-left: 3.5rem;
+  font-size: 0.9rem;
+}
+
+/* Mobile Menu & Footer Mobile Media Queries */
+@media (max-width: 768px) {
+  .hamburger,
+  .hamburger-close {
+    display: block;
+  }
+
+  .site-footer {
+    padding: 2rem 1rem 1.5rem;
+  }
+
+  .footer-content {
+    padding: 0 1rem;
+  }
+
+  .footer-contact {
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-contact h3 {
+    font-size: 1.1rem;
+  }
+
+  .footer-contact p {
+    font-size: 0.9rem;
+  }
+
+  .footer-copyright p {
+    font-size: 0.85rem;
+  }
+}
+
+/* ==========================================================================
+   Navigation Menu Styles  
+   ========================================================================== */
+
+.menu-bar {
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #600018 100%);
+  padding: 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .menu-bar {
+    display: none;
+  }
+}
+
+.menu-bar nav {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.menu-bar nav > a,
+.menu-bar nav .dropdown {
+  position: relative;
+}
+
+.menu-bar nav a {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #fff;
+  text-decoration: none;
+  padding: 1.1rem 1.5rem;
+  display: block;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+}
+
+.menu-bar nav a:hover {
+  background-color: rgba(212, 175, 55, 0.15);
+  border-bottom-color: var(--color-accent);
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown > a {
+  cursor: pointer;
+}
+
+.dropdown > a::after {
+  content: ' ▼';
+  font-size: 0.7em;
+  margin-left: 0.3rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #600018 100%);
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  border-radius: 0 0 8px 8px;
+}
+
+.dropdown-content a {
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.9rem;
+}
+
+.dropdown-content a:last-child {
+  border-bottom: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(212, 175, 55, 0.2);
+  border-bottom-color: transparent;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:focus-within > .dropdown-content {
+  display: block;
+}
+
+.dropdown-content .dropdown {
+  position: relative;
+}
+
+.dropdown-content .dropdown > a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-content .dropdown > a::after {
+  content: ' ▶';
+  margin-left: auto;
+}
+
+.dropdown-content .dropdown-content {
+  left: 100%;
+  top: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.dropdown-content .dropdown:hover > .dropdown-content {
+  display: block;
+}
+
+.dropdown-content .dropdown:focus-within > .dropdown-content {
+  display: block;
+}
+
 .file-item-wrapper .file-item.clickable {
   background: none;
   border: none;
@@ -3943,7 +4523,7 @@ p {
 }
 
 .news-card-header {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #2c3e50 100%);
+  background: linear-gradient(135deg, var(--color-footer-bg) 0%, #600018 100%);
   color: var(--color-white);
   padding: 2rem;
   display: flex;
@@ -4256,20 +4836,45 @@ p {
 /* Gallery Detail Styles (individual gallery pages) */
 .breadcrumb {
   margin-bottom: 2rem;
-  padding: 1rem;
-  font-size: 0.9rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-background));
+  border-radius: 8px;
+  border-left: 4px solid var(--color-accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-size: 0.95rem;
   color: var(--color-text);
-  opacity: 0.8;
+  font-family: var(--font-body);
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .breadcrumb a {
   color: var(--color-accent);
   text-decoration: none;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all var(--transition-base);
+  position: relative;
 }
 
 .breadcrumb a:hover {
   color: var(--color-accent-hover);
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-1px);
+}
+
+.breadcrumb a:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -0.75rem;
+  color: var(--color-text);
+  opacity: 0.5;
+  font-weight: normal;
+  pointer-events: none;
 }
 
 .gallery-header {

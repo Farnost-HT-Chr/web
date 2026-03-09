@@ -62,7 +62,7 @@ const galleries = [
   { 
     id: 'duchovni_obnova', 
     name: 'Duchovní obnova', 
-    description: 'Fotografie z duchovní obnovy',
+    description: 'Fotografie z duchovní obnovy s P. Anthony Sajim',
     count: countImagesInDir(path.join(galleryPath, 'duchovni_obnova')),
     previewImage: getFirstImage(path.join(galleryPath, 'duchovni_obnova'), 'duchovni_obnova'),
     url: '/galerie/duchovni-obnova'
@@ -70,7 +70,7 @@ const galleries = [
   { 
     id: 'farni_kavarna', 
     name: 'Farní kavárna', 
-    description: 'Fotografie z farní kavárny a společenských setkání',
+    description: 'Fotografie z farní kavárny',
     count: countImagesInDir(path.join(galleryPath, 'farni_kavarna')),
     previewImage: getFirstImage(path.join(galleryPath, 'farni_kavarna'), 'farni_kavarna'),
     url: '/galerie/farni-kavarna'
@@ -78,7 +78,7 @@ const galleries = [
   { 
     id: 'farni_rada', 
     name: 'Farní rada', 
-    description: 'Fotografie z jednání a aktivit farní rady',
+    description: 'Fotografie farní rady',
     count: countImagesInDir(path.join(galleryPath, 'farni_rada')),
     previewImage: getFirstImage(path.join(galleryPath, 'farni_rada'), 'farni_rada'),
     url: '/galerie/farni-rada'
@@ -94,7 +94,7 @@ const galleries = [
   { 
     id: 'pruvod', 
     name: 'Průvod', 
-    description: 'Fotografie z průvodů a procesí',
+    description: 'Fotografie z průvodů',
     count: countImagesInDir(path.join(galleryPath, 'pruvod')),
     previewImage: getFirstImage(path.join(galleryPath, 'pruvod'), 'pruvod'),
     url: '/galerie/pruvod'
@@ -118,7 +118,7 @@ const galleries = [
   { 
     id: 'sbor', 
     name: 'Sbor', 
-    description: 'Fotografie ze sborových aktivit a setkání',
+    description: 'Fotografie z vystoupení chrámového sboru',
     count: countImagesInDir(path.join(galleryPath, 'sbor')),
     previewImage: getFirstImage(path.join(galleryPath, 'sbor'), 'sbor'),
     url: '/galerie/sbor'
@@ -126,7 +126,7 @@ const galleries = [
   { 
     id: 'trikralova_sbirka', 
     name: 'Tříkrálová sbírka', 
-    description: 'Fotografie z Tříkrálové sbírky a koledování',
+    description: 'Fotografie z Tříkrálové sbírky',
     count: countImagesInDir(path.join(galleryPath, 'trikralova_sbirka')),
     previewImage: getFirstImage(path.join(galleryPath, 'trikralova_sbirka'), 'trikralova_sbirka'),
     url: '/galerie/trikralova-sbirka'
@@ -154,9 +154,11 @@ const totalImages = activeGalleries.reduce((sum, gallery) => sum + gallery.count
 >
   <FontPreload />
 
-  <div class="container">
-    <h1 class="page-title">Galerie</h1>
-    
+  <div class="page-hero">
+    <h2>Galerie</h2>
+  </div>
+
+  <section class="content-section">
     {activeGalleries.length > 0 ? (
       <div class="gallery-overview">
         {activeGalleries.map((gallery) => (

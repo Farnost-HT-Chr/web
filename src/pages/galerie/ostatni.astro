@@ -40,14 +40,6 @@ try {
     <div class="breadcrumb">
       <a href="/galerie">← Galerie</a> / {galleryData.name}
     </div>
-
-    <div class="gallery-header">
-      <h1 class="gallery-name">{galleryData.name}</h1>
-      <p class="gallery-description">{galleryData.description}</p>
-      <div class="gallery-count">
-        Počet fotografií: {images.length}
-      </div>
-    </div>
     
     {images.length > 0 ? (
       <div class="gallery-grid">

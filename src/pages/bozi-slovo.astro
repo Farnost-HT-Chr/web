@@ -119,9 +119,11 @@ const otherYears = allYears.filter(year => year !== currentYear).reverse();
 >
   <FontPreload />
 
-  <div class="container">
-    <!-- Liturgické texty ke stažení -->
-    <h1 class="page-title">Boží slovo</h1>
+  <div class="page-hero">
+    <h2>Boží slovo</h2>
+  </div>
+
+  <section class="content-section">
     <div class="liturgical-files-section">
           
           {Object.keys(pdfsByYear).length === 0 ? (

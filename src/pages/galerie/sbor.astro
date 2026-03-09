@@ -7,7 +7,7 @@ import path from 'path';
 const galleryData = {
   id: 'sbor',
   name: 'Sbor',
-  description: 'Fotografie ze sborových aktivit a setkání'
+  description: 'Fotografie z vystoupení chrámového sboru'
 };
 
 // Načtení fotek z podadresáře
@@ -37,14 +37,6 @@ try {
   <div class="container">
     <div class="breadcrumb">
       <a href="/galerie">← Galerie</a> / {galleryData.name}
-    </div>
-
-    <div class="gallery-header">
-      <h1 class="gallery-name">{galleryData.name}</h1>
-      <p class="gallery-description">{galleryData.description}</p>
-      <div class="gallery-count">
-        Počet fotografií: {images.length}
-      </div>
     </div>
     
     {images.length > 0 ? (
