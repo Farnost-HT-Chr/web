@@ -54,18 +54,34 @@ const galleries = [
   { 
     id: 'kaple', 
     name: 'Svěcení kaple', 
-    description: 'Posvěcení nové kaple Božího milosrdenství na faře dne 3.ledna 2024 generálním vikářem Mons. Janem Pasekou',
+    description: 'Posvěcení nové kaple Božího milosrdenství na faře dne 3. ledna 2024 generálním vikářem Mons. Janem Pasekou',
     count: countImagesInDir(path.join(galleryPath, 'kaple')),
     previewImage: getFirstImage(path.join(galleryPath, 'kaple'), 'kaple'),
-    url: '/galerie/kaple'
+    url: '/galerie/sveceni-kaple'
   },
   { 
-    id: 'chroustovice', 
-    name: 'Chroustovice', 
-    description: 'Fotografie z kostela a akcí v Chroustovicích',
-    count: countImagesInDir(path.join(galleryPath, 'chroustovice')),
-    previewImage: getFirstImage(path.join(galleryPath, 'chroustovice'), 'chroustovice'),
-    url: '/galerie/chroustovice'
+    id: 'prvni_sv_prijimani_2024', 
+    name: 'První svaté přijímání 2024', 
+    description: 'Fotografie z prvního svatého přijímání dětí v roce 2024',
+    count: countImagesInDir(path.join(galleryPath, 'prvni_sv_prijimani_2024')),
+    previewImage: getFirstImage(path.join(galleryPath, 'prvni_sv_prijimani_2024'), 'prvni_sv_prijimani_2024'),
+    url: '/galerie/prvni-sv-prijimani-2024'
+  },
+  { 
+    id: 'sbor', 
+    name: 'Sbor', 
+    description: 'Fotografie z vystoupení chrámového sboru',
+    count: countImagesInDir(path.join(galleryPath, 'sbor')),
+    previewImage: getFirstImage(path.join(galleryPath, 'sbor'), 'sbor'),
+    url: '/galerie/sbor'
+  },
+  { 
+    id: 'trikralova_sbirka', 
+    name: 'Tříkrálová sbírka', 
+    description: 'Fotografie z Tříkrálové sbírky',
+    count: countImagesInDir(path.join(galleryPath, 'trikralova_sbirka')),
+    previewImage: getFirstImage(path.join(galleryPath, 'trikralova_sbirka'), 'trikralova_sbirka'),
+    url: '/galerie/trikralova-sbirka'
   },
   { 
     id: 'duchovni_obnova', 
@@ -100,6 +116,14 @@ const galleries = [
     url: '/galerie/hrochuv-tynec'
   },
   { 
+    id: 'chroustovice', 
+    name: 'Chroustovice', 
+    description: 'Fotografie z kostela a akcí v Chroustovicích',
+    count: countImagesInDir(path.join(galleryPath, 'chroustovice')),
+    previewImage: getFirstImage(path.join(galleryPath, 'chroustovice'), 'chroustovice'),
+    url: '/galerie/chroustovice'
+  },
+  { 
     id: 'pruvod', 
     name: 'Průvod', 
     description: 'Fotografie z průvodů',
@@ -114,30 +138,6 @@ const galleries = [
     count: countImagesInDir(path.join(galleryPath, 'prvni_sv_prijimani')),
     previewImage: getFirstImage(path.join(galleryPath, 'prvni_sv_prijimani'), 'prvni_sv_prijimani'),
     url: '/galerie/prvni-sv-prijimani'
-  },
-  { 
-    id: 'prvni_sv_prijimani_2024', 
-    name: 'První svaté přijímání 2024', 
-    description: 'Fotografie z prvního svatého přijímání dětí v roce 2024',
-    count: countImagesInDir(path.join(galleryPath, 'prvni_sv_prijimani_2024')),
-    previewImage: getFirstImage(path.join(galleryPath, 'prvni_sv_prijimani_2024'), 'prvni_sv_prijimani_2024'),
-    url: '/galerie/prvni-sv-prijimani-2024'
-  },
-  { 
-    id: 'sbor', 
-    name: 'Sbor', 
-    description: 'Fotografie z vystoupení chrámového sboru',
-    count: countImagesInDir(path.join(galleryPath, 'sbor')),
-    previewImage: getFirstImage(path.join(galleryPath, 'sbor'), 'sbor'),
-    url: '/galerie/sbor'
-  },
-  { 
-    id: 'trikralova_sbirka', 
-    name: 'Tříkrálová sbírka', 
-    description: 'Fotografie z Tříkrálové sbírky',
-    count: countImagesInDir(path.join(galleryPath, 'trikralova_sbirka')),
-    previewImage: getFirstImage(path.join(galleryPath, 'trikralova_sbirka'), 'trikralova_sbirka'),
-    url: '/galerie/trikralova-sbirka'
   },
   { 
     id: 'ostatni', 
