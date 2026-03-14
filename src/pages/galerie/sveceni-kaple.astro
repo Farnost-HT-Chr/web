@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FontPreload from '../../components/FontPreload.astro';
+import fs from 'fs';
+import path from 'path';
+
+const galleryData = {
+  id: 'kaple',
+  name: 'Svěcení kaple',
+  description: 'Posvěcení nové kaple Božího milosrdenství na faře dne 3.ledna 2024 generálním vikářem Mons. Janem Pasekou'
+};
+
+// Načtení fotek z podadresáře
+const galleryPath = path.join(process.cwd(), 'public', 'images', 'gallery', galleryData.id);
+let images: string[] = [];
+
+try {
+  images = fs.readdirSync(galleryPath)
+    .filter(file => 
+      file.toLowerCase().endsWith('.jpg') || 
+      file.toLowerCase().endsWith('.jpeg') || 
+      file.toLowerCase().endsWith('.png') || 
+      file.toLowerCase().endsWith('.webp')
+    )
+    .sort();
+} catch (error) {
+  console.error(`Chyba při načítání fotek z ${galleryPath}:`, error);
+}
+---
+
+<Layout 
+  title={`${galleryData.name} - Galerie - Farnost Hrochův Týnec - Chroustovice`}
+  description={`${galleryData.description} - Fotogalerie farnosti Hrochův Týnec - Chroustovice.`}
+>
+  <FontPreload />
+
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/galerie">← Galerie</a> / {galleryData.name}
+    </div>
+
+    {images.length > 0 ? (
+      <div class="gallery-grid">
+        {images.map((image, index) => (
+          <div class="gallery-item" data-index={index}>
+            <img 
+              src={`/images/gallery/${galleryData.id}/${image}`} 
+              alt={`${galleryData.name} - fotografie ${index + 1}`}
+              loading="lazy"
+            />
+            <div class="gallery-overlay">
+              <h3 class="gallery-title">{image.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ")}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="liturgical-files-section">
+        <div class="content-text">
+          <div class="preparation-message">
+            <p>Momentálně nejsou k dispozici žádné fotografie</p>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+      <span class="close-btn">&times;</span>
+      <button class="nav-btn prev-btn">&#8249;</button>
+      <img id="lightbox-img" src="" alt="" />
+      <button class="nav-btn next-btn">&#8250;</button>
+      <div class="gallery-counter">
+        <span id="current-index">1</span> / <span id="total-images">{images.length}</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.querySelector('.close-btn');
+      const prevBtn = document.querySelector('.prev-btn');
+      const nextBtn = document.querySelector('.next-btn');
+      const currentIndex = document.getElementById('current-index');
+      
+      let currentImageIndex = 0;
+      const totalImages = galleryItems.length;
+
+      // Otevření lightboxu
+      galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+          currentImageIndex = index;
+          showImage(index);
+          lightbox.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      // Zavření lightboxu
+      closeBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      // Navigace
+      prevBtn.addEventListener('click', showPrevImage);
+      nextBtn.addEventListener('click', showNextImage);
+
+      // Klávesové zkratky
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        
+        switch(e.key) {
+          case 'Escape':
+            closeLightbox();
+            break;
+          case 'ArrowLeft':
+            showPrevImage();
+            break;
+          case 'ArrowRight':
+            showNextImage();
+            break;
+        }
+      });
+
+      function showImage(index) {
+        const img = galleryItems[index].querySelector('img');
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        currentIndex.textContent = index + 1;
+      }
+
+      function showPrevImage() {
+        currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+        showImage(currentImageIndex);
+      }
+
+      function showNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % totalImages;
+        showImage(currentImageIndex);
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</Layout>

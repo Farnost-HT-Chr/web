@@ -1,0 +1,76 @@
+---
+import { readdir } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import Layout from '../layouts/Layout.astro';
+import FontPreload from '../components/FontPreload.astro';
+
+interface DieceseFile {
+  name: string;
+  href: string;
+  title: string;
+}
+
+const dioceseDir = fileURLToPath(new URL('../../public/files/dieceze', import.meta.url));
+
+const entries = await readdir(dioceseDir, { withFileTypes: true });
+
+const files: DieceseFile[] = entries
+  .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith('.pdf'))
+  .map((entry) => {
+    const title = entry.name
+      .replace(/\.pdf$/i, '')
+      .replace(/^[0-9]+[-_\s]*/, '')
+      .replace(/[_-]+/g, ' ')
+      .trim();
+
+    return {
+      name: entry.name,
+      href: `/files/dieceze/${encodeURIComponent(entry.name)}`,
+      title: title || entry.name,
+    };
+  })
+  .sort((a, b) => a.title.localeCompare(b.title, 'cs', { sensitivity: 'base' }));
+---
+
+<Layout
+  title="Z diecéze - Farnost Hrochův Týnec - Chroustovice"
+  description="Dokumenty a oznámení z diecéze."
+>
+  <FontPreload />
+
+  <div class="page-hero">
+    <h2>Z diecéze</h2>
+  </div>
+
+  <section class="content-section">
+    <div class="liturgical-files-section">
+      <div class="files-by-year">
+        <div class="year-group">
+          <h4 class="year-header">Dokumenty z diecéze</h4>
+
+          {files.length === 0 ? (
+            <p class="no-files">Ve složce zatím nejsou žádné PDF dokumenty.</p>
+          ) : (
+            <div class="files-grid">
+              {files.map((file) => (
+                <a
+                  href={file.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="file-item file-item-link"
+                  aria-label={`Otevřít dokument ${file.title}`}
+                >
+                  <div class="file-info">
+                    <span class="file-icon">📄</span>
+                    <span class="file-name" title={file.name}>{file.title}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
