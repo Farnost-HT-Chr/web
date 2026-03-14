@@ -52,6 +52,14 @@ function getPhotoText(count: number) {
 
 const galleries = [
   { 
+    id: 'kaple', 
+    name: 'Svěcení kaple', 
+    description: 'Posvěcení nové kaple Božího milosrdenství na faře dne 3.ledna 2024 generálním vikářem Mons. Janem Pasekou',
+    count: countImagesInDir(path.join(galleryPath, 'kaple')),
+    previewImage: getFirstImage(path.join(galleryPath, 'kaple'), 'kaple'),
+    url: '/galerie/kaple'
+  },
+  { 
     id: 'chroustovice', 
     name: 'Chroustovice', 
     description: 'Fotografie z kostela a akcí v Chroustovicích',
