@@ -1,2 +1,2 @@
 # web
-Web pages for Farnost HT/CHR
+Web pages for Farnost HT and CHR
