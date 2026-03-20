@@ -14,33 +14,14 @@ import Layout from '../layouts/Layout.astro';
     <form 
       id="intenceForm" 
       class="intence-form"
-      action="https://formsubmit.co/fas@farnostht-chr.cz"
       method="POST"
     >
-      <!-- FormSubmit konfigurace -->
-      <input type="hidden" name="_subject" value="📅 Nová rezervace mešní intence - Farnost HT-CHR" />
-      <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_template" value="table" />
-      
-      <!-- Reply-to bude nastaveno na e-mail odesílatele formuláře -->
-      <input type="hidden" name="_replyto" id="replyToField" value="" />
-      
-      <!-- Auto-reply configuration (sends confirmation to user) -->
-      <input type="hidden" name="_autoresponse" value="Dobrý den,
-
-děkujeme za odeslání rezervace mešní intence prostřednictvím našeho webového formuláře.
-
-Vaši žádost jsme obdrželi a zpracujeme ji v nejbližší možné době. O přijetí a potvrzení intence vás budeme informovat e-mailem nebo telefonicky.
-
-V případě dotazů nás můžete kontaktovat:
-📞 Telefon: 731 598 782
-✉️ Email: fas@farnostht-chr.cz
-
-S pozdravem,
-Římskokatolická farnost Hrochův Týnec - Chroustovice" />
+      <!-- Metadata pro Google Apps Script -->
+      <input type="hidden" name="formType" value="Rezervace mešní intence" />
+      <input type="hidden" name="sentAt" id="sentAtField" value="" />
       
       <!-- Anti-spam honeypot -->
-      <input type="text" name="_honey" style="display:none" />
+      <input type="text" id="honey" name="website" style="display:none" />
       
       <!-- Jméno a příjmení -->
       <div class="form-row">
@@ -159,6 +140,8 @@ S pozdravem,
 </Layout>
 
 <script>
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzEYuT42uXiV6uy2lsefqLJ2eYmXdpdRTXfPmAUesOlqY5SX34VmB-H9DaTW4ZsCwd3/exec';
+
   // Zpracování formuláře
   const form = document.getElementById('intenceForm') as HTMLFormElement;
   
@@ -172,29 +155,53 @@ S pozdravem,
     submitBtn.textContent = 'Odesílám...';
     
     try {
-      const formData = new FormData(form);
-      
-      // Nastavit reply-to na e-mail odesílatele
       const emailInput = document.getElementById('email') as HTMLInputElement;
-      const replyToField = document.getElementById('replyToField') as HTMLInputElement;
-      if (emailInput && replyToField) {
-        replyToField.value = emailInput.value;
+      const firstNameInput = document.getElementById('firstName') as HTMLInputElement;
+      const lastNameInput = document.getElementById('lastName') as HTMLInputElement;
+      const phoneInput = document.getElementById('phone') as HTMLInputElement;
+      const dateInput = document.getElementById('customDate') as HTMLInputElement;
+      const parishSelect = document.getElementById('parish') as HTMLSelectElement;
+      const intentionInput = document.getElementById('intention') as HTMLTextAreaElement;
+      const sentAtField = document.getElementById('sentAtField') as HTMLInputElement;
+      const honeyField = document.getElementById('honey') as HTMLInputElement;
+      if (sentAtField) {
+        sentAtField.value = new Date().toLocaleString('cs-CZ', { timeZone: 'Europe/Prague' });
       }
-      
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
+
+      const firstName = firstNameInput?.value?.trim() ?? '';
+      const lastName = lastNameInput?.value?.trim() ?? '';
+      const fullName = `${firstName} ${lastName}`.trim();
+      const parish = parishSelect?.value ?? '';
+      const dateText = dateInput?.value?.trim() || 'neuvedeno';
+      const senderEmail = emailInput?.value?.trim() ?? '';
+
+      const payload = new URLSearchParams({
+        formType: 'Rezervace mešní intence',
+        sentAt: sentAtField?.value ?? '',
+        firstName,
+        lastName,
+        fullName,
+        phone: phoneInput?.value?.trim() ?? '',
+        email: senderEmail,
+        replyTo: senderEmail,
+        parish,
+        serviceDate: dateText,
+        intention: intentionInput?.value?.trim() ?? '',
+        honey: honeyField?.value?.trim() ?? '',
+        emailSubject: `Rezervace intence | ${fullName || 'Neznámý odesílatel'} | ${parish || 'Neurčená farnost'} | ${dateText}`
       });
       
-      if (response.ok) {
-        alert('Děkujeme za odeslání rezervace intence. Brzy obdržíte potvrzovací e-mail.');
-        form.reset();
-      } else {
-        alert('Omlouváme se, došlo k chybě při odesílání. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.');
-      }
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: payload,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        }
+      });
+
+      alert('Děkujeme za odeslání rezervace intence. Brzy obdržíte potvrzovací e-mail.');
+      form.reset();
     } catch (error) {
       console.error('Chyba:', error);
       alert('Omlouváme se, došlo k chybě při odesílání. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.');
