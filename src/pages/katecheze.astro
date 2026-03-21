@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FontPreload from '../components/FontPreload.astro';
+---
+
+<Layout 
+  title="Katecheze - Farnost Hrochův Týnec - Chroustovice"
+  description="Měsíční katecheze pro prohloubení víry. Texty o katolické víře s diskusí, otázkami a komentáři."
+>
+  <FontPreload />
+
+  <div class="page-hero">
+    <h2>Katecheze</h2>
+  </div>
+
+  <section class="content-section">
+    <div class="text-content">
+      <p>Vítáme vás na stránce katechezí! Každý měsíc zde naleznete novou katechezi zaměřenou na prohloubení naší víry a lepší pochopení.</p>
+    
+      <p>Doporučujeme vám také seznámit se s <a href="/files/KKC.pdf" target="_blank" class="file-link">Katechismem katolické církve (KKC)</a></p>
+
+      <p><strong>Jak se zapojit:</strong> Můžete se podělit o své myšlenky, klást otázky a vést diskusi k jednotlivým temátům katechezí. Vaše příspěvky a otázky nám pomohou vytvořit živou komunitu věřících, která se vzájemně podporuje na cestě víry.</p>
+
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="liturgical-files-section">
+      <div class="files-by-year">
+        <div class="year-group">
+          <h4 class="year-header">Měsíční katecheze</h4>
+          <div class="files-grid">
+            <!-- Katecheze - březen 2026 -->
+            <div class="file-item">
+              <div class="file-info">
+                <span class="file-icon">📖</span>
+                <span class="file-name">1. Katecheze - březen 2026</span>
+              </div>
+              <div class="file-actions">
+                <a 
+                  href="/files/katecheze/1. Katecheze - březen 2026.pdf" 
+                  target="_blank"
+                  class="file-btn view-btn"
+                  aria-label="Zobrazit katechezi březen 2026"
+                >
+                  👁️ Zobrazit
+                </a>
+                <a 
+                  href="/files/katecheze/1. Katecheze - březen 2026.pdf" 
+                  download
+                  class="file-btn download-btn"
+                  aria-label="Stáhnout katechezi březen 2026"
+                >
+                  ⬇️ Stáhnout
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="comments-section">
+      <h3>Komentáře a otázky</h3>
+      <p>Zde se můžete podílet na diskusi k jednotlivým katechezím. Napište svou otázku nebo sdílejte své myšlenky k danému tématu.</p>
+
+      <div id="cusdis_thread"
+        data-host="https://cusdis-two-blue.vercel.app"
+        data-app-id="bdb854e1-b10b-4174-85a9-61166204ce3a"
+        data-page-id="katecheze"
+        data-page-url="https://farnostht-chr.cz/katecheze"
+        data-page-title="Katecheze"
+      ></div>
+      <script is:inline defer src="https://cusdis-two-blue.vercel.app/js/widget/lang/cs.js"></script>
+      <script is:inline defer src="https://cusdis-two-blue.vercel.app/js/cusdis.es.js"></script>
+    </div>
+  </section>
+</Layout>
