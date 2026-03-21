@@ -4119,6 +4119,74 @@ p {
   transition: color 0.3s ease;
 }
 
+/* ==========================================================================
+   KATECHEZE PAGE STYLES
+========================================================================== */
+
+.comments-section {
+  margin: 2rem 0;
+  padding: 1.25rem;
+  background-color: rgba(212, 175, 55, 0.1);
+  border-left: 4px solid var(--color-accent);
+  border-radius: 4px;
+}
+
+.comments-section h3 {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.comments-placeholder {
+  padding: 1.5rem;
+  text-align: center;
+  background-color: var(--color-background);
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+#cusdis_thread {
+  margin-top: 0.75rem;
+  max-height: none;
+  overflow: visible;
+  overscroll-behavior: auto;
+  background-color: var(--color-background);
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+#cusdis_thread iframe,
+#cusdis_thread .cusdis-frame {
+  width: 100%;
+  min-height: 920px;
+  height: 920px;
+  border: 0;
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  #cusdis_thread {
+    max-height: none;
+    overflow: visible;
+    padding: 0.25rem;
+  }
+
+  #cusdis_thread iframe,
+  #cusdis_thread .cusdis-frame {
+    min-height: 1020px;
+    height: 1020px;
+  }
+}
+
+.file-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.file-link:hover {
+  color: var(--color-accent);
+}
+
 .footer-contact a:hover {
   color: var(--color-accent);
 }
