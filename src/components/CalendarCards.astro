@@ -158,6 +158,44 @@
     return new Date(event.start.dateTime || event.start.date);
   }
 
+  /** @param {string} time */
+  function timeToMinutes(time) {
+    const match = time.match(/^(\d{1,2}):(\d{2})$/);
+    if (!match) return Number.MAX_SAFE_INTEGER;
+
+    const hours = Number.parseInt(match[1], 10);
+    const minutes = Number.parseInt(match[2], 10);
+
+    if (Number.isNaN(hours) || Number.isNaN(minutes)) {
+      return Number.MAX_SAFE_INTEGER;
+    }
+
+    return (hours * 60) + minutes;
+  }
+
+  /** @param {CalendarEvent} event */
+  function getEventSortValues(event) {
+    const start = getEventStart(event);
+    const dayStart = new Date(start);
+    dayStart.setHours(0, 0, 0, 0);
+
+    // Prefer exact event time from calendar, fallback to time parsed from title.
+    let minutesInDay = Number.MAX_SAFE_INTEGER;
+
+    if (event.start.dateTime) {
+      minutesInDay = (start.getHours() * 60) + start.getMinutes();
+    } else {
+      const parsed = parseMassTitle(event.summary || '');
+      minutesInDay = timeToMinutes(parsed.time);
+    }
+
+    return {
+      dayTimestamp: dayStart.getTime(),
+      minutesInDay,
+      startTimestamp: start.getTime()
+    };
+  }
+
   /** @returns {Promise<CalendarEvent[]>} */
   async function getEvents() {
     const nowIso = new Date().toISOString();
@@ -196,7 +234,20 @@
 
         return eventDateTime > currentTime;
       })
-      .sort((a, b) => getEventStart(a).getTime() - getEventStart(b).getTime())
+      .sort((a, b) => {
+        const aSort = getEventSortValues(a);
+        const bSort = getEventSortValues(b);
+
+        if (aSort.dayTimestamp !== bSort.dayTimestamp) {
+          return aSort.dayTimestamp - bSort.dayTimestamp;
+        }
+
+        if (aSort.minutesInDay !== bSort.minutesInDay) {
+          return aSort.minutesInDay - bSort.minutesInDay;
+        }
+
+        return aSort.startTimestamp - bSort.startTimestamp;
+      })
       .slice(0, 4);
   }
 
