@@ -1,0 +1,18 @@
+<Layout 
+  title="Setkání ministrantů v Hradci Králové - Farnost Hrochův Týnec - Chroustovice"
+  description="Informace o setkání ministrantů ve farnosti Hrochův Týnec - Chroustovice."
+>
+  <div class="container">
+    <div class="content-section">
+      <div class="pdf-container">
+        <iframe 
+          src="/files/ministranti.pdf" 
+          width="100%" 
+          height="800px"
+          title="Setkání ministrantů v Hradci Králové - PDF"
+        >
+        </iframe>
+      </div>
+    </div>
+  </div>
+</Layout>
